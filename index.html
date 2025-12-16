@@ -1,0 +1,903 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plan de Estudio EXANI-II</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+        
+        .header h1 {
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .tabs {
+            background: white;
+            border-radius: 15px;
+            padding: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 10px;
+        }
+        
+        .tab {
+            padding: 12px 15px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 14px;
+            transition: all 0.3s;
+            background: #f3f4f6;
+            color: #4b5563;
+        }
+        
+        .tab.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .content {
+            display: none;
+        }
+        
+        .content.active {
+            display: block;
+        }
+        
+        .semana {
+            background: white;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-left: 5px solid #667eea;
+        }
+        
+        .semana-header {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px 30px;
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+        
+        .semana-body {
+            padding: 30px;
+        }
+        
+        .dia {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .dia-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 15px;
+            flex-wrap: wrap;
+        }
+        
+        .dia-nombre {
+            background: #f3f4f6;
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-weight: bold;
+            color: #4b5563;
+        }
+        
+        .materia-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: white;
+            font-weight: bold;
+            font-size: 14px;
+        }
+        
+        .temas {
+            margin-left: 20px;
+        }
+        
+        .tema {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 10px;
+            padding: 8px;
+        }
+        
+        .checkbox {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+        
+        .tema-text {
+            flex: 1;
+            line-height: 1.5;
+        }
+        
+        .tema-text.checked {
+            text-decoration: line-through;
+            color: #9ca3af;
+        }
+        
+        .progress-general {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+        
+        .progress-numero {
+            font-size: 4em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        
+        .progress-bar-container {
+            background: rgba(255,255,255,0.2);
+            height: 30px;
+            border-radius: 15px;
+            overflow: hidden;
+            margin-top: 20px;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: white;
+            border-radius: 15px;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 15px;
+            font-weight: bold;
+            color: #667eea;
+        }
+        
+        .progress-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .progress-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 4px solid;
+        }
+        
+        .progress-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .progress-card-numero {
+            font-size: 2em;
+            font-weight: bold;
+        }
+        
+        .progress-bar-small {
+            background: #e5e7eb;
+            height: 15px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .progress-bar-fill {
+            height: 100%;
+            border-radius: 10px;
+            transition: width 0.5s ease;
+        }
+        
+        .dashboard {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            border-top: 4px solid;
+        }
+        
+        .stat-card h3 {
+            font-size: 0.9em;
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+        
+        .stat-card .numero {
+            font-size: 2.5em;
+            font-weight: bold;
+        }
+        
+        .pomodoro {
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
+            color: white;
+            padding: 40px;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
+        }
+        
+        .timer-display {
+            font-size: 5em;
+            font-weight: bold;
+            margin: 30px 0;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .timer-btn {
+            background: white;
+            color: #ef4444;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        
+        .hoy-estudiar {
+            background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
+        }
+        
+        .achievement {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .achievement.unlocked {
+            border: 3px solid #fbbf24;
+        }
+        
+        .achievement-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        .progress-container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #4b5563;
+            display: block;
+        }
+        
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px 15px;
+            border: 2px solid #e5e7eb;
+            border-radius: 8px;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>📚 Plan de Estudio EXANI-II</h1>
+            <p style="font-size: 1.3em; margin-top: 10px;">Ingeniería en Tecnología de Software</p>
+            <p style="opacity: 0.9; margin-top: 10px;">12 semanas • 1.5-2.5 hrs diarias</p>
+        </div>
+        
+        <div class="tabs">
+            <button class="tab active" onclick="showTab('inicio')">🏠 Inicio</button>
+            <button class="tab" onclick="showTab('calendario')">📅 Calendario</button>
+            <button class="tab" onclick="showTab('progreso')">📊 Progreso</button>
+            <button class="tab" onclick="showTab('pomodoro')">⏱️ Pomodoro</button>
+            <button class="tab" onclick="showTab('simulacros')">📝 Simulacros</button>
+            <button class="tab" onclick="showTab('logros')">🏆 Logros</button>
+        </div>
+        
+        <div id="inicio" class="content active">
+            <div class="hoy-estudiar">
+                <h3>📖 Hoy debes estudiar:</h3>
+                <div class="temas-hoy" id="temas-hoy" style="font-size: 1.2em; margin-top: 15px;"></div>
+            </div>
+            
+            <div class="dashboard" id="dashboard-stats"></div>
+        </div>
+        
+        <div id="calendario" class="content"></div>
+        <div id="progreso" class="content">
+            <div class="progress-general">
+                <h3 style="font-size: 2em; margin-bottom: 20px;">Progreso General</h3>
+                <div class="progress-numero" id="progreso-general-num">0%</div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="progreso-general-bar" style="width: 0%;">
+                        <span id="progreso-general-text">0%</span>
+                    </div>
+                </div>
+            </div>
+            <div class="progress-grid" id="progreso-materias"></div>
+        </div>
+        
+        <div id="pomodoro" class="content">
+            <div class="pomodoro">
+                <h2 style="font-size: 2em; margin-bottom: 20px;">⏱️ Temporizador Pomodoro</h2>
+                <div class="timer-display" id="timer-display">25:00</div>
+                <div>
+                    <button class="timer-btn" onclick="startTimer()">▶️ Iniciar</button>
+                    <button class="timer-btn" onclick="pauseTimer()">⏸️ Pausar</button>
+                    <button class="timer-btn" onclick="resetTimer()">🔄 Reiniciar</button>
+                </div>
+                <div style="margin-top: 20px; font-size: 1.2em;" id="session-counter">Sesiones hoy: 0</div>
+            </div>
+        </div>
+        
+        <div id="simulacros" class="content">
+            <div class="progress-container">
+                <h2 style="font-size: 2em; margin-bottom: 20px;">📝 Registro de Simulacros</h2>
+                <div id="simulacros-container"></div>
+            </div>
+        </div>
+        
+        <div id="logros" class="content">
+            <div class="progress-container">
+                <h2 style="font-size: 2em; margin-bottom: 30px; text-align: center;">🏆 Tus Logros</h2>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;" id="achievements-container"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const materias = {
+            "Pensamiento Matemático": "#3b82f6",
+            "Comprensión Lectora": "#10b981",
+            "Aritmética": "#f59e0b",
+            "Física": "#8b5cf6",
+            "Redacción Indirecta": "#ec4899",
+            "Inglés": "#06b6d4",
+            "Repaso": "#6366f1",
+            "Simulacro": "#ef4444",
+            "Mini simulacro": "#ef4444",
+            "Análisis": "#14b8a6",
+            "Refuerzo": "#f97316",
+            "Descanso": "#64748b",
+            "Preparación": "#8b5cf6"
+        };
+
+        const studyPlan = {
+            semana1: { titulo: "Semana 1 - Fundamentos", dias: [
+                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Razones y proporciones", "Proporcionalidad directa e inversa"] },
+                { dia: "Martes", materia: "Comprensión Lectora", temas: ["Identificación de información", "Textos argumentativos y periodísticos"] },
+                { dia: "Miércoles", materia: "Aritmética", temas: ["Operaciones con números enteros", "Fracciones y decimales"] },
+                { dia: "Jueves", materia: "Física", temas: ["Magnitudes y unidades", "Sistema Internacional"] },
+                { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Registro lingüístico", "Género textual"] },
+                { dia: "Sábado", materia: "Repaso", temas: ["Ejercicios mixtos de la semana", "Mini-simulacro (20-25 preguntas)"] }
+            ]},
+            semana2: { titulo: "Semana 2 - Fundamentos", dias: [
+                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Interpretación gráfica de ecuaciones", "Ejes de simetría"] },
+                { dia: "Martes", materia: "Comprensión Lectora", temas: ["Interpretación del texto", "Intención del autor"] },
+                { dia: "Miércoles", materia: "Aritmética", temas: ["Jerarquía de operaciones", "Potencias y raíces"] },
+                { dia: "Jueves", materia: "Física", temas: ["Cinemática", "Velocidad, distancia y tiempo"] },
+                { dia: "Viernes", materia: "Inglés", temas: ["Idea general de textos", "Vocabulario común"] },
+                { dia: "Sábado", materia: "Repaso", temas: ["Corrección de errores", "Ejercicios cronometrados"] }
+            ]},
+            semana3: { titulo: "Semana 3 - Fundamentos", dias: [
+                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Probabilidad clásica", "Frecuencias"] },
+                { dia: "Martes", materia: "Redacción Indirecta", temas: ["Concordancia nominal", "Concordancia verbal"] },
+                { dia: "Miércoles", materia: "Aritmética", temas: ["Notación científica", "Factores primos"] },
+                { dia: "Jueves", materia: "Física", temas: ["Leyes de Newton", "Diagramas de fuerzas"] },
+                { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Evaluación de forma y contenido"] },
+                { dia: "Sábado", materia: "Mini simulacro", temas: ["Matemáticas + Aritmética + Física"] }
+            ]},
+            semana4: { titulo: "Semana 4 - Fundamentos", dias: [
+                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Medidas de tendencia central", "Media, mediana y moda"] },
+                { dia: "Martes", materia: "Redacción Indirecta", temas: ["Uso correcto de comas y puntos", "Conectores lógicos"] },
+                { dia: "Miércoles", materia: "Aritmética", temas: ["Mínimo común múltiplo", "Máximo común divisor"] },
+                { dia: "Jueves", materia: "Física", temas: ["Trabajo y energía"] },
+                { dia: "Viernes", materia: "Inglés", temas: ["Falsos cognados", "Comprensión de lectura"] },
+                { dia: "Sábado", materia: "Simulacro parcial", temas: ["Módulo general completo"] }
+            ]},
+            semana5: { titulo: "Semana 5 - Profundización", dias: [
+                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de funciones"] },
+                { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos literarios"] },
+                { dia: "Miércoles", materia: "Aritmética", temas: ["Porcentajes"] },
+                { dia: "Jueves", materia: "Física", temas: ["Conservación de la energía"] },
+                { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Cohesión gramatical y semántica"] },
+                { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro de Aritmética"] }
+            ]},
+            semana6: { titulo: "Semana 6 - Profundización", dias: [
+                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Desviación estándar (conceptual)"] },
+                { dia: "Martes", materia: "Inglés", temas: ["Lectura cronometrada"] },
+                { dia: "Miércoles", materia: "Aritmética", temas: ["Progresión aritmética"] },
+                { dia: "Jueves", materia: "Física", temas: ["Cantidad de movimiento", "Choques"] },
+                { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Corrección de textos completos"] },
+                { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro de Física"] }
+            ]},
+            semana7: { titulo: "Semana 7 - Profundización", dias: [
+                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de información"] },
+                { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos administrativos y sociales"] },
+                { dia: "Miércoles", materia: "Aritmética", temas: ["Regla de tres"] },
+                { dia: "Jueves", materia: "Física", temas: ["Movimiento ondulatorio"] },
+                { dia: "Viernes", materia: "Inglés", temas: ["Práctica tipo EXANI"] },
+                { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro general"] }
+            ]},
+            semana8: { titulo: "Semana 8 - Profundización", dias: [
+                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Sistemas de ecuaciones (interpretación)"] },
+                { dia: "Martes", materia: "Redacción Indirecta", temas: ["Ortografía y acentuación"] },
+                { dia: "Miércoles", materia: "Aritmética", temas: ["Repaso general"] },
+                { dia: "Jueves", materia: "Física", temas: ["Óptica: lentes y fenómenos"] },
+                { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Lectura larga cronometrada"] },
+                { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro completo"] }
+            ]},
+            semana9: { titulo: "Semana 9 - Simulación Real", dias: [
+                { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 1"] },
+                { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 1"] },
+                { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
+                { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 2"] },
+                { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 2"] },
+                { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
+            ]},
+            semana10: { titulo: "Semana 10 - Simulación Real", dias: [
+                { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 3"] },
+                { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 3"] },
+                { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
+                { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 4"] },
+                { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 4"] },
+                { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
+            ]},
+            semana11: { titulo: "Semana 11 - Simulación Real", dias: [
+                { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 5"] },
+                { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 5"] },
+                { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
+                { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 6"] },
+                { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 6"] },
+                { dia: "Sábado", materia: "Repaso", temas: ["Repaso general de conceptos clave"] }
+            ]},
+            semana12: { titulo: "Semana 12 - Ajuste Final", dias: [
+                { dia: "Lunes", materia: "Repaso", temas: ["Fórmulas clave"] },
+                { dia: "Martes", materia: "Repaso", temas: ["Errores frecuentes"] },
+                { dia: "Miércoles", materia: "Repaso", temas: ["Repaso ligero general"] },
+                { dia: "Jueves", materia: "Descanso", temas: ["Descanso mental"] },
+                { dia: "Viernes", materia: "Repaso", temas: ["Último repaso de conceptos"] },
+                { dia: "Sábado", materia: "Preparación", temas: ["Preparación mental para el examen"] }
+            ]}
+        };
+
+        let timerInterval = null;
+        let timeLeft = 25 * 60;
+        let isRunning = false;
+
+        function showTab(tabName) {
+            document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            document.getElementById(tabName).classList.add('active');
+            event.target.classList.add('active');
+            
+            if (tabName === 'progreso') actualizarProgreso();
+            if (tabName === 'inicio') renderDashboard();
+        }
+
+        function toggleTema(semana, diaIdx, temaIdx) {
+            const key = `${semana}-${diaIdx}-${temaIdx}`;
+            const checked = localStorage.getItem(key) === 'true';
+            localStorage.setItem(key, (!checked).toString());
+            if (!checked) {
+                const today = new Date().toISOString().split('T')[0];
+                const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
+                if (!studyDays.includes(today)) {
+                    studyDays.push(today);
+                    localStorage.setItem('studyDays', JSON.stringify(studyDays));
+                }
+            }
+            renderCalendario();
+            actualizarProgreso();
+            checkAchievements();
+        }
+
+        function renderCalendario() {
+            const container = document.getElementById('calendario');
+            let html = '';
+            
+            Object.keys(studyPlan).forEach(semanaKey => {
+                const semana = studyPlan[semanaKey];
+                const progresoSemana = calcularProgresoSemana(semanaKey);
+                html += `<div class="semana">
+                    <div class="semana-header">${semana.titulo} <span style="opacity:0.8;">${progresoSemana}% completado</span></div>
+                    <div class="semana-body">`;
+                
+                semana.dias.forEach((dia, diaIdx) => {
+                    const color = materias[dia.materia] || '#6b7280';
+                    html += `<div class="dia" style="border-left: 4px solid ${color};">
+                        <div class="dia-header">
+                            <div class="dia-nombre">${dia.dia}</div>
+                            <div class="materia-badge" style="background-color: ${color};">${dia.materia}</div>
+                        </div>
+                        <div class="temas">`;
+                    
+                    dia.temas.forEach((tema, temaIdx) => {
+                        const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
+                        const checked = localStorage.getItem(key) === 'true';
+                        html += `<div class="tema">
+                            <input type="checkbox" class="checkbox" ${checked ? 'checked' : ''} 
+                                onchange="toggleTema('${semanaKey}', ${diaIdx}, ${temaIdx})">
+                            <span class="tema-text ${checked ? 'checked' : ''}">${tema}</span>
+                        </div>`;
+                    });
+                    
+                    html += `</div></div>`;
+                });
+                
+                html += `</div></div>`;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function calcularProgresoSemana(semanaKey) {
+            let total = 0, completados = 0;
+            studyPlan[semanaKey].dias.forEach((dia, diaIdx) => {
+                dia.temas.forEach((tema, temaIdx) => {
+                    total++;
+                    if (localStorage.getItem(`${semanaKey}-${diaIdx}-${temaIdx}`) === 'true') completados++;
+                });
+            });
+            return total > 0 ? Math.round((completados / total) * 100) : 0;
+        }
+
+        function calcularProgreso(materia) {
+            let total = 0, completados = 0;
+            Object.keys(studyPlan).forEach(semanaKey => {
+                studyPlan[semanaKey].dias.forEach((dia, diaIdx) => {
+                    if (dia.materia === materia) {
+                        dia.temas.forEach((tema, temaIdx) => {
+                            total++;
+                            if (localStorage.getItem(`${semanaKey}-${diaIdx}-${temaIdx}`) === 'true') completados++;
+                        });
+                    }
+                });
+            });
+            return total > 0 ? Math.round((completados / total) * 100) : 0;
+        }
+
+        function calcularProgresoGeneral() {
+            let total = 0, completados = 0;
+            Object.keys(studyPlan).forEach(semanaKey => {
+                studyPlan[semanaKey].dias.forEach((dia, diaIdx) => {
+                    dia.temas.forEach((tema, temaIdx) => {
+                        total++;
+                        if (localStorage.getItem(`${semanaKey}-${diaIdx}-${temaIdx}`) === 'true') completados++;
+                    });
+                });
+            });
+            return total > 0 ? Math.round((completados / total) * 100) : 0;
+        }
+
+        function actualizarProgreso() {
+            const progresoGeneral = calcularProgresoGeneral();
+            document.getElementById('progreso-general-num').textContent = progresoGeneral + '%';
+            document.getElementById('progreso-general-bar').style.width = progresoGeneral + '%';
+            document.getElementById('progreso-general-text').textContent = progresoGeneral + '%';
+            
+            const materiasUnicas = [...new Set(Object.values(studyPlan).flatMap(s => s.dias.map(d => d.materia)))];
+            const container = document.getElementById('progreso-materias');
+            let html = '';
+            
+            materiasUnicas.forEach(materia => {
+                const progreso = calcularProgreso(materia);
+                const color = materias[materia] || '#6b7280';
+                html += `<div class="progress-card" style="border-top-color: ${color};">
+                    <div class="progress-card-header">
+                        <div style="font-weight: bold; font-size: 1.1em;">${materia}</div>
+                        <div class="progress-card-numero" style="color: ${color};">${progreso}%</div>
+                    </div>
+                    <div class="progress-bar-small">
+                        <div class="progress-bar-fill" style="width: ${progreso}%; background-color: ${color};"></div>
+                    </div>
+                </div>`;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function startTimer() {
+            if (isRunning) return;
+            isRunning = true;
+            timerInterval = setInterval(() => {
+                if (timeLeft > 0) {
+                    timeLeft--;
+                    updateTimerDisplay();
+                } else {
+                    pauseTimer();
+                    alert('¡Pomodoro completado! Toma un descanso de 5 minutos.');
+                    const sessions = parseInt(localStorage.getItem('pomodoroSessions') || '0') + 1;
+                    localStorage.setItem('pomodoroSessions', sessions.toString());
+                    document.getElementById('session-counter').textContent = 'Sesiones hoy: ' + sessions;
+                }
+            }, 1000);
+        }
+
+        function pauseTimer() {
+            isRunning = false;
+            clearInterval(timerInterval);
+        }
+
+        function resetTimer() {
+            pauseTimer();
+            timeLeft = 25 * 60;
+            updateTimerDisplay();
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            document.getElementById('timer-display').textContent = 
+                `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function renderDashboard() {
+            const progresoGeneral = calcularProgresoGeneral();
+            const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
+            const racha = calcularRacha(studyDays);
+            const sessions = localStorage.getItem('pomodoroSessions') || '0';
+            
+            const today = new Date();
+            const dayOfWeek = today.getDay();
+            const semanaActual = Math.floor((Date.now() - new Date(2024, 11, 16)) / (7 * 24 * 60 * 60 * 1000)) + 1;
+            
+            const temasHoy = obtenerTemasHoy(semanaActual, dayOfWeek);
+            document.getElementById('temas-hoy').innerHTML = temasHoy || 'No hay temas programados para hoy. ¡Descansa o adelanta!';
+            
+            const html = `
+                <div class="stat-card" style="border-top-color: #667eea;">
+                    <h3>PROGRESO TOTAL</h3>
+                    <div class="numero" style="color: #667eea;">${progresoGeneral}%</div>
+                    <div style="font-size: 0.9em; color: #9ca3af;">Del temario completo</div>
+                </div>
+                <div class="stat-card" style="border-top-color: #10b981;">
+                    <h3>RACHA ACTUAL</h3>
+                    <div class="numero" style="color: #10b981;">🔥 ${racha}</div>
+                    <div style="font-size: 0.9em; color: #9ca3af;">Días consecutivos</div>
+                </div>
+                <div class="stat-card" style="border-top-color: #ef4444;">
+                    <h3>SESIONES HOY</h3>
+                    <div class="numero" style="color: #ef4444;">${sessions}</div>
+                    <div style="font-size: 0.9em; color: #9ca3af;">Pomodoros completados</div>
+                </div>
+                <div class="stat-card" style="border-top-color: #f59e0b;">
+                    <h3>DÍAS ESTUDIADOS</h3>
+                    <div class="numero" style="color: #f59e0b;">${studyDays.length}</div>
+                    <div style="font-size: 0.9em; color: #9ca3af;">Total acumulado</div>
+                </div>
+            `;
+            document.getElementById('dashboard-stats').innerHTML = html;
+        }
+
+        function calcularRacha(studyDays) {
+            if (studyDays.length === 0) return 0;
+            studyDays.sort().reverse();
+            let racha = 0;
+            const today = new Date();
+            today.setHours(0,0,0,0);
+            
+            for (let i = 0; i < studyDays.length; i++) {
+                const studyDate = new Date(studyDays[i]);
+                studyDate.setHours(0,0,0,0);
+                const diffDays = Math.floor((today - studyDate) / (24 * 60 * 60 * 1000));
+                if (diffDays === i) racha++;
+                else break;
+            }
+            return racha;
+        }
+
+        function obtenerTemasHoy(semana, dia) {
+            const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+            const diaTexto = dias[dia];
+            const semanaKey = 'semana' + semana;
+            
+            if (!studyPlan[semanaKey]) return null;
+            const diaData = studyPlan[semanaKey].dias.find(d => d.dia === diaTexto);
+            if (!diaData) return null;
+            
+            return `<strong>${diaData.materia}</strong><br>` + diaData.temas.map(t => `• ${t}`).join('<br>');
+        }
+        function renderSimulacros() {
+            const container = document.getElementById('simulacros-container');
+            let html = '';
+            
+            for (let i = 1; i <= 6; i++) {
+                html += `
+                    <div style="background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                        <h4 style="font-size: 1.3em; margin-bottom: 20px; color: #1f2937;">Simulacro #${i}</h4>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                            <div class="form-group">
+                                <label>Fecha</label>
+                                <input type="date" id="sim${i}-fecha" onchange="saveSimulacro(${i})">
+                            </div>
+                            <div class="form-group">
+                                <label>Puntaje Total</label>
+                                <input type="number" placeholder="0-100" id="sim${i}-total" onchange="saveSimulacro(${i})">
+                            </div>
+                            <div class="form-group">
+                                <label>Matemáticas</label>
+                                <input type="number" placeholder="0-100" id="sim${i}-mat" onchange="saveSimulacro(${i})">
+                            </div>
+                            <div class="form-group">
+                                <label>Comprensión</label>
+                                <input type="number" placeholder="0-100" id="sim${i}-comp" onchange="saveSimulacro(${i})">
+                            </div>
+                            <div class="form-group">
+                                <label>Física</label>
+                                <input type="number" placeholder="0-100" id="sim${i}-fis" onchange="saveSimulacro(${i})">
+                            </div>
+                            <div class="form-group">
+                                <label>Inglés</label>
+                                <input type="number" placeholder="0-100" id="sim${i}-ing" onchange="saveSimulacro(${i})">
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top: 15px;">
+                            <label>Notas / Áreas a mejorar</label>
+                            <textarea rows="3" placeholder="Escribe aquí tus observaciones..." id="sim${i}-notas" onchange="saveSimulacro(${i})"></textarea>
+                        </div>
+                    </div>
+                `;
+            }
+            
+            container.innerHTML = html;
+            loadSimulacros();
+        }
+
+        function saveSimulacro(num) {
+            const data = {
+                fecha: document.getElementById(`sim${num}-fecha`).value,
+                total: document.getElementById(`sim${num}-total`).value,
+                mat: document.getElementById(`sim${num}-mat`).value,
+                comp: document.getElementById(`sim${num}-comp`).value,
+                fis: document.getElementById(`sim${num}-fis`).value,
+                ing: document.getElementById(`sim${num}-ing`).value,
+                notas: document.getElementById(`sim${num}-notas`).value
+            };
+            localStorage.setItem(`simulacro${num}`, JSON.stringify(data));
+        }
+
+        function loadSimulacros() {
+            for (let i = 1; i <= 6; i++) {
+                const saved = localStorage.getItem(`simulacro${i}`);
+                if (saved) {
+                    const data = JSON.parse(saved);
+                    document.getElementById(`sim${i}-fecha`).value = data.fecha || '';
+                    document.getElementById(`sim${i}-total`).value = data.total || '';
+                    document.getElementById(`sim${i}-mat`).value = data.mat || '';
+                    document.getElementById(`sim${i}-comp`).value = data.comp || '';
+                    document.getElementById(`sim${i}-fis`).value = data.fis || '';
+                    document.getElementById(`sim${i}-ing`).value = data.ing || '';
+                    document.getElementById(`sim${i}-notas`).value = data.notas || '';
+                }
+            }
+        }
+
+        function renderAchievements() {
+            const achievements = [
+                { id: 'first-day', icon: '🎯', title: 'Primer Día', desc: 'Completaste tu primer día de estudio', check: () => calcularProgresoGeneral() > 0 },
+                { id: 'week-1', icon: '📅', title: 'Primera Semana', desc: 'Completaste la primera semana', check: () => calcularProgresoSemana('semana1') === 100 },
+                { id: 'streak-3', icon: '🔥', title: 'Racha de 3', desc: 'Estudiaste 3 días seguidos', check: () => {
+                    const days = JSON.parse(localStorage.getItem('studyDays') || '[]');
+                    return calcularRacha(days) >= 3;
+                }},
+                { id: 'streak-7', icon: '⚡', title: 'Racha de 7', desc: 'Estudiaste 7 días seguidos', check: () => {
+                    const days = JSON.parse(localStorage.getItem('studyDays') || '[]');
+                    return calcularRacha(days) >= 7;
+                }},
+                { id: 'pomodoro-10', icon: '⏱️', title: 'Pomodoro Master', desc: 'Completaste 10 sesiones Pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || '0') >= 10 },
+                { id: 'half-way', icon: '🎊', title: 'A Mitad de Camino', desc: 'Completaste el 50% del temario', check: () => calcularProgresoGeneral() >= 50 },
+                { id: 'all-done', icon: '🏆', title: '¡Campeón!', desc: 'Completaste TODO el temario', check: () => calcularProgresoGeneral() === 100 },
+                { id: 'first-sim', icon: '📝', title: 'Primer Simulacro', desc: 'Completaste tu primer simulacro', check: () => localStorage.getItem('simulacro1') !== null }
+            ];
+
+            const container = document.getElementById('achievements-container');
+            let html = '';
+            
+            achievements.forEach(ach => {
+                const unlocked = ach.check();
+                const unlockedClass = unlocked ? 'unlocked' : '';
+                const opacity = unlocked ? '1' : '0.5';
+                html += `
+                    <div class="achievement ${unlockedClass}" style="opacity: ${opacity};">
+                        <div class="achievement-icon">${ach.icon}</div>
+                        <div class="achievement-title" style="font-weight: bold; margin-bottom: 5px;">${ach.title}</div>
+                        <div class="achievement-desc" style="font-size: 0.9em; color: #6b7280;">${ach.desc}</div>
+                        ${unlocked ? '<div style="margin-top: 10px; color: #fbbf24; font-weight: bold;">✓ DESBLOQUEADO</div>' : '<div style="margin-top: 10px; color: #9ca3af;">🔒 Bloqueado</div>'}
+                    </div>
+                `;
+            });
+            
+            container.innerHTML = html;
+        }
+
+        function checkAchievements() {
+            renderAchievements();
+        }
+
+        window.onload = function() {
+            renderCalendario();
+            renderSimulacros();
+            renderAchievements();
+            actualizarProgreso();
+            renderDashboard();
+            
+            const sessions = localStorage.getItem('pomodoroSessions') || '0';
+            document.getElementById('session-counter').textContent = 'Sesiones hoy: ' + sessions;
+            
+            const lastDate = localStorage.getItem('lastVisit');
+            const today = new Date().toISOString().split('T')[0];
+            if (lastDate !== today) {
+                localStorage.setItem('pomodoroSessions', '0');
+                document.getElementById('session-counter').textContent = 'Sesiones hoy: 0';
+            }
+            localStorage.setItem('lastVisit', today);
+        };
+    </script>
+</body>
+</html>
