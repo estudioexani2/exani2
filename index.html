@@ -3,26 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Plan de Estudio EXANI-II</title>
+    <title>Plan de Estudio EXANI-II - Completo</title>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 20px;
         }
-        
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-        }
-        
+        .container { max-width: 1400px; margin: 0 auto; }
         .header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -31,12 +21,7 @@
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.3);
         }
-        
-        .header h1 {
-            font-size: 2.5em;
-            margin-bottom: 10px;
-        }
-        
+        .header h1 { font-size: 2.5em; margin-bottom: 10px; }
         .tabs {
             background: white;
             border-radius: 15px;
@@ -44,37 +29,34 @@
             margin-bottom: 20px;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 10px;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 8px;
         }
-        
         .tab {
-            padding: 12px 15px;
+            padding: 10px 8px;
             border: none;
             border-radius: 10px;
             cursor: pointer;
             font-weight: bold;
-            font-size: 14px;
+            font-size: 12px;
             transition: all 0.3s;
             background: #f3f4f6;
             color: #4b5563;
         }
-        
         .tab.active {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             transform: scale(1.05);
-            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
         }
-        
-        .content {
-            display: none;
+        .content { display: none; }
+        .content.active { display: block; }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
-        
-        .content.active {
-            display: block;
-        }
-        
         .semana {
             background: white;
             border-radius: 15px;
@@ -83,7 +65,6 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             border-left: 5px solid #667eea;
         }
-        
         .semana-header {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -91,18 +72,13 @@
             font-size: 1.3em;
             font-weight: bold;
         }
-        
-        .semana-body {
-            padding: 30px;
-        }
-        
+        .semana-body { padding: 30px; }
         .dia {
             border: 2px solid #e5e7eb;
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 15px;
         }
-        
         .dia-header {
             display: flex;
             align-items: center;
@@ -110,7 +86,6 @@
             margin-bottom: 15px;
             flex-wrap: wrap;
         }
-        
         .dia-nombre {
             background: #f3f4f6;
             padding: 8px 16px;
@@ -118,7 +93,6 @@
             font-weight: bold;
             color: #4b5563;
         }
-        
         .materia-badge {
             padding: 8px 16px;
             border-radius: 20px;
@@ -126,11 +100,7 @@
             font-weight: bold;
             font-size: 14px;
         }
-        
-        .temas {
-            margin-left: 20px;
-        }
-        
+        .temas { margin-left: 20px; }
         .tema {
             display: flex;
             align-items: flex-start;
@@ -138,7 +108,6 @@
             margin-bottom: 10px;
             padding: 8px;
         }
-        
         .checkbox {
             width: 20px;
             height: 20px;
@@ -146,17 +115,8 @@
             flex-shrink: 0;
             margin-top: 2px;
         }
-        
-        .tema-text {
-            flex: 1;
-            line-height: 1.5;
-        }
-        
-        .tema-text.checked {
-            text-decoration: line-through;
-            color: #9ca3af;
-        }
-        
+        .tema-text { flex: 1; line-height: 1.5; }
+        .tema-text.checked { text-decoration: line-through; color: #9ca3af; }
         .progress-general {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -165,13 +125,7 @@
             margin-bottom: 30px;
             box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
         }
-        
-        .progress-numero {
-            font-size: 4em;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-        
+        .progress-numero { font-size: 4em; font-weight: bold; margin-bottom: 10px; }
         .progress-bar-container {
             background: rgba(255,255,255,0.2);
             height: 30px;
@@ -179,7 +133,6 @@
             overflow: hidden;
             margin-top: 20px;
         }
-        
         .progress-bar {
             height: 100%;
             background: white;
@@ -192,53 +145,12 @@
             font-weight: bold;
             color: #667eea;
         }
-        
-        .progress-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 20px;
-        }
-        
-        .progress-card {
-            background: white;
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-            border-top: 4px solid;
-        }
-        
-        .progress-card-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-        }
-        
-        .progress-card-numero {
-            font-size: 2em;
-            font-weight: bold;
-        }
-        
-        .progress-bar-small {
-            background: #e5e7eb;
-            height: 15px;
-            border-radius: 10px;
-            overflow: hidden;
-        }
-        
-        .progress-bar-fill {
-            height: 100%;
-            border-radius: 10px;
-            transition: width 0.5s ease;
-        }
-        
         .dashboard {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
             gap: 20px;
             margin-bottom: 30px;
         }
-        
         .stat-card {
             background: white;
             border-radius: 15px;
@@ -246,18 +158,7 @@
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
             border-top: 4px solid;
         }
-        
-        .stat-card h3 {
-            font-size: 0.9em;
-            color: #6b7280;
-            margin-bottom: 10px;
-        }
-        
-        .stat-card .numero {
-            font-size: 2.5em;
-            font-weight: bold;
-        }
-        
+        .stat-card .numero { font-size: 2.5em; font-weight: bold; }
         .pomodoro {
             background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
@@ -266,14 +167,12 @@
             text-align: center;
             box-shadow: 0 10px 30px rgba(239, 68, 68, 0.3);
         }
-        
         .timer-display {
             font-size: 5em;
             font-weight: bold;
             margin: 30px 0;
             font-family: 'Courier New', monospace;
         }
-        
         .timer-btn {
             background: white;
             color: #ef4444;
@@ -281,11 +180,9 @@
             padding: 15px 30px;
             border-radius: 10px;
             font-weight: bold;
-            font-size: 16px;
             cursor: pointer;
             margin: 5px;
         }
-        
         .hoy-estudiar {
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
             color: white;
@@ -294,7 +191,37 @@
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(251, 191, 36, 0.3);
         }
-        
+        .formula-card {
+            background: #f9fafb;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+        }
+        .formula-content {
+            font-family: 'Courier New', monospace;
+            background: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        .resource-link {
+            display: block;
+            padding: 15px;
+            background: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            text-decoration: none;
+            color: #4b5563;
+            border-left: 4px solid #10b981;
+        }
+        .tip-box {
+            background: #fef3c7;
+            border-left: 4px solid #f59e0b;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
         .achievement {
             background: white;
             border-radius: 15px;
@@ -302,37 +229,16 @@
             text-align: center;
             box-shadow: 0 5px 20px rgba(0,0,0,0.1);
         }
-        
-        .achievement.unlocked {
-            border: 3px solid #fbbf24;
-        }
-        
-        .achievement-icon {
-            font-size: 3em;
-            margin-bottom: 10px;
-        }
-        
-        .progress-container {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 20px;
-            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
-        }
-        
-        .form-group {
-            margin-bottom: 15px;
-        }
-        
+        .achievement.unlocked { border: 3px solid #fbbf24; }
+        .achievement-icon { font-size: 3em; margin-bottom: 10px; }
+        .form-group { margin-bottom: 15px; }
         .form-group label {
             font-weight: 600;
             margin-bottom: 8px;
             color: #4b5563;
             display: block;
         }
-        
         .form-group input,
-        .form-group select,
         .form-group textarea {
             width: 100%;
             padding: 10px 15px;
@@ -347,7 +253,7 @@
         <div class="header">
             <h1>📚 Plan de Estudio EXANI-II</h1>
             <p style="font-size: 1.3em; margin-top: 10px;">Ingeniería en Tecnología de Software</p>
-            <p style="opacity: 0.9; margin-top: 10px;">12 semanas • 1.5-2.5 hrs diarias</p>
+            <p style="opacity: 0.9; margin-top: 10px;">Inicio: Lunes 23 Diciembre 2024</p>
         </div>
         
         <div class="tabs">
@@ -356,19 +262,22 @@
             <button class="tab" onclick="showTab('progreso')">📊 Progreso</button>
             <button class="tab" onclick="showTab('pomodoro')">⏱️ Pomodoro</button>
             <button class="tab" onclick="showTab('simulacros')">📝 Simulacros</button>
+            <button class="tab" onclick="showTab('formulas')">📐 Fórmulas</button>
+            <button class="tab" onclick="showTab('recursos')">🔗 Recursos</button>
+            <button class="tab" onclick="showTab('tips')">💡 Tips</button>
             <button class="tab" onclick="showTab('logros')">🏆 Logros</button>
         </div>
         
         <div id="inicio" class="content active">
             <div class="hoy-estudiar">
-                <h3>📖 Hoy debes estudiar:</h3>
-                <div class="temas-hoy" id="temas-hoy" style="font-size: 1.2em; margin-top: 15px;"></div>
+                <h3 style="font-size: 2em; margin-bottom: 15px;">📖 Hoy debes estudiar:</h3>
+                <div id="temas-hoy" style="font-size: 1.2em;"></div>
             </div>
-            
             <div class="dashboard" id="dashboard-stats"></div>
         </div>
         
         <div id="calendario" class="content"></div>
+        
         <div id="progreso" class="content">
             <div class="progress-general">
                 <h3 style="font-size: 2em; margin-bottom: 20px;">Progreso General</h3>
@@ -379,12 +288,12 @@
                     </div>
                 </div>
             </div>
-            <div class="progress-grid" id="progreso-materias"></div>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;" id="progreso-materias"></div>
         </div>
         
         <div id="pomodoro" class="content">
             <div class="pomodoro">
-                <h2 style="font-size: 2em; margin-bottom: 20px;">⏱️ Temporizador Pomodoro</h2>
+                <h2 style="font-size: 2em; margin-bottom: 20px;">⏱️ Pomodoro</h2>
                 <div class="timer-display" id="timer-display">25:00</div>
                 <div>
                     <button class="timer-btn" onclick="startTimer()">▶️ Iniciar</button>
@@ -396,15 +305,110 @@
         </div>
         
         <div id="simulacros" class="content">
-            <div class="progress-container">
-                <h2 style="font-size: 2em; margin-bottom: 20px;">📝 Registro de Simulacros</h2>
+            <div class="card">
+                <h2 style="font-size: 2em; margin-bottom: 20px;">📝 Simulacros</h2>
                 <div id="simulacros-container"></div>
             </div>
         </div>
         
+        <div id="formulas" class="content">
+            <div class="card">
+                <h2 style="font-size: 2em; margin-bottom: 30px;">📐 Fórmulas Clave</h2>
+                
+                <h3 style="color: #3b82f6; font-size: 1.5em; margin: 20px 0;">Matemáticas</h3>
+                <div class="formula-card">
+                    <strong style="color: #667eea;">Ecuación Cuadrática</strong>
+                    <div class="formula-content">x = (-b ± √(b² - 4ac)) / 2a</div>
+                </div>
+                <div class="formula-card">
+                    <strong style="color: #667eea;">Teorema de Pitágoras</strong>
+                    <div class="formula-content">a² + b² = c²</div>
+                </div>
+                
+                <h3 style="color: #8b5cf6; font-size: 1.5em; margin: 20px 0;">Física</h3>
+                <div class="formula-card">
+                    <strong style="color: #8b5cf6;">Velocidad</strong>
+                    <div class="formula-content">v = d / t</div>
+                </div>
+                <div class="formula-card">
+                    <strong style="color: #8b5cf6;">Segunda Ley de Newton</strong>
+                    <div class="formula-content">F = m × a</div>
+                </div>
+                <div class="formula-card">
+                    <strong style="color: #8b5cf6;">Energía Cinética</strong>
+                    <div class="formula-content">Ec = (1/2) × m × v²</div>
+                </div>
+                
+                <h3 style="color: #f59e0b; font-size: 1.5em; margin: 20px 0;">Aritmética</h3>
+                <div class="formula-card">
+                    <strong style="color: #f59e0b;">Porcentaje</strong>
+                    <div class="formula-content">% = (parte / total) × 100</div>
+                </div>
+                <div class="formula-card">
+                    <strong style="color: #f59e0b;">Regla de Tres</strong>
+                    <div class="formula-content">X = (C × B) / A</div>
+                </div>
+            </div>
+        </div>
+        
+        <div id="recursos" class="content">
+            <div class="card">
+                <h2 style="font-size: 2em; margin-bottom: 30px;">🔗 Recursos</h2>
+                
+                <h3 style="margin: 20px 0;">Plataformas</h3>
+                <a href="https://www.khanacademy.org/math" target="_blank" class="resource-link">
+                    <strong>Khan Academy</strong><br>
+                    <small>Matemáticas gratuitas</small>
+                </a>
+                <a href="https://www.ceneval.edu.mx" target="_blank" class="resource-link">
+                    <strong>CENEVAL Oficial</strong><br>
+                    <small>Guías y simuladores</small>
+                </a>
+                <a href="https://es.duolingo.com" target="_blank" class="resource-link">
+                    <strong>Duolingo</strong><br>
+                    <small>Practica inglés</small>
+                </a>
+                
+                <h3 style="margin: 30px 0 20px;">YouTube</h3>
+                <a href="https://www.youtube.com/@JulianProfe" target="_blank" class="resource-link">
+                    <strong>Julián Profe</strong><br>
+                    <small>Matemáticas y Física</small>
+                </a>
+            </div>
+        </div>
+        
+        <div id="tips" class="content">
+            <div class="card">
+                <h2 style="font-size: 2em; margin-bottom: 30px;">💡 Tips</h2>
+                
+                <div class="tip-box">
+                    <h3 style="font-size: 1.3em; margin-bottom: 10px;">🧠 Técnica Feynman</h3>
+                    <p>Explica cada tema como si fueras un profesor. Si no puedes explicarlo simple, no lo entiendes.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <h3 style="font-size: 1.3em; margin-bottom: 10px;">😴 Duerme Bien</h3>
+                    <p>7-8 horas diarias. Tu cerebro consolida información mientras duermes.</p>
+                </div>
+                
+                <div class="tip-box">
+                    <h3 style="font-size: 1.3em; margin-bottom: 10px;">🎯 Estrategia de Examen</h3>
+                    <p>1. Responde las fáciles primero<br>
+                    2. Marca las difíciles<br>
+                    3. Nunca dejes en blanco<br>
+                    4. Elimina opciones incorrectas</p>
+                </div>
+                
+                <div class="tip-box">
+                    <h3 style="font-size: 1.3em; margin-bottom: 10px;">💧 Hidrátate</h3>
+                    <p>2 litros de agua diarios. Tu cerebro funciona mejor hidratado.</p>
+                </div>
+            </div>
+        </div>
+        
         <div id="logros" class="content">
-            <div class="progress-container">
-                <h2 style="font-size: 2em; margin-bottom: 30px; text-align: center;">🏆 Tus Logros</h2>
+            <div class="card">
+                <h2 style="font-size: 2em; margin-bottom: 30px; text-align: center;">🏆 Logros</h2>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px;" id="achievements-container"></div>
             </div>
         </div>
@@ -526,6 +530,7 @@
             ]}
         };
 
+        const startDate = new Date(2024, 11, 23); // 23 de diciembre de 2024
         let timerInterval = null;
         let timeLeft = 25 * 60;
         let isRunning = false;
@@ -538,6 +543,7 @@
             
             if (tabName === 'progreso') actualizarProgreso();
             if (tabName === 'inicio') renderDashboard();
+            if (tabName === 'logros') renderAchievements();
         }
 
         function toggleTema(semana, diaIdx, temaIdx) {
@@ -565,11 +571,11 @@
                 const semana = studyPlan[semanaKey];
                 const progresoSemana = calcularProgresoSemana(semanaKey);
                 html += `<div class="semana">
-                    <div class="semana-header">${semana.titulo} <span style="opacity:0.8;">${progresoSemana}% completado</span></div>
+                    <div class="semana-header">${semana.titulo} <span style="opacity:0.8;">${progresoSemana}%</span></div>
                     <div class="semana-body">`;
                 
                 semana.dias.forEach((dia, diaIdx) => {
-                    const color = materias[dia.materia] || '#6b7280';
+                    const color = materias[dia.materia];
                     html += `<div class="dia" style="border-left: 4px solid ${color};">
                         <div class="dia-header">
                             <div class="dia-nombre">${dia.dia}</div>
@@ -647,21 +653,20 @@
             
             materiasUnicas.forEach(materia => {
                 const progreso = calcularProgreso(materia);
-                const color = materias[materia] || '#6b7280';
-                html += `<div class="progress-card" style="border-top-color: ${color};">
-                    <div class="progress-card-header">
+                const color = materias[materia];
+                html += `<div class="card" style="border-top: 4px solid ${color};">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
                         <div style="font-weight: bold; font-size: 1.1em;">${materia}</div>
-                        <div class="progress-card-numero" style="color: ${color};">${progreso}%</div>
+                        <div style="font-size: 2em; font-weight: bold; color: ${color};">${progreso}%</div>
                     </div>
-                    <div class="progress-bar-small">
-                        <div class="progress-bar-fill" style="width: ${progreso}%; background-color: ${color};"></div>
+                    <div style="background: #e5e7eb; height: 15px; border-radius: 10px; overflow: hidden;">
+                        <div style="height: 100%; width: ${progreso}%; background-color: ${color}; transition: width 0.5s;"></div>
                     </div>
                 </div>`;
             });
             
             container.innerHTML = html;
         }
-
         function startTimer() {
             if (isRunning) return;
             isRunning = true;
@@ -675,6 +680,7 @@
                     const sessions = parseInt(localStorage.getItem('pomodoroSessions') || '0') + 1;
                     localStorage.setItem('pomodoroSessions', sessions.toString());
                     document.getElementById('session-counter').textContent = 'Sesiones hoy: ' + sessions;
+                    checkAchievements();
                 }
             }, 1000);
         }
@@ -704,30 +710,31 @@
             const sessions = localStorage.getItem('pomodoroSessions') || '0';
             
             const today = new Date();
-            const dayOfWeek = today.getDay();
-            const semanaActual = Math.floor((Date.now() - new Date(2024, 11, 16)) / (7 * 24 * 60 * 60 * 1000)) + 1;
+            const daysSinceStart = Math.floor((today - startDate) / (24 * 60 * 60 * 1000));
+            const semanaActual = Math.floor(daysSinceStart / 7) + 1;
+            const diaActual = today.getDay();
             
-            const temasHoy = obtenerTemasHoy(semanaActual, dayOfWeek);
-            document.getElementById('temas-hoy').innerHTML = temasHoy || 'No hay temas programados para hoy. ¡Descansa o adelanta!';
+            const temasHoy = obtenerTemasHoy(semanaActual, diaActual);
+            document.getElementById('temas-hoy').innerHTML = temasHoy || 'El plan inicia el Lunes 23 de Diciembre. ¡Prepárate!';
             
             const html = `
                 <div class="stat-card" style="border-top-color: #667eea;">
-                    <h3>PROGRESO TOTAL</h3>
+                    <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">PROGRESO TOTAL</h3>
                     <div class="numero" style="color: #667eea;">${progresoGeneral}%</div>
                     <div style="font-size: 0.9em; color: #9ca3af;">Del temario completo</div>
                 </div>
                 <div class="stat-card" style="border-top-color: #10b981;">
-                    <h3>RACHA ACTUAL</h3>
+                    <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">RACHA ACTUAL</h3>
                     <div class="numero" style="color: #10b981;">🔥 ${racha}</div>
                     <div style="font-size: 0.9em; color: #9ca3af;">Días consecutivos</div>
                 </div>
                 <div class="stat-card" style="border-top-color: #ef4444;">
-                    <h3>SESIONES HOY</h3>
+                    <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">SESIONES HOY</h3>
                     <div class="numero" style="color: #ef4444;">${sessions}</div>
                     <div style="font-size: 0.9em; color: #9ca3af;">Pomodoros completados</div>
                 </div>
                 <div class="stat-card" style="border-top-color: #f59e0b;">
-                    <h3>DÍAS ESTUDIADOS</h3>
+                    <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">DÍAS ESTUDIADOS</h3>
                     <div class="numero" style="color: #f59e0b;">${studyDays.length}</div>
                     <div style="font-size: 0.9em; color: #9ca3af;">Total acumulado</div>
                 </div>
@@ -763,14 +770,15 @@
             
             return `<strong>${diaData.materia}</strong><br>` + diaData.temas.map(t => `• ${t}`).join('<br>');
         }
+
         function renderSimulacros() {
             const container = document.getElementById('simulacros-container');
             let html = '';
             
             for (let i = 1; i <= 6; i++) {
                 html += `
-                    <div style="background: white; border-radius: 15px; padding: 25px; margin-bottom: 20px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
-                        <h4 style="font-size: 1.3em; margin-bottom: 20px; color: #1f2937;">Simulacro #${i}</h4>
+                    <div style="background: #f9fafb; border-radius: 10px; padding: 20px; margin-bottom: 20px; border-left: 4px solid #667eea;">
+                        <h4 style="font-size: 1.2em; margin-bottom: 15px; color: #1f2937;">Simulacro #${i}</h4>
                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                             <div class="form-group">
                                 <label>Fecha</label>
@@ -799,7 +807,7 @@
                         </div>
                         <div class="form-group" style="margin-top: 15px;">
                             <label>Notas / Áreas a mejorar</label>
-                            <textarea rows="3" placeholder="Escribe aquí tus observaciones..." id="sim${i}-notas" onchange="saveSimulacro(${i})"></textarea>
+                            <textarea rows="3" placeholder="Escribe aquí..." id="sim${i}-notas" onchange="saveSimulacro(${i})"></textarea>
                         </div>
                     </div>
                 `;
@@ -820,6 +828,7 @@
                 notas: document.getElementById(`sim${num}-notas`).value
             };
             localStorage.setItem(`simulacro${num}`, JSON.stringify(data));
+            checkAchievements();
         }
 
         function loadSimulacros() {
@@ -840,20 +849,80 @@
 
         function renderAchievements() {
             const achievements = [
-                { id: 'first-day', icon: '🎯', title: 'Primer Día', desc: 'Completaste tu primer día de estudio', check: () => calcularProgresoGeneral() > 0 },
-                { id: 'week-1', icon: '📅', title: 'Primera Semana', desc: 'Completaste la primera semana', check: () => calcularProgresoSemana('semana1') === 100 },
-                { id: 'streak-3', icon: '🔥', title: 'Racha de 3', desc: 'Estudiaste 3 días seguidos', check: () => {
-                    const days = JSON.parse(localStorage.getItem('studyDays') || '[]');
-                    return calcularRacha(days) >= 3;
-                }},
-                { id: 'streak-7', icon: '⚡', title: 'Racha de 7', desc: 'Estudiaste 7 días seguidos', check: () => {
-                    const days = JSON.parse(localStorage.getItem('studyDays') || '[]');
-                    return calcularRacha(days) >= 7;
-                }},
-                { id: 'pomodoro-10', icon: '⏱️', title: 'Pomodoro Master', desc: 'Completaste 10 sesiones Pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || '0') >= 10 },
-                { id: 'half-way', icon: '🎊', title: 'A Mitad de Camino', desc: 'Completaste el 50% del temario', check: () => calcularProgresoGeneral() >= 50 },
-                { id: 'all-done', icon: '🏆', title: '¡Campeón!', desc: 'Completaste TODO el temario', check: () => calcularProgresoGeneral() === 100 },
-                { id: 'first-sim', icon: '📝', title: 'Primer Simulacro', desc: 'Completaste tu primer simulacro', check: () => localStorage.getItem('simulacro1') !== null }
+                { 
+                    id: 'first-day', 
+                    icon: '🎯', 
+                    title: 'Primer Día', 
+                    desc: 'Completaste tu primer día', 
+                    check: () => calcularProgresoGeneral() > 0 
+                },
+                { 
+                    id: 'week-1', 
+                    icon: '📅', 
+                    title: 'Primera Semana', 
+                    desc: 'Completaste la semana 1', 
+                    check: () => calcularProgresoSemana('semana1') === 100 
+                },
+                { 
+                    id: 'streak-3', 
+                    icon: '🔥', 
+                    title: 'Racha de 3', 
+                    desc: '3 días consecutivos', 
+                    check: () => {
+                        const days = JSON.parse(localStorage.getItem('studyDays') || '[]');
+                        return calcularRacha(days) >= 3;
+                    }
+                },
+                { 
+                    id: 'streak-7', 
+                    icon: '⚡', 
+                    title: 'Racha de 7', 
+                    desc: '7 días consecutivos', 
+                    check: () => {
+                        const days = JSON.parse(localStorage.getItem('studyDays') || '[]');
+                        return calcularRacha(days) >= 7;
+                    }
+                },
+                { 
+                    id: 'pomodoro-10', 
+                    icon: '⏱️', 
+                    title: 'Pomodoro Master', 
+                    desc: '10 sesiones completadas', 
+                    check: () => {
+                        let total = 0;
+                        for (let i = 0; i < 100; i++) {
+                            const date = new Date();
+                            date.setDate(date.getDate() - i);
+                            const key = `pomodoro-${date.toISOString().split('T')[0]}`;
+                            total += parseInt(localStorage.getItem(key) || '0');
+                        }
+                        return total >= 10;
+                    }
+                },
+                { 
+                    id: 'half-way', 
+                    icon: '🎊', 
+                    title: 'Mitad del Camino', 
+                    desc: 'Completaste el 50%', 
+                    check: () => calcularProgresoGeneral() >= 50 
+                },
+                { 
+                    id: 'all-done', 
+                    icon: '🏆', 
+                    title: '¡Campeón!', 
+                    desc: 'Completaste el 100%', 
+                    check: () => calcularProgresoGeneral() === 100 
+                },
+                { 
+                    id: 'first-sim', 
+                    icon: '📝', 
+                    title: 'Primer Simulacro', 
+                    desc: 'Completaste un simulacro', 
+                    check: () => {
+                        const sim = localStorage.getItem('simulacro1');
+                        return sim && JSON.parse(sim).total;
+                    }
+                }
             ];
 
             const container = document.getElementById('achievements-container');
@@ -866,8 +935,8 @@
                 html += `
                     <div class="achievement ${unlockedClass}" style="opacity: ${opacity};">
                         <div class="achievement-icon">${ach.icon}</div>
-                        <div class="achievement-title" style="font-weight: bold; margin-bottom: 5px;">${ach.title}</div>
-                        <div class="achievement-desc" style="font-size: 0.9em; color: #6b7280;">${ach.desc}</div>
+                        <div style="font-weight: bold; margin-bottom: 5px;">${ach.title}</div>
+                        <div style="font-size: 0.9em; color: #6b7280;">${ach.desc}</div>
                         ${unlocked ? '<div style="margin-top: 10px; color: #fbbf24; font-weight: bold;">✓ DESBLOQUEADO</div>' : '<div style="margin-top: 10px; color: #9ca3af;">🔒 Bloqueado</div>'}
                     </div>
                 `;
@@ -879,7 +948,6 @@
         function checkAchievements() {
             renderAchievements();
         }
-
         window.onload = function() {
             renderCalendario();
             renderSimulacros();
