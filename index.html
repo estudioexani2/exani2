@@ -1002,8 +1002,9 @@
         function checkAchievements() {
             renderAchievements();
         }
-        function obtenerExplicacion(materia, tema) {
+function obtenerExplicacion(materia, tema) {
             const explicaciones = {
+                // SEMANA 1
                 "Razones y proporciones": {
                     texto: "Una razón compara dos cantidades. Una proporción es la igualdad de dos razones.",
                     formula: "a/b = c/d  →  a×d = b×c"
@@ -1014,15 +1015,15 @@
                 },
                 "Identificación de información": {
                     texto: "Localiza datos específicos en el texto: nombres, fechas, cifras, lugares.",
-                    formula: "Tip: Subraya palabras clave antes de leer las preguntas."
+                    formula: "Tip: Subraya palabras clave antes de leer las preguntas"
                 },
                 "Textos argumentativos y periodísticos": {
                     texto: "Argumentativos: defienden una opinión. Periodísticos: informan sobre hechos.",
-                    formula: "Identifica: tesis, argumentos, contraargumentos, conclusión."
+                    formula: "Estructura: Introducción → Desarrollo → Conclusión"
                 },
                 "Operaciones con números enteros": {
                     texto: "Suma, resta, multiplicación y división con números positivos y negativos.",
-                    formula: "(+)(+) = +  |  (-)(-)= +  |  (+)(-) = -  |  (-)(+) = -"
+                    formula: "(+)(+)=+  |  (-)(-)=+  |  (+)(-)=-  |  (-)(+)=-"
                 },
                 "Fracciones y decimales": {
                     texto: "Convertir fracciones a decimales dividiendo numerador entre denominador.",
@@ -1030,67 +1031,357 @@
                 },
                 "Magnitudes y unidades": {
                     texto: "Longitud (m), Masa (kg), Tiempo (s), Temperatura (K), Corriente (A).",
-                    formula: "Sistema Internacional (SI): 7 magnitudes fundamentales"
+                    formula: "Sistema Internacional: 7 magnitudes fundamentales"
                 },
                 "Sistema Internacional": {
                     texto: "Sistema métrico estándar usado en ciencia. Base 10.",
                     formula: "kilo(k)=1000, centi(c)=0.01, mili(m)=0.001"
                 },
                 "Registro lingüístico": {
-                    texto: "Formal: académico, oficial. Informal: coloquial, familiar. Técnico: especializado.",
-                    formula: "Ajusta tu lenguaje según el contexto y audiencia."
+                    texto: "Formal: académico/oficial. Informal: coloquial/familiar. Técnico: especializado.",
+                    formula: "Ajusta tu lenguaje según contexto y audiencia"
                 },
                 "Género textual": {
                     texto: "Narrativo (cuenta), Descriptivo (describe), Expositivo (explica), Argumentativo (convence).",
-                    formula: "Identifica verbos y estructura para reconocer el género."
+                    formula: "Identifica verbos y estructura del texto"
                 },
+                "Ejercicios mixtos de la semana": {
+                    texto: "Repasa todos los temas vistos esta semana. Identifica tus puntos débiles.",
+                    formula: "Dedica más tiempo a lo que no dominas"
+                },
+                "Mini-simulacro (20-25 preguntas)": {
+                    texto: "Practica en condiciones similares al examen real. Cronometra tu tiempo.",
+                    formula: "30 minutos = 1.5 min por pregunta"
+                },
+                
+                // SEMANA 2
                 "Interpretación gráfica de ecuaciones": {
                     texto: "Las ecuaciones se representan como líneas o curvas en el plano cartesiano.",
-                    formula: "y = mx + b  (línea recta: m=pendiente, b=intersección)"
+                    formula: "y = mx + b  (m=pendiente, b=intersección con y)"
                 },
                 "Ejes de simetría": {
-                    texto: "Línea que divide una figura en dos partes idénticas.",
+                    texto: "Línea que divide una figura en dos partes idénticas (reflejadas).",
                     formula: "Un círculo tiene infinitos ejes de simetría"
                 },
                 "Interpretación del texto": {
-                    texto: "Comprender el mensaje principal y las ideas secundarias.",
+                    texto: "Comprender el mensaje principal y las ideas secundarias del texto.",
                     formula: "Pregúntate: ¿De qué habla? ¿Qué quiere decir?"
                 },
                 "Intención del autor": {
-                    texto: "¿Por qué escribió esto? Informar, persuadir, entretener, expresar.",
+                    texto: "¿Por qué escribió esto? Puede ser: informar, persuadir, entretener, expresar.",
                     formula: "Busca pistas en el tono y vocabulario usado"
                 },
                 "Jerarquía de operaciones": {
                     texto: "Orden para resolver: Paréntesis, Exponentes, Multiplicación/División, Suma/Resta.",
-                    formula: "PEMDAS: Please Excuse My Dear Aunt Sally"
+                    formula: "PEMDAS o PAPOMUDAS"
                 },
                 "Potencias y raíces": {
-                    texto: "Potencia: multiplicación repetida. Raíz: operación inversa.",
+                    texto: "Potencia: multiplicación repetida. Raíz: operación inversa de la potencia.",
                     formula: "a^n × a^m = a^(n+m)  |  √(a×b) = √a × √b"
                 },
                 "Cinemática": {
-                    texto: "Estudio del movimiento sin considerar las fuerzas.",
+                    texto: "Estudio del movimiento sin considerar las causas (fuerzas).",
                     formula: "v = d/t  |  a = Δv/Δt  |  d = v₀t + ½at²"
                 },
                 "Velocidad, distancia y tiempo": {
-                    texto: "Relación fundamental del movimiento rectilíneo uniforme.",
+                    texto: "Relación fundamental del movimiento rectilíneo uniforme (MRU).",
                     formula: "v = d/t  |  d = v×t  |  t = d/v"
                 },
                 "Idea general de textos": {
-                    texto: "Captar el tema principal sin necesidad de entender cada palabra.",
+                    texto: "Captar el tema principal sin necesidad de entender cada palabra en inglés.",
                     formula: "Lee título, primer y último párrafo primero"
                 },
                 "Vocabulario común": {
-                    texto: "Palabras más frecuentes en inglés: the, be, to, of, and, a, in, that, have, I.",
-                    formula: "Aprende las 1000 palabras más comunes = 80% comprensión"
+                    texto: "Palabras más frecuentes: the, be, to, of, and, a, in, that, have, I.",
+                    formula: "1000 palabras comunes = 80% de comprensión"
                 },
                 "Corrección de errores": {
-                    texto: "Revisa tus respuestas buscando patrones en tus errores.",
-                    formula: "Anota: ¿Por qué fallé? ¿Concepto, cálculo o lectura?"
+                    texto: "Revisa tus respuestas buscando patrones en tus equivocaciones.",
+                    formula: "Anota: ¿Concepto, cálculo o lectura?"
                 },
                 "Ejercicios cronometrados": {
                     texto: "Practica con límite de tiempo para simular el examen real.",
-                    formula: "EXANI-II: 3 horas, ~130 preguntas = 1.4 min/pregunta"
+                    formula: "EXANI-II: ~1.4 min por pregunta"
+                },
+                
+                // SEMANA 3
+                "Probabilidad clásica": {
+                    texto: "Casos favorables entre casos posibles. Valor entre 0 y 1.",
+                    formula: "P(A) = casos favorables / casos totales"
+                },
+                "Frecuencias": {
+                    texto: "Número de veces que aparece un dato. Absoluta o relativa (porcentaje).",
+                    formula: "Frecuencia relativa = frecuencia absoluta / total"
+                },
+                "Concordancia nominal": {
+                    texto: "Sustantivos y adjetivos deben concordar en género y número.",
+                    formula: "Las casas blancas (femenino plural ambos)"
+                },
+                "Concordancia verbal": {
+                    texto: "El verbo concuerda con el sujeto en número y persona.",
+                    formula: "Yo como / Nosotros comemos"
+                },
+                "Notación científica": {
+                    texto: "Forma de expresar números muy grandes o muy pequeños.",
+                    formula: "a × 10^n  (donde 1 ≤ a < 10)"
+                },
+                "Factores primos": {
+                    texto: "Descomponer un número en multiplicación de números primos.",
+                    formula: "12 = 2² × 3  |  Primos: 2,3,5,7,11,13..."
+                },
+                "Leyes de Newton": {
+                    texto: "1ª: Inercia. 2ª: F=ma. 3ª: Acción y reacción.",
+                    formula: "F = m × a  (Segunda Ley)"
+                },
+                "Diagramas de fuerzas": {
+                    texto: "Representación gráfica de todas las fuerzas que actúan sobre un objeto.",
+                    formula: "∑F = 0 (equilibrio)  |  ∑F ≠ 0 (aceleración)"
+                },
+                "Evaluación de forma y contenido": {
+                    texto: "Forma: estructura, ortografía. Contenido: ideas, coherencia, argumentos.",
+                    formula: "Ambos son importantes para un buen texto"
+                },
+                "Matemáticas + Aritmética + Física": {
+                    texto: "Simulacro combinado de las tres áreas más técnicas del examen.",
+                    formula: "Practica manejo del tiempo entre materias"
+                },
+                
+                // SEMANA 4
+                "Medidas de tendencia central": {
+                    texto: "Valores que representan el centro de un conjunto de datos.",
+                    formula: "Media: promedio  |  Mediana: valor central  |  Moda: más frecuente"
+                },
+                "Media, mediana y moda": {
+                    texto: "Media=(suma/n). Mediana=valor central ordenado. Moda=más repetido.",
+                    formula: "Ej: [1,2,2,3,5] → Media=2.6, Mediana=2, Moda=2"
+                },
+                "Uso correcto de comas y puntos": {
+                    texto: "Coma: separa elementos. Punto: separa oraciones completas.",
+                    formula: "Coma en enumeración: Juan, María y Pedro"
+                },
+                "Conectores lógicos": {
+                    texto: "Palabras que unen ideas: además, sin embargo, por lo tanto, aunque.",
+                    formula: "Adición: además, también  |  Contraste: pero, sin embargo"
+                },
+                "Mínimo común múltiplo": {
+                    texto: "El menor número que es múltiplo de dos o más números.",
+                    formula: "mcm(4,6) = 12  |  Usa factores primos"
+                },
+                "Máximo común divisor": {
+                    texto: "El mayor número que divide exactamente a dos o más números.",
+                    formula: "mcd(12,18) = 6  |  Usa factores primos comunes"
+                },
+                "Trabajo y energía": {
+                    texto: "Trabajo: fuerza por distancia. Energía: capacidad de realizar trabajo.",
+                    formula: "W = F × d  |  Ec = ½mv²  |  Ep = mgh"
+                },
+                "Falsos cognados": {
+                    texto: "Palabras que se parecen pero significan diferente. Actually=en realidad (no actualmente).",
+                    formula: "Exit=salida (no éxito)  |  Embarrassed=avergonzado"
+                },
+                "Comprensión de lectura": {
+                    texto: "Entender textos en inglés: idea principal, detalles, vocabulario en contexto.",
+                    formula: "No traduzcas todo, busca palabras clave"
+                },
+                "Módulo general completo": {
+                    texto: "Simulacro de todas las materias del módulo general del EXANI-II.",
+                    formula: "Aproximadamente 90-110 preguntas en 2.5 horas"
+                },
+                
+                // SEMANA 5
+                "Representación gráfica de funciones": {
+                    texto: "Dibujar funciones en el plano cartesiano para visualizar su comportamiento.",
+                    formula: "Lineal: y=mx+b  |  Cuadrática: y=ax²+bx+c"
+                },
+                "Textos literarios": {
+                    texto: "Narrativos (cuentos, novelas), Líricos (poemas), Dramáticos (teatro).",
+                    formula: "Identifica: personajes, narrador, ambiente, trama"
+                },
+                "Porcentajes": {
+                    texto: "Parte de un total expresada en centésimas. Base 100.",
+                    formula: "% = (parte/total) × 100  |  20% de 50 = 50×0.20 = 10"
+                },
+                "Conservación de la energía": {
+                    texto: "La energía no se crea ni se destruye, solo se transforma.",
+                    formula: "Ec + Ep = constante (en ausencia de fricción)"
+                },
+                "Cohesión gramatical y semántica": {
+                    texto: "Gramatical: conectores. Semántica: relación lógica de ideas.",
+                    formula: "Cohesión = texto unificado y fluido"
+                },
+                "Simulacro de Aritmética": {
+                    texto: "Practica solo problemas de aritmética: fracciones, %, decimales, etc.",
+                    formula: "40-50 preguntas en 45-60 minutos"
+                },
+                
+                // SEMANA 6
+                "Desviación estándar (conceptual)": {
+                    texto: "Mide qué tan dispersos están los datos respecto a la media.",
+                    formula: "σ = dispersión  |  Mayor σ = datos más dispersos"
+                },
+                "Lectura cronometrada": {
+                    texto: "Lee textos en inglés contra reloj. Mejora velocidad y comprensión.",
+                    formula: "Meta: 200-250 palabras por minuto con comprensión"
+                },
+                "Progresión aritmética": {
+                    texto: "Sucesión con diferencia constante entre términos consecutivos.",
+                    formula: "an = a1 + (n-1)d  |  Ej: 2,5,8,11... (d=3)"
+                },
+                "Cantidad de movimiento": {
+                    texto: "Momento lineal: masa por velocidad. Se conserva en choques.",
+                    formula: "p = m × v  |  Unidades: kg·m/s"
+                },
+                "Choques": {
+                    texto: "Elásticos: se conserva energía. Inelásticos: se pierde energía.",
+                    formula: "∑p_antes = ∑p_después (siempre)"
+                },
+                "Corrección de textos completos": {
+                    texto: "Revisa ortografía, gramática, coherencia y cohesión en textos largos.",
+                    formula: "Lee en voz alta para detectar errores"
+                },
+                "Simulacro de Física": {
+                    texto: "Practica solo problemas de física: cinemática, dinámica, energía.",
+                    formula: "30-40 preguntas en 45 minutos"
+                },
+                
+                // SEMANA 7
+                "Representación gráfica de información": {
+                    texto: "Gráficas de barras, circulares, líneas para mostrar datos.",
+                    formula: "Elige el tipo según los datos: barras=comparar, línea=tendencia"
+                },
+                "Textos administrativos y sociales": {
+                    texto: "Oficios, cartas formales, memorándums, avisos, convocatorias.",
+                    formula: "Estructura formal: encabezado, cuerpo, despedida"
+                },
+                "Regla de tres": {
+                    texto: "Método para resolver problemas de proporcionalidad.",
+                    formula: "Si A→B entonces C→X  |  X = (C×B)/A"
+                },
+                "Movimiento ondulatorio": {
+                    texto: "Propagación de energía sin transporte de materia. Ej: sonido, luz.",
+                    formula: "v = λ × f  (velocidad = longitud × frecuencia)"
+                },
+                "Práctica tipo EXANI": {
+                    texto: "Ejercicios de inglés similares a los del examen real.",
+                    formula: "Enfócate en: vocabulario, comprensión, gramática básica"
+                },
+                "Simulacro general": {
+                    texto: "Simulacro completo de todas las materias del EXANI-II.",
+                    formula: "3 horas, 130 preguntas aprox."
+                },
+                
+                // SEMANA 8
+                "Sistemas de ecuaciones (interpretación)": {
+                    texto: "Dos o más ecuaciones con las mismas variables. Buscar solución común.",
+                    formula: "Métodos: sustitución, igualación, eliminación"
+                },
+                "Ortografía y acentuación": {
+                    texto: "Reglas de acentuación: agudas, graves, esdrújulas. Uso de b/v, s/c/z.",
+                    formula: "Agudas: última sílaba (café)  |  Graves: penúltima (árbol)"
+                },
+                "Repaso general": {
+                    texto: "Revisa todos los temas de aritmética vistos hasta ahora.",
+                    formula: "Haz lista de fórmulas clave y practica"
+                },
+                "Óptica: lentes y fenómenos": {
+                    texto: "Reflexión, refracción, lentes convergentes y divergentes.",
+                    formula: "Ley de reflexión: ángulo incidencia = ángulo reflexión"
+                },
+                "Lectura larga cronometrada": {
+                    texto: "Textos extensos (300-500 palabras) para mejorar resistencia.",
+                    formula: "Identifica idea principal sin leer todo en detalle"
+                },
+                "Simulacro completo": {
+                    texto: "Simulacro integral con todas las secciones del examen.",
+                    formula: "Analiza errores después para mejorar"
+                },
+                
+                // SEMANAS 9-11 (Simulación Real)
+                "Simulacro completo 1": {
+                    texto: "Primer simulacro completo en condiciones de examen real.",
+                    formula: "3 horas sin interrupciones, sin celular"
+                },
+                "Análisis de errores simulacro 1": {
+                    texto: "Revisa cada error: ¿fue por concepto, cálculo o falta de tiempo?",
+                    formula: "Categoriza errores para enfocarte mejor"
+                },
+                "Refuerzo de temas débiles": {
+                    texto: "Estudia intensivamente los temas donde más fallaste.",
+                    formula: "Dedica 2-3 horas a tu área más débil"
+                },
+                "Simulacro completo 2": {
+                    texto: "Segundo simulacro. Compara resultados con el primero.",
+                    formula: "Busca mejora de al menos 5-10%"
+                },
+                "Análisis de errores simulacro 2": {
+                    texto: "¿Repetiste los mismos errores? Identifica patrones.",
+                    formula: "Si un tema sigue fallando, refuérzalo más"
+                },
+                "Refuerzo intensivo": {
+                    texto: "Sesión extendida de estudio en tus 2-3 temas más débiles.",
+                    formula: "Usa videos, ejercicios y resúmenes"
+                },
+                "Simulacro completo 3": {
+                    texto: "Tercer simulacro. Deberías ver mejora notable.",
+                    formula: "Velocidad y precisión deben aumentar"
+                },
+                "Análisis de errores simulacro 3": {
+                    texto: "Cada vez menos errores. Enfócate en los restantes.",
+                    formula: "Tu objetivo: >80% de aciertos"
+                },
+                "Simulacro completo 4": {
+                    texto: "Cuarto simulacro. Estás en la recta final.",
+                    formula: "Simula el día real: desayuna igual, misma hora"
+                },
+                "Análisis de errores simulacro 4": {
+                    texto: "Afina detalles. Errores ahora son más por descuido.",
+                    formula: "Lee preguntas con más cuidado"
+                },
+                "Simulacro completo 5": {
+                    texto: "Quinto simulacro. Ya dominas el formato.",
+                    formula: "Trabaja tu confianza y manejo del estrés"
+                },
+                "Análisis de errores simulacro 5": {
+                    texto: "Últimos ajustes. Identifica errores tontos.",
+                    formula: "Velocidad sin sacrificar precisión"
+                },
+                "Simulacro completo 6": {
+                    texto: "Último simulacro antes del examen real. Dale todo.",
+                    formula: "Este es tu mejor pronóstico del resultado real"
+                },
+                "Análisis de errores simulacro 6": {
+                    texto: "Análisis final. Anota últimas áreas de mejora.",
+                    formula: "Confía en tu preparación"
+                },
+                "Repaso general de conceptos clave": {
+                    texto: "Repasa fórmulas, conceptos y estrategias principales.",
+                    formula: "Haz resumen de 1 página por materia"
+                },
+                
+                // SEMANA 12 (Ajuste Final)
+                "Fórmulas clave": {
+                    texto: "Repasa todas las fórmulas matemáticas y de física.",
+                    formula: "Haz fichas: una fórmula por tarjeta"
+                },
+                "Errores frecuentes": {
+                    texto: "Revisa tu bitácora de errores de las 11 semanas.",
+                    formula: "NO repitas los mismos errores en el examen"
+                },
+                "Repaso ligero general": {
+                    texto: "Repaso superficial de todos los temas. NO estudies a fondo.",
+                    formula: "Solo refrescar memoria, no aprender nuevo"
+                },
+                "Descanso mental": {
+                    texto: "Descansa, relájate. Tu cerebro necesita consolidar información.",
+                    formula: "Haz algo que disfrutes: caminar, música, amigos"
+                },
+                "Último repaso de conceptos": {
+                    texto: "Hojea tus resúmenes y fórmulas clave por última vez.",
+                    formula: "Máximo 2 horas de repaso ligero"
+                },
+                "Preparación mental para el examen": {
+                    texto: "Visualiza éxito. Prepara ropa, documentos. Duerme temprano.",
+                    formula: "Confianza + preparación = éxito garantizado"
                 }
             };
             
@@ -1104,8 +1395,8 @@
             } else {
                 return `
                     <strong style="color: #1e40af;">📚 Concepto importante:</strong><br>
-                    Este tema es fundamental para el EXANI-II. Busca videos y ejercicios para dominarlo.
-                    <div class="tema-formula">💡 Tip: Practica con ejercicios reales del CENEVAL</div>
+                    Este tema es fundamental para el EXANI-II. Busca videos y ejercicios para practicarlo.
+                    <div class="tema-formula">💡 Tip: Practica con ejercicios del CENEVAL</div>
                 `;
             }
         }
@@ -1130,4 +1421,5 @@
     </script>
 </body>
 </html>
+
 
