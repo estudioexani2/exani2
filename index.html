@@ -117,6 +117,37 @@
         }
         .tema-text { flex: 1; line-height: 1.5; }
         .tema-text.checked { text-decoration: line-through; color: #9ca3af; }
+        .tema-explicacion {
+            margin-left: 30px;
+            margin-top: 10px;
+            padding: 15px;
+            background: #f0f9ff;
+            border-left: 3px solid #3b82f6;
+            border-radius: 5px;
+            display: none;
+            font-size: 0.95em;
+            line-height: 1.6;
+        }
+        
+        .tema-explicacion.show {
+            display: block;
+            animation: slideDown 0.3s ease;
+        }
+        
+        @keyframes slideDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tema-formula {
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            margin-top: 8px;
+            color: #1e40af;
+            font-weight: bold;
+        }
         .progress-general {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
@@ -562,6 +593,17 @@
             actualizarProgreso();
             checkAchievements();
         }
+        
+        function toggleExplicacion(semana, diaIdx, temaIdx) {
+            const expId = `exp-${semana}-${diaIdx}-${temaIdx}`;
+            const element = document.getElementById(expId);
+            if (element.classList.contains('show')) {
+                element.classList.remove('show');
+            } else {
+                document.querySelectorAll('.tema-explicacion').forEach(el => el.classList.remove('show'));
+                element.classList.add('show');
+            }
+        }
 
         function renderCalendario() {
             const container = document.getElementById('calendario');
@@ -586,10 +628,22 @@
                     dia.temas.forEach((tema, temaIdx) => {
                         const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
                         const checked = localStorage.getItem(key) === 'true';
-                        html += `<div class="tema">
-                            <input type="checkbox" class="checkbox" ${checked ? 'checked' : ''} 
-                                onchange="toggleTema('${semanaKey}', ${diaIdx}, ${temaIdx})">
-                            <span class="tema-text ${checked ? 'checked' : ''}">${tema}</span>
+                        const explicacion = obtenerExplicacion(dia.materia, tema);
+                        
+                        html += `<div>
+                            <div class="tema">
+                                <input type="checkbox" class="checkbox" ${checked ? 'checked' : ''} 
+                                    onchange="toggleTema('${semanaKey}', ${diaIdx}, ${temaIdx})">
+                                <span class="tema-text ${checked ? 'checked' : ''}" 
+                                    style="cursor: pointer;" 
+                                    onclick="toggleExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx})"
+                                    title="Haz clic para ver explicación">
+                                    ${tema} 💡
+                                </span>
+                            </div>
+                            <div id="exp-${semanaKey}-${diaIdx}-${temaIdx}" class="tema-explicacion">
+                                ${explicacion}
+                            </div>
                         </div>`;
                     });
                     
@@ -948,6 +1002,113 @@
         function checkAchievements() {
             renderAchievements();
         }
+        function obtenerExplicacion(materia, tema) {
+            const explicaciones = {
+                "Razones y proporciones": {
+                    texto: "Una razón compara dos cantidades. Una proporción es la igualdad de dos razones.",
+                    formula: "a/b = c/d  →  a×d = b×c"
+                },
+                "Proporcionalidad directa e inversa": {
+                    texto: "Directa: Si una aumenta, la otra también. Inversa: Si una aumenta, la otra disminuye.",
+                    formula: "Directa: y = kx  |  Inversa: y = k/x"
+                },
+                "Identificación de información": {
+                    texto: "Localiza datos específicos en el texto: nombres, fechas, cifras, lugares.",
+                    formula: "Tip: Subraya palabras clave antes de leer las preguntas."
+                },
+                "Textos argumentativos y periodísticos": {
+                    texto: "Argumentativos: defienden una opinión. Periodísticos: informan sobre hechos.",
+                    formula: "Identifica: tesis, argumentos, contraargumentos, conclusión."
+                },
+                "Operaciones con números enteros": {
+                    texto: "Suma, resta, multiplicación y división con números positivos y negativos.",
+                    formula: "(+)(+) = +  |  (-)(-)= +  |  (+)(-) = -  |  (-)(+) = -"
+                },
+                "Fracciones y decimales": {
+                    texto: "Convertir fracciones a decimales dividiendo numerador entre denominador.",
+                    formula: "3/4 = 0.75  |  Para sumar: mismo denominador"
+                },
+                "Magnitudes y unidades": {
+                    texto: "Longitud (m), Masa (kg), Tiempo (s), Temperatura (K), Corriente (A).",
+                    formula: "Sistema Internacional (SI): 7 magnitudes fundamentales"
+                },
+                "Sistema Internacional": {
+                    texto: "Sistema métrico estándar usado en ciencia. Base 10.",
+                    formula: "kilo(k)=1000, centi(c)=0.01, mili(m)=0.001"
+                },
+                "Registro lingüístico": {
+                    texto: "Formal: académico, oficial. Informal: coloquial, familiar. Técnico: especializado.",
+                    formula: "Ajusta tu lenguaje según el contexto y audiencia."
+                },
+                "Género textual": {
+                    texto: "Narrativo (cuenta), Descriptivo (describe), Expositivo (explica), Argumentativo (convence).",
+                    formula: "Identifica verbos y estructura para reconocer el género."
+                },
+                "Interpretación gráfica de ecuaciones": {
+                    texto: "Las ecuaciones se representan como líneas o curvas en el plano cartesiano.",
+                    formula: "y = mx + b  (línea recta: m=pendiente, b=intersección)"
+                },
+                "Ejes de simetría": {
+                    texto: "Línea que divide una figura en dos partes idénticas.",
+                    formula: "Un círculo tiene infinitos ejes de simetría"
+                },
+                "Interpretación del texto": {
+                    texto: "Comprender el mensaje principal y las ideas secundarias.",
+                    formula: "Pregúntate: ¿De qué habla? ¿Qué quiere decir?"
+                },
+                "Intención del autor": {
+                    texto: "¿Por qué escribió esto? Informar, persuadir, entretener, expresar.",
+                    formula: "Busca pistas en el tono y vocabulario usado"
+                },
+                "Jerarquía de operaciones": {
+                    texto: "Orden para resolver: Paréntesis, Exponentes, Multiplicación/División, Suma/Resta.",
+                    formula: "PEMDAS: Please Excuse My Dear Aunt Sally"
+                },
+                "Potencias y raíces": {
+                    texto: "Potencia: multiplicación repetida. Raíz: operación inversa.",
+                    formula: "a^n × a^m = a^(n+m)  |  √(a×b) = √a × √b"
+                },
+                "Cinemática": {
+                    texto: "Estudio del movimiento sin considerar las fuerzas.",
+                    formula: "v = d/t  |  a = Δv/Δt  |  d = v₀t + ½at²"
+                },
+                "Velocidad, distancia y tiempo": {
+                    texto: "Relación fundamental del movimiento rectilíneo uniforme.",
+                    formula: "v = d/t  |  d = v×t  |  t = d/v"
+                },
+                "Idea general de textos": {
+                    texto: "Captar el tema principal sin necesidad de entender cada palabra.",
+                    formula: "Lee título, primer y último párrafo primero"
+                },
+                "Vocabulario común": {
+                    texto: "Palabras más frecuentes en inglés: the, be, to, of, and, a, in, that, have, I.",
+                    formula: "Aprende las 1000 palabras más comunes = 80% comprensión"
+                },
+                "Corrección de errores": {
+                    texto: "Revisa tus respuestas buscando patrones en tus errores.",
+                    formula: "Anota: ¿Por qué fallé? ¿Concepto, cálculo o lectura?"
+                },
+                "Ejercicios cronometrados": {
+                    texto: "Practica con límite de tiempo para simular el examen real.",
+                    formula: "EXANI-II: 3 horas, ~130 preguntas = 1.4 min/pregunta"
+                }
+            };
+            
+            const exp = explicaciones[tema];
+            if (exp) {
+                return `
+                    <strong style="color: #1e40af;">📚 Explicación:</strong><br>
+                    ${exp.texto}
+                    <div class="tema-formula">${exp.formula}</div>
+                `;
+            } else {
+                return `
+                    <strong style="color: #1e40af;">📚 Concepto importante:</strong><br>
+                    Este tema es fundamental para el EXANI-II. Busca videos y ejercicios para dominarlo.
+                    <div class="tema-formula">💡 Tip: Practica con ejercicios reales del CENEVAL</div>
+                `;
+            }
+        }
         window.onload = function() {
             renderCalendario();
             renderSimulacros();
@@ -969,3 +1130,4 @@
     </script>
 </body>
 </html>
+
