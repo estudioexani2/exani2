@@ -3074,7 +3074,11 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
             renderSimulacros();
             renderAchievements();
             actualizarProgreso();
-            renderDashboard();
+            
+            // Renderizar dashboard después de un pequeño delay
+            setTimeout(() => {
+                renderDashboard();
+            }, 100);
             
             const sessions = localStorage.getItem('pomodoroSessions') || '0';
             document.getElementById('session-counter').textContent = 'Sesiones hoy: ' + sessions;
@@ -3090,6 +3094,7 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
     </script>
 </body>
 </html>
+
 
 
 
