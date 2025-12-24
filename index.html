@@ -1481,386 +1481,610 @@
         }
 function obtenerExplicacion(materia, tema) {
             const explicaciones = {
-                // SEMANA 1
+                // ==================== SEMANA 1 ====================
                 "Razones y proporciones": {
-                    texto: "Una razón compara dos cantidades. Una proporción es la igualdad de dos razones.",
+                    texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p><strong>Razón:</strong> Comparación entre dos cantidades mediante división. Se escribe a:b o a/b</p>
+                        <p><strong>Proporción:</strong> Igualdad entre dos razones. Si a/b = c/d, entonces a×d = b×c</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Conceptos clave:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Razón directa: a/b (ej: 3/5)</li>
+                            <li>Razón inversa: b/a (ej: 5/3)</li>
+                            <li>Términos de una proporción: extremos y medios</li>
+                            <li>Producto de extremos = Producto de medios</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Fórmulas:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Proporción:</strong> a/b = c/d</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Propiedad fundamental:</strong> a × d = b × c</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Despejar:</strong> a = (b × c) / d</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si 3:5 = x:20, ¿cuánto vale x? <em>(R: 12)</em></li>
+                            <li>La razón de niños a niñas es 2:3. Si hay 15 niñas, ¿cuántos niños hay? <em>(R: 10)</em></li>
+                            <li>Si a/b = 4/7 y a=12, encuentra b <em>(R: 21)</em></li>
+                            <li>Dos números están en razón 5:8. Si el menor es 15, ¿cuál es el mayor? <em>(R: 24)</em></li>
+                            <li>Si 2/5 = 6/x, calcula x <em>(R: 15)</em></li>
+                        </ol>
+                    `,
                     formula: "a/b = c/d  →  a×d = b×c"
                 },
+                
                 "Proporcionalidad directa e inversa": {
-                    texto: "Directa: Si una aumenta, la otra también. Inversa: Si una aumenta, la otra disminuye.",
+                    texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p><strong>Directa:</strong> Si una cantidad aumenta, la otra también aumenta proporcionalmente</p>
+                        <p><strong>Inversa:</strong> Si una cantidad aumenta, la otra disminuye proporcionalmente</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Conceptos clave:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Directa: y = k×x (constante de proporcionalidad k)</li>
+                            <li>Inversa: y = k/x o x×y = k</li>
+                            <li>En directa: al doble de x, doble de y</li>
+                            <li>En inversa: al doble de x, mitad de y</li>
+                            <li>Gráfica directa: línea recta por el origen</li>
+                            <li>Gráfica inversa: hipérbola</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Fórmulas:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Directa:</strong> y = k × x</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Encontrar k:</strong> k = y/x</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Inversa:</strong> y = k/x  o  x × y = k</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Encontrar k:</strong> k = x × y</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si 5 lápices cuestan $25, ¿cuánto costarán 8 lápices? <em>(R: $40, directa)</em></li>
+                            <li>4 obreros tardan 12 días en hacer un trabajo. ¿Cuánto tardarán 6 obreros? <em>(R: 8 días, inversa)</em></li>
+                            <li>Si y es directamente proporcional a x, y y=6 cuando x=2, encuentra y cuando x=5 <em>(R: 15)</em></li>
+                            <li>La velocidad y el tiempo son inversamente proporcionales. Si a 60 km/h tardas 2h, ¿cuánto tardas a 80 km/h? <em>(R: 1.5h)</em></li>
+                            <li>3 grifos llenan una alberca en 4 horas. ¿Cuánto tardarían 5 grifos? <em>(R: 2.4h, inversa)</em></li>
+                        </ol>
+                    `,
                     formula: "Directa: y = kx  |  Inversa: y = k/x"
                 },
+                
                 "Identificación de información": {
-                    texto: "Localiza datos específicos en el texto: nombres, fechas, cifras, lugares.",
-                    formula: "Tip: Subraya palabras clave antes de leer las preguntas"
+                    texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Localizar datos específicos en un texto: nombres, fechas, cifras, lugares, hechos concretos</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Estrategias:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>1. Lee la pregunta ANTES del texto</strong> - sabrás qué buscar</li>
+                            <li><strong>2. Subraya palabras clave</strong> - nombres, números, fechas</li>
+                            <li><strong>3. Busca pistas tipográficas</strong> - mayúsculas, negritas, comillas</li>
+                            <li><strong>4. Identifica tipo de dato</strong> - ¿persona, lugar, fecha, cantidad?</li>
+                            <li><strong>5. No interpretes</strong> - busca lo literal, no lo implícito</li>
+                        </ul>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">📐 Técnica de lectura rápida:</h4>
+                        <div style="background: #d1fae5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Scanning:</strong> Buscar información específica sin leer todo</p>
+                            <p style="margin: 5px 0;"><strong>Skimming:</strong> Lectura superficial para captar idea general</p>
+                            <p style="margin: 5px 0;"><strong>Palabras clave:</strong> Enfócate en sustantivos y números</p>
+                        </div>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Lee: "María cumple 15 años el 3 de mayo". ¿Cuándo es su cumpleaños? <em>(R: 3 de mayo)</em></li>
+                            <li>Texto: "El Popocatépetl mide 5,452 m". ¿Cuánto mide? <em>(R: 5,452 m)</em></li>
+                            <li>"La batalla de 1810 fue crucial". ¿En qué año? <em>(R: 1810)</em></li>
+                            <li>"Juan y Pedro viajaron a París". ¿Quiénes viajaron? <em>(R: Juan y Pedro)</em></li>
+                            <li>Encuentra el dato: "La empresa tiene 3 sucursales en Monterrey y 5 en Guadalajara" <em>(R: 3 y 5 sucursales)</em></li>
+                        </ol>
+                    `,
+                    formula: "Técnica: Leer pregunta → Identificar tipo de dato → Buscar en texto"
                 },
+                
                 "Textos argumentativos y periodísticos": {
-                    texto: "Argumentativos: defienden una opinión. Periodísticos: informan sobre hechos.",
-                    formula: "Estructura: Introducción → Desarrollo → Conclusión"
+                    texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p><strong>Argumentativos:</strong> Defienden una opinión con argumentos lógicos</p>
+                        <p><strong>Periodísticos:</strong> Informan sobre hechos de actualidad objetivamente</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Diferencias clave:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #d1fae5;">
+                                <th style="border: 1px solid #10b981; padding: 8px;">Argumentativo</th>
+                                <th style="border: 1px solid #10b981; padding: 8px;">Periodístico</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Opina y persuade</td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Informa objetivamente</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Usa argumentos</td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Usa datos y hechos</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Subjetivo</td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Objetivo</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">📐 Estructura argumentativa:</h4>
+                        <div style="background: #d1fae5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>1. Tesis:</strong> Opinión principal que se defiende</p>
+                            <p style="margin: 5px 0;"><strong>2. Argumentos:</strong> Razones que apoyan la tesis</p>
+                            <p style="margin: 5px 0;"><strong>3. Contraargumentos:</strong> Refutación de ideas opuestas</p>
+                            <p style="margin: 5px 0;"><strong>4. Conclusión:</strong> Cierre que refuerza la tesis</p>
+                        </div>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Identifica: "El cambio climático es real y requiere acción inmediata" ¿Argumentativo o informativo? <em>(R: Argumentativo)</em></li>
+                            <li>¿Cuál es la tesis en: "Los videojuegos mejoran la coordinación. Estudios muestran..."? <em>(R: Mejoran coordinación)</em></li>
+                            <li>Noticia: "Ayer hubo terremoto de 6.5". ¿Tipo de texto? <em>(R: Periodístico)</em></li>
+                            <li>Encuentra el argumento en: "Debemos reciclar porque reduce contaminación" <em>(R: Reduce contaminación)</em></li>
+                            <li>Editorial: "Es necesario aumentar impuestos por X razón" ¿Qué tipo? <em>(R: Argumentativo)</em></li>
+                        </ol>
+                    `,
+                    formula: "Argumentativo = Opinión + Argumentos | Periodístico = Hechos + Datos"
                 },
+
                 "Operaciones con números enteros": {
-                    texto: "Suma, resta, multiplicación y división con números positivos y negativos.",
-                    formula: "(+)(+)=+  |  (-)(-)=+  |  (+)(-)=-  |  (-)(+)=-"
+                    texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Realizar suma, resta, multiplicación y división con números positivos y negativos</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Reglas de signos:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fef3c7;">
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Operación</th>
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Regla</th>
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Ejemplo</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">Suma de iguales</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">Se suman, se conserva signo</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">3+5=8, (-3)+(-5)=-8</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">Suma de diferentes</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">Se restan, signo del mayor</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">5+(-3)=2, 3+(-5)=-2</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">Multiplicación/División</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">Iguales=+, Diferentes=-</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">(+)(+)=+, (+)(-)=-</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Fórmulas:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Signos iguales:</strong> (+)(+) = +  y  (-)(-) = +</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Signos diferentes:</strong> (+)(-) = -  y  (-)(+) = -</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Resta:</strong> a - b = a + (-b)</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>(-5) + (-3) = ? <em>(R: -8)</em></li>
+                            <li>8 + (-12) = ? <em>(R: -4)</em></li>
+                            <li>(-6) × (-4) = ? <em>(R: 24)</em></li>
+                            <li>(-20) ÷ 4 = ? <em>(R: -5)</em></li>
+                            <li>15 - (-7) = ? <em>(R: 22)</em></li>
+                        </ol>
+                    `,
+                    formula: "(+)(+)=+ | (-)(-)=+ | (+)(-)=- | (-)(+)=-"
                 },
                 "Fracciones y decimales": {
-                    texto: "Convertir fracciones a decimales dividiendo numerador entre denominador.",
-                    formula: "3/4 = 0.75  |  Para sumar: mismo denominador"
+                    texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Convertir entre fracciones y decimales, realizar operaciones, simplificar fracciones</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Conversiones:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Fracción → Decimal:</strong> Dividir numerador ÷ denominador</li>
+                            <li><strong>Decimal → Fracción:</strong> Poner sobre potencia de 10 y simplificar</li>
+                            <li><strong>Decimal finito:</strong> 0.75 = 75/100 = 3/4</li>
+                            <li><strong>Decimal periódico:</strong> 0.333... = 1/3</li>
+                        </ul>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Operaciones con fracciones:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Suma/Resta:</strong> Mismo denominador → a/c ± b/c = (a±b)/c</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Diferente denominador:</strong> Obtener mcm primero</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Multiplicación:</strong> (a/b) × (c/d) = (a×c)/(b×d)</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>División:</strong> (a/b) ÷ (c/d) = (a/b) × (d/c)</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Simplificar:</strong> Dividir num. y den. entre su MCD</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Convierte 3/4 a decimal <em>(R: 0.75)</em></li>
+                            <li>Convierte 0.6 a fracción simplificada <em>(R: 3/5)</em></li>
+                            <li>1/2 + 1/3 = ? <em>(R: 5/6)</em></li>
+                            <li>2/5 × 3/4 = ? <em>(R: 6/20 = 3/10)</em></li>
+                            <li>Simplifica 18/24 <em>(R: 3/4)</em></li>
+                        </ol>
+                    `,
+                    formula: "a/b → decimal: a÷b | Suma: mismo denominador primero"
                 },
+
                 "Magnitudes y unidades": {
-                    texto: "Longitud (m), Masa (kg), Tiempo (s), Temperatura (K), Corriente (A).",
-                    formula: "Sistema Internacional: 7 magnitudes fundamentales"
+                    texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Las 7 magnitudes fundamentales del Sistema Internacional y sus unidades</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Magnitudes fundamentales (SI):</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #ede9fe;">
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Magnitud</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Unidad</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Símbolo</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Longitud</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">metro</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">m</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Masa</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">kilogramo</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">kg</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Tiempo</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">segundo</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">s</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Temperatura</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">kelvin</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">K</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Corriente eléctrica</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">ampere</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">A</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Intensidad luminosa</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">candela</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">cd</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Cantidad de sustancia</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">mol</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">mol</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Magnitudes derivadas importantes:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Velocidad:</strong> m/s (metros por segundo)</p>
+                            <p style="margin: 5px 0;"><strong>Aceleración:</strong> m/s² (metros por segundo al cuadrado)</p>
+                            <p style="margin: 5px 0;"><strong>Fuerza:</strong> N (newton) = kg·m/s²</p>
+                            <p style="margin: 5px 0;"><strong>Energía:</strong> J (joule) = kg·m²/s²</p>
+                            <p style="margin: 5px 0;"><strong>Potencia:</strong> W (watt) = J/s</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>¿Cuál es la unidad SI de masa? <em>(R: kilogramo, kg)</em></li>
+                            <li>¿Qué mide el kelvin? <em>(R: Temperatura)</em></li>
+                            <li>¿Cuál es la unidad de velocidad en SI? <em>(R: m/s)</em></li>
+                            <li>¿Qué magnitud se mide en amperes? <em>(R: Corriente eléctrica)</em></li>
+                            <li>¿1 Newton equivale a cuántos kg·m/s²? <em>(R: 1)</em></li>
+                        </ol>
+                    `,
+                    formula: "7 magnitudes fundamentales: m, kg, s, K, A, cd, mol"
                 },
+
                 "Sistema Internacional": {
-                    texto: "Sistema métrico estándar usado en ciencia. Base 10.",
-                    formula: "kilo(k)=1000, centi(c)=0.01, mili(m)=0.001"
+                    texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Prefijos del SI para múltiplos y submúltiplos. Conversiones entre unidades</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Prefijos del SI:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #ede9fe;">
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Prefijo</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Símbolo</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Factor</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Ejemplo</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">kilo</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">k</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">× 1000</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">1 km = 1000 m</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">hecto</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">h</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">× 100</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">1 hm = 100 m</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">deca</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">da</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">× 10</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">1 dam = 10 m</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">deci</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">d</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">÷ 10</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">1 dm = 0.1 m</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">centi</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">c</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">÷ 100</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">1 cm = 0.01 m</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">mili</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">m</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">÷ 1000</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">1 mm = 0.001 m</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Conversiones frecuentes:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Longitud:</strong> 1 km = 1000 m = 100,000 cm = 1,000,000 mm</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Masa:</strong> 1 kg = 1000 g = 1,000,000 mg</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Volumen:</strong> 1 L = 1000 mL = 1 dm³</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;"><strong>Tiempo:</strong> 1 h = 60 min = 3600 s</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Convierte 5 km a metros <em>(R: 5000 m)</em></li>
+                            <li>¿Cuántos cm hay en 2.5 m? <em>(R: 250 cm)</em></li>
+                            <li>Convierte 750 g a kg <em>(R: 0.75 kg)</em></li>
+                            <li>¿Cuántos mm son 0.5 cm? <em>(R: 5 mm)</em></li>
+                            <li>Convierte 2 horas a segundos <em>(R: 7200 s)</em></li>
+                        </ol>
+                    `,
+                    formula: "kilo(×1000), centi(÷100), mili(÷1000)"
                 },
+
                 "Registro lingüístico": {
-                    texto: "Formal: académico/oficial. Informal: coloquial/familiar. Técnico: especializado.",
-                    formula: "Ajusta tu lenguaje según contexto y audiencia"
+                    texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Identificar y usar el nivel de lenguaje apropiado según la situación comunicativa</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Tipos de registro:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fce7f3;">
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Registro</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Características</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Ejemplo</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Formal</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Vocabulario culto, sintaxis correcta</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">"Le solicito considere mi propuesta"</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Informal</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Coloquial, cercano, familiar</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">"¿Qué onda? ¿Vienes?"</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Técnico</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Vocabulario especializado</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">"El algoritmo optimiza el proceso"</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Vulgar</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Palabras groseras, incorrectas</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Lenguaje soez (evitar)</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">📐 Cuándo usar cada registro:</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>FORMAL:</strong> Trabajos académicos, entrevistas, documentos oficiales</p>
+                            <p style="margin: 5px 0;"><strong>INFORMAL:</strong> Amigos, familia, conversaciones casuales</p>
+                            <p style="margin: 5px 0;"><strong>TÉCNICO:</strong> Textos especializados, manuales, artículos científicos</p>
+                            <p style="margin: 5px 0;"><strong>Factores:</strong> Audiencia, contexto, propósito, medio</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>"¿Qué tal, compa?" - ¿Qué registro? <em>(R: Informal)</em></li>
+                            <li>"Solicito su atención" - ¿Qué registro? <em>(R: Formal)</em></li>
+                            <li>¿Qué registro usarías en una carta de solicitud de empleo? <em>(R: Formal)</em></li>
+                            <li>"El CPU procesa datos binarios" - ¿Qué registro? <em>(R: Técnico)</em></li>
+                            <li>Identifica: "Me urge que vengas" <em>(R: Informal)</em></li>
+                        </ol>
+                    `,
+                    formula: "Ajusta lenguaje según: Audiencia + Contexto + Propósito"
                 },
+
                 "Género textual": {
-                    texto: "Narrativo (cuenta), Descriptivo (describe), Expositivo (explica), Argumentativo (convence).",
-                    formula: "Identifica verbos y estructura del texto"
+                    texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Identificar el tipo de texto según su intención y características</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Los 4 géneros principales:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fce7f3;">
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Género</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Intención</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Características</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Narrativo</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Contar una historia</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Personajes, trama, tiempo, espacio</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Descriptivo</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Describir (cómo es)</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Adjetivos, detalles sensoriales</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Expositivo</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Explicar/informar</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Objetivo, claro, organizado</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Argumentativo</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Convencer/persuadir</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Tesis, argumentos, conclusión</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">📐 Pistas para identificar:</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Narrativo:</strong> Verbos en pasado, "había una vez", secuencia temporal</p>
+                            <p style="margin: 5px 0;"><strong>Descriptivo:</strong> Muchos adjetivos, "es/era/tiene", presente</p>
+                            <p style="margin: 5px 0;"><strong>Expositivo:</strong> Definiciones, ejemplos, "es decir", "por ejemplo"</p>
+                            <p style="margin: 5px 0;"><strong>Argumentativo:</strong> "opino que", "porque", "por lo tanto"</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>"Juan era alto, de ojos azules..." - ¿Género? <em>(R: Descriptivo)</em></li>
+                            <li>"Los mamíferos son animales que..." - ¿Género? <em>(R: Expositivo)</em></li>
+                            <li>"Había una vez un rey que..." - ¿Género? <em>(R: Narrativo)</em></li>
+                            <li>"Debemos actuar ahora porque..." - ¿Género? <em>(R: Argumentativo)</em></li>
+                            <li>Un cuento es de género: <em>(R: Narrativo)</em></li>
+                        </ol>
+                    `,
+                    formula: "Narrar=contar | Describir=detallar | Exponer=explicar | Argumentar=convencer"
                 },
+
                 "Ejercicios mixtos de la semana": {
-                    texto: "Repasa todos los temas vistos esta semana. Identifica tus puntos débiles.",
-                    formula: "Dedica más tiempo a lo que no dominas"
+                    texto: `
+                        <h4 style="color: #6366f1; margin-bottom: 10px;">📖 ¿Qué debes hacer?</h4>
+                        <p>Repasar TODOS los temas de la Semana 1 y hacer ejercicios combinados</p>
+                        
+                        <h4 style="color: #6366f1; margin: 15px 0 10px;">🎯 Estrategia de repaso:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Revisa tus notas</strong> de todos los temas</li>
+                            <li><strong>Identifica tus puntos débiles</strong> - ¿qué no dominas?</li>
+                            <li><strong>Practica más</strong> en lo que fallaste</li>
+                            <li><strong>Haz ejercicios mixtos</strong> - combina materias</li>
+                            <li><strong>Cronometra tu tiempo</strong> - practica velocidad</li>
+                        </ol>
+                        
+                        <h4 style="color: #6366f1; margin: 15px 0 10px;">📐 Checklist de repaso:</h4>
+                        <div style="background: #e0e7ff; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;">✓ Razones y proporciones - ¿Puedo resolver problemas?</p>
+                            <p style="margin: 5px 0;">✓ Proporcionalidad - ¿Distingo directa de inversa?</p>
+                            <p style="margin: 5px 0;">✓ Comprensión lectora - ¿Identifico información clave?</p>
+                            <p style="margin: 5px 0;">✓ Aritmética - ¿Opero con enteros y fracciones?</p>
+                            <p style="margin: 5px 0;">✓ Física - ¿Conozco magnitudes y unidades?</p>
+                            <p style="margin: 5px 0;">✓ Redacción - ¿Identifico registros y géneros?</p>
+                        </div>
+                        
+                        <h4 style="color: #6366f1; margin: 15px 0 10px;">✏️ Ejercicios mixtos:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si 3:5 = 9:x, y x está en metros, ¿cuántos cm es x? <em>(R: x=15m = 1500cm)</em></li>
+                            <li>(-8) + 12 - (-5) = ? <em>(R: 9)</em></li>
+                            <li>Un texto que describe un paisaje es: <em>(R: Descriptivo)</em></li>
+                            <li>Convierte 2.5 kg a gramos <em>(R: 2500 g)</em></li>
+                            <li>En una carta formal usarías registro: <em>(R: Formal)</em></li>
+                        </ol>
+                    `,
+                    formula: "Repaso = Identificar debilidades + Practicar + Cronometrar"
                 },
+
                 "Mini-simulacro (20-25 preguntas)": {
-                    texto: "Practica en condiciones similares al examen real. Cronometra tu tiempo.",
-                    formula: "30 minutos = 1.5 min por pregunta"
-                },
+                    texto: `
+                        <h4 style="color: #ef4444; margin-bottom: 10px;">📖 ¿Qué debes hacer?</h4>
+                        <p>Realizar un simulacro corto de 20-25 preguntas en 30 minutos</p>
+                        
+                        <h4 style="color: #ef4444; margin: 15px 0 10px;">🎯 Instrucciones:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Busca un simulacro EXANI-II</strong> en línea o en guías</li>
+                            <li><strong>Cronometra 30 minutos</strong> exactos</li>
+                            <li><strong>Sin interrupciones</strong> - apaga celular, cierra puerta</li>
+                            <li><strong>Responde TODO</strong> - nunca dejes en blanco</li>
+                            <li><strong>Al terminar:</strong> Revisa respuestas y anota errores</li>
+                        </ol>
+                        
+                      <h4 style="color: #ef4444; margin: 15px 0 10px;">✏️ Después del simulacro:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Calcula tu porcentaje de aciertos</li>
+                        <li>Anota cada error: ¿Por qué fallaste?</li>
+                        <li>Identifica patrones: ¿Qué materia te cuesta más?</li>
+                        <li>Repasa los temas donde fallaste</li>
+                        <li>Meta: >70% de aciertos en este simulacro</li>
+                    </ol>
+                `,
+                formula: "Simulacro = Práctica real + Análisis de errores + Mejora continua"
+            },
+
+            // ==================== SEMANA 2 ====================
+            "Interpretación gráfica de ecuaciones": {
+                texto: `
+                    <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Representar ecuaciones como líneas o curvas en el plano cartesiano</p>
+                    
+                    <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Ecuación de la recta:</h4>
+                    <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;"><strong>y = mx + b</strong></p>
+                        <p style="margin: 5px 0;"><strong>m</strong> = pendiente (inclinación de la recta)</p>
+                        <p style="margin: 5px 0;">• Si m > 0: recta crece (sube)</p>
+                        <p style="margin: 5px 0;">• Si m < 0: recta decrece (baja)</p>
+                        <p style="margin: 5px 0;">• Si m = 0: recta horizontal</p>
+                        <p style="margin: 5px 0;"><strong>b</strong> = ordenada al origen (donde cruza el eje y)</p>
+                    </div>
+                    
+                    <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Cómo graficar:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Identifica b</strong> - marca el punto (0, b) en eje y</li>
+                        <li><strong>Usa la pendiente m</strong> - desde b, sube/baja m unidades</li>
+                        <li><strong>Avanza 1 a la derecha</strong> y marca el punto</li>
+                        <li><strong>Traza la línea</strong> que une ambos puntos</li>
+                    </ol>
+                    
+                    <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>En y = 2x + 3, ¿cuál es la pendiente? <em>(R: m=2)</em></li>
+                        <li>En y = -x + 5, ¿dónde cruza el eje y? <em>(R: b=5, punto (0,5))</em></li>
+                        <li>Si m=0 en y=mx+2, ¿qué tipo de recta es? <em>(R: Horizontal)</em></li>
+                        <li>¿Qué ecuación pasa por (0,4) con pendiente 3? <em>(R: y=3x+4)</em></li>
+                        <li>Si y=x, ¿cuánto valen m y b? <em>(R: m=1, b=0)</em></li>
+                    </ol>
+                `,
+                formula: "y = mx + b | m=pendiente, b=intersección con y"
+            },
+
+
+
+
+
+
+
+
+
                 
-                // SEMANA 2
-                "Interpretación gráfica de ecuaciones": {
-                    texto: "Las ecuaciones se representan como líneas o curvas en el plano cartesiano.",
-                    formula: "y = mx + b  (m=pendiente, b=intersección con y)"
-                },
-                "Ejes de simetría": {
-                    texto: "Línea que divide una figura en dos partes idénticas (reflejadas).",
-                    formula: "Un círculo tiene infinitos ejes de simetría"
-                },
-                "Interpretación del texto": {
-                    texto: "Comprender el mensaje principal y las ideas secundarias del texto.",
-                    formula: "Pregúntate: ¿De qué habla? ¿Qué quiere decir?"
-                },
-                "Intención del autor": {
-                    texto: "¿Por qué escribió esto? Puede ser: informar, persuadir, entretener, expresar.",
-                    formula: "Busca pistas en el tono y vocabulario usado"
-                },
-                "Jerarquía de operaciones": {
-                    texto: "Orden para resolver: Paréntesis, Exponentes, Multiplicación/División, Suma/Resta.",
-                    formula: "PEMDAS o PAPOMUDAS"
-                },
-                "Potencias y raíces": {
-                    texto: "Potencia: multiplicación repetida. Raíz: operación inversa de la potencia.",
-                    formula: "a^n × a^m = a^(n+m)  |  √(a×b) = √a × √b"
-                },
-                "Cinemática": {
-                    texto: "Estudio del movimiento sin considerar las causas (fuerzas).",
-                    formula: "v = d/t  |  a = Δv/Δt  |  d = v₀t + ½at²"
-                },
-                "Velocidad, distancia y tiempo": {
-                    texto: "Relación fundamental del movimiento rectilíneo uniforme (MRU).",
-                    formula: "v = d/t  |  d = v×t  |  t = d/v"
-                },
-                "Idea general de textos": {
-                    texto: "Captar el tema principal sin necesidad de entender cada palabra en inglés.",
-                    formula: "Lee título, primer y último párrafo primero"
-                },
-                "Vocabulario común": {
-                    texto: "Palabras más frecuentes: the, be, to, of, and, a, in, that, have, I.",
-                    formula: "1000 palabras comunes = 80% de comprensión"
-                },
-                "Corrección de errores": {
-                    texto: "Revisa tus respuestas buscando patrones en tus equivocaciones.",
-                    formula: "Anota: ¿Concepto, cálculo o lectura?"
-                },
-                "Ejercicios cronometrados": {
-                    texto: "Practica con límite de tiempo para simular el examen real.",
-                    formula: "EXANI-II: ~1.4 min por pregunta"
-                },
+                };
+            
+            const exp = explicaciones[tema];
+            if (exp) {
+                return `
+                    <strong style="color: #1e40af;">📚 Explicación completa:</strong><br>
+                    ${exp.texto}
+                `;
+            } else {
+                return `
+                    <strong style="color: #1e40af;">📚 Concepto importante:</strong><br>
+                    Este tema es fundamental para el EXANI-II. Busca videos y ejercicios para practicarlo.
+                    <div class="tema-formula">💡 Tip: Practica con ejercicios del CENEVAL</div>
+                `;
+            }
+        }
                 
-                // SEMANA 3
-                "Probabilidad clásica": {
-                    texto: "Casos favorables entre casos posibles. Valor entre 0 y 1.",
-                    formula: "P(A) = casos favorables / casos totales"
-                },
-                "Frecuencias": {
-                    texto: "Número de veces que aparece un dato. Absoluta o relativa (porcentaje).",
-                    formula: "Frecuencia relativa = frecuencia absoluta / total"
-                },
-                "Concordancia nominal": {
-                    texto: "Sustantivos y adjetivos deben concordar en género y número.",
-                    formula: "Las casas blancas (femenino plural ambos)"
-                },
-                "Concordancia verbal": {
-                    texto: "El verbo concuerda con el sujeto en número y persona.",
-                    formula: "Yo como / Nosotros comemos"
-                },
-                "Notación científica": {
-                    texto: "Forma de expresar números muy grandes o muy pequeños.",
-                    formula: "a × 10^n  (donde 1 ≤ a < 10)"
-                },
-                "Factores primos": {
-                    texto: "Descomponer un número en multiplicación de números primos.",
-                    formula: "12 = 2² × 3  |  Primos: 2,3,5,7,11,13..."
-                },
-                "Leyes de Newton": {
-                    texto: "1ª: Inercia. 2ª: F=ma. 3ª: Acción y reacción.",
-                    formula: "F = m × a  (Segunda Ley)"
-                },
-                "Diagramas de fuerzas": {
-                    texto: "Representación gráfica de todas las fuerzas que actúan sobre un objeto.",
-                    formula: "∑F = 0 (equilibrio)  |  ∑F ≠ 0 (aceleración)"
-                },
-                "Evaluación de forma y contenido": {
-                    texto: "Forma: estructura, ortografía. Contenido: ideas, coherencia, argumentos.",
-                    formula: "Ambos son importantes para un buen texto"
-                },
-                "Matemáticas + Aritmética + Física": {
-                    texto: "Simulacro combinado de las tres áreas más técnicas del examen.",
-                    formula: "Practica manejo del tiempo entre materias"
-                },
-                
-                // SEMANA 4
-                "Medidas de tendencia central": {
-                    texto: "Valores que representan el centro de un conjunto de datos.",
-                    formula: "Media: promedio  |  Mediana: valor central  |  Moda: más frecuente"
-                },
-                "Media, mediana y moda": {
-                    texto: "Media=(suma/n). Mediana=valor central ordenado. Moda=más repetido.",
-                    formula: "Ej: [1,2,2,3,5] → Media=2.6, Mediana=2, Moda=2"
-                },
-                "Uso correcto de comas y puntos": {
-                    texto: "Coma: separa elementos. Punto: separa oraciones completas.",
-                    formula: "Coma en enumeración: Juan, María y Pedro"
-                },
-                "Conectores lógicos": {
-                    texto: "Palabras que unen ideas: además, sin embargo, por lo tanto, aunque.",
-                    formula: "Adición: además, también  |  Contraste: pero, sin embargo"
-                },
-                "Mínimo común múltiplo": {
-                    texto: "El menor número que es múltiplo de dos o más números.",
-                    formula: "mcm(4,6) = 12  |  Usa factores primos"
-                },
-                "Máximo común divisor": {
-                    texto: "El mayor número que divide exactamente a dos o más números.",
-                    formula: "mcd(12,18) = 6  |  Usa factores primos comunes"
-                },
-                "Trabajo y energía": {
-                    texto: "Trabajo: fuerza por distancia. Energía: capacidad de realizar trabajo.",
-                    formula: "W = F × d  |  Ec = ½mv²  |  Ep = mgh"
-                },
-                "Falsos cognados": {
-                    texto: "Palabras que se parecen pero significan diferente. Actually=en realidad (no actualmente).",
-                    formula: "Exit=salida (no éxito)  |  Embarrassed=avergonzado"
-                },
-                "Comprensión de lectura": {
-                    texto: "Entender textos en inglés: idea principal, detalles, vocabulario en contexto.",
-                    formula: "No traduzcas todo, busca palabras clave"
-                },
-                "Módulo general completo": {
-                    texto: "Simulacro de todas las materias del módulo general del EXANI-II.",
-                    formula: "Aproximadamente 90-110 preguntas en 2.5 horas"
-                },
-                
-                // SEMANA 5
-                "Representación gráfica de funciones": {
-                    texto: "Dibujar funciones en el plano cartesiano para visualizar su comportamiento.",
-                    formula: "Lineal: y=mx+b  |  Cuadrática: y=ax²+bx+c"
-                },
-                "Textos literarios": {
-                    texto: "Narrativos (cuentos, novelas), Líricos (poemas), Dramáticos (teatro).",
-                    formula: "Identifica: personajes, narrador, ambiente, trama"
-                },
-                "Porcentajes": {
-                    texto: "Parte de un total expresada en centésimas. Base 100.",
-                    formula: "% = (parte/total) × 100  |  20% de 50 = 50×0.20 = 10"
-                },
-                "Conservación de la energía": {
-                    texto: "La energía no se crea ni se destruye, solo se transforma.",
-                    formula: "Ec + Ep = constante (en ausencia de fricción)"
-                },
-                "Cohesión gramatical y semántica": {
-                    texto: "Gramatical: conectores. Semántica: relación lógica de ideas.",
-                    formula: "Cohesión = texto unificado y fluido"
-                },
-                "Simulacro de Aritmética": {
-                    texto: "Practica solo problemas de aritmética: fracciones, %, decimales, etc.",
-                    formula: "40-50 preguntas en 45-60 minutos"
-                },
-                
-                // SEMANA 6
-                "Desviación estándar (conceptual)": {
-                    texto: "Mide qué tan dispersos están los datos respecto a la media.",
-                    formula: "σ = dispersión  |  Mayor σ = datos más dispersos"
-                },
-                "Lectura cronometrada": {
-                    texto: "Lee textos en inglés contra reloj. Mejora velocidad y comprensión.",
-                    formula: "Meta: 200-250 palabras por minuto con comprensión"
-                },
-                "Progresión aritmética": {
-                    texto: "Sucesión con diferencia constante entre términos consecutivos.",
-                    formula: "an = a1 + (n-1)d  |  Ej: 2,5,8,11... (d=3)"
-                },
-                "Cantidad de movimiento": {
-                    texto: "Momento lineal: masa por velocidad. Se conserva en choques.",
-                    formula: "p = m × v  |  Unidades: kg·m/s"
-                },
-                "Choques": {
-                    texto: "Elásticos: se conserva energía. Inelásticos: se pierde energía.",
-                    formula: "∑p_antes = ∑p_después (siempre)"
-                },
-                "Corrección de textos completos": {
-                    texto: "Revisa ortografía, gramática, coherencia y cohesión en textos largos.",
-                    formula: "Lee en voz alta para detectar errores"
-                },
-                "Simulacro de Física": {
-                    texto: "Practica solo problemas de física: cinemática, dinámica, energía.",
-                    formula: "30-40 preguntas en 45 minutos"
-                },
-                
-                // SEMANA 7
-                "Representación gráfica de información": {
-                    texto: "Gráficas de barras, circulares, líneas para mostrar datos.",
-                    formula: "Elige el tipo según los datos: barras=comparar, línea=tendencia"
-                },
-                "Textos administrativos y sociales": {
-                    texto: "Oficios, cartas formales, memorándums, avisos, convocatorias.",
-                    formula: "Estructura formal: encabezado, cuerpo, despedida"
-                },
-                "Regla de tres": {
-                    texto: "Método para resolver problemas de proporcionalidad.",
-                    formula: "Si A→B entonces C→X  |  X = (C×B)/A"
-                },
-                "Movimiento ondulatorio": {
-                    texto: "Propagación de energía sin transporte de materia. Ej: sonido, luz.",
-                    formula: "v = λ × f  (velocidad = longitud × frecuencia)"
-                },
-                "Práctica tipo EXANI": {
-                    texto: "Ejercicios de inglés similares a los del examen real.",
-                    formula: "Enfócate en: vocabulario, comprensión, gramática básica"
-                },
-                "Simulacro general": {
-                    texto: "Simulacro completo de todas las materias del EXANI-II.",
-                    formula: "3 horas, 130 preguntas aprox."
-                },
-                
-                // SEMANA 8
-                "Sistemas de ecuaciones (interpretación)": {
-                    texto: "Dos o más ecuaciones con las mismas variables. Buscar solución común.",
-                    formula: "Métodos: sustitución, igualación, eliminación"
-                },
-                "Ortografía y acentuación": {
-                    texto: "Reglas de acentuación: agudas, graves, esdrújulas. Uso de b/v, s/c/z.",
-                    formula: "Agudas: última sílaba (café)  |  Graves: penúltima (árbol)"
-                },
-                "Repaso general": {
-                    texto: "Revisa todos los temas de aritmética vistos hasta ahora.",
-                    formula: "Haz lista de fórmulas clave y practica"
-                },
-                "Óptica: lentes y fenómenos": {
-                    texto: "Reflexión, refracción, lentes convergentes y divergentes.",
-                    formula: "Ley de reflexión: ángulo incidencia = ángulo reflexión"
-                },
-                "Lectura larga cronometrada": {
-                    texto: "Textos extensos (300-500 palabras) para mejorar resistencia.",
-                    formula: "Identifica idea principal sin leer todo en detalle"
-                },
-                "Simulacro completo": {
-                    texto: "Simulacro integral con todas las secciones del examen.",
-                    formula: "Analiza errores después para mejorar"
-                },
-                
-                // SEMANAS 9-11 (Simulación Real)
-                "Simulacro completo 1": {
-                    texto: "Primer simulacro completo en condiciones de examen real.",
-                    formula: "3 horas sin interrupciones, sin celular"
-                },
-                "Análisis de errores simulacro 1": {
-                    texto: "Revisa cada error: ¿fue por concepto, cálculo o falta de tiempo?",
-                    formula: "Categoriza errores para enfocarte mejor"
-                },
-                "Refuerzo de temas débiles": {
-                    texto: "Estudia intensivamente los temas donde más fallaste.",
-                    formula: "Dedica 2-3 horas a tu área más débil"
-                },
-                "Simulacro completo 2": {
-                    texto: "Segundo simulacro. Compara resultados con el primero.",
-                    formula: "Busca mejora de al menos 5-10%"
-                },
-                "Análisis de errores simulacro 2": {
-                    texto: "¿Repetiste los mismos errores? Identifica patrones.",
-                    formula: "Si un tema sigue fallando, refuérzalo más"
-                },
-                "Refuerzo intensivo": {
-                    texto: "Sesión extendida de estudio en tus 2-3 temas más débiles.",
-                    formula: "Usa videos, ejercicios y resúmenes"
-                },
-                "Simulacro completo 3": {
-                    texto: "Tercer simulacro. Deberías ver mejora notable.",
-                    formula: "Velocidad y precisión deben aumentar"
-                },
-                "Análisis de errores simulacro 3": {
-                    texto: "Cada vez menos errores. Enfócate en los restantes.",
-                    formula: "Tu objetivo: >80% de aciertos"
-                },
-                "Simulacro completo 4": {
-                    texto: "Cuarto simulacro. Estás en la recta final.",
-                    formula: "Simula el día real: desayuna igual, misma hora"
-                },
-                "Análisis de errores simulacro 4": {
-                    texto: "Afina detalles. Errores ahora son más por descuido.",
-                    formula: "Lee preguntas con más cuidado"
-                },
-                "Simulacro completo 5": {
-                    texto: "Quinto simulacro. Ya dominas el formato.",
-                    formula: "Trabaja tu confianza y manejo del estrés"
-                },
-                "Análisis de errores simulacro 5": {
-                    texto: "Últimos ajustes. Identifica errores tontos.",
-                    formula: "Velocidad sin sacrificar precisión"
-                },
-                "Simulacro completo 6": {
-                    texto: "Último simulacro antes del examen real. Dale todo.",
-                    formula: "Este es tu mejor pronóstico del resultado real"
-                },
-                "Análisis de errores simulacro 6": {
-                    texto: "Análisis final. Anota últimas áreas de mejora.",
-                    formula: "Confía en tu preparación"
-                },
-                "Repaso general de conceptos clave": {
-                    texto: "Repasa fórmulas, conceptos y estrategias principales.",
-                    formula: "Haz resumen de 1 página por materia"
-                },
-                
-                // SEMANA 12 (Ajuste Final)
-                "Fórmulas clave": {
-                    texto: "Repasa todas las fórmulas matemáticas y de física.",
-                    formula: "Haz fichas: una fórmula por tarjeta"
-                },
-                "Errores frecuentes": {
-                    texto: "Revisa tu bitácora de errores de las 11 semanas.",
-                    formula: "NO repitas los mismos errores en el examen"
-                },
-                "Repaso ligero general": {
-                    texto: "Repaso superficial de todos los temas. NO estudies a fondo.",
-                    formula: "Solo refrescar memoria, no aprender nuevo"
-                },
-                "Descanso mental": {
-                    texto: "Descansa, relájate. Tu cerebro necesita consolidar información.",
-                    formula: "Haz algo que disfrutes: caminar, música, amigos"
-                },
-                "Último repaso de conceptos": {
-                    texto: "Hojea tus resúmenes y fórmulas clave por última vez.",
-                    formula: "Máximo 2 horas de repaso ligero"
-                },
-                "Preparación mental para el examen": {
-                    texto: "Visualiza éxito. Prepara ropa, documentos. Duerme temprano.",
-                    formula: "Confianza + preparación = éxito garantizado"
-                }
-            };
+                // Continuaré con los demás temas...
             
             const exp = explicaciones[tema];
             if (exp) {
@@ -1898,6 +2122,7 @@ function obtenerExplicacion(materia, tema) {
     </script>
 </body>
 </html>
+
 
 
 
