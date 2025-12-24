@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Plan de Estudio EXANI-II - Completo</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
@@ -297,6 +298,7 @@
             <button class="tab" onclick="showTab('recursos')">🔗 Recursos</button>
             <button class="tab" onclick="showTab('tips')">💡 Tips</button>
             <button class="tab" onclick="showTab('logros')">🏆 Logros</button>
+            <button class="tab" onclick="showTab('quiz')">🎲 Quiz</button>
         </div>
         
         <div id="inicio" class="content active">
@@ -336,6 +338,10 @@
         </div>
         
         <div id="simulacros" class="content">
+            <div class="card" style="margin-bottom: 30px;">
+                <h2 style="font-size: 2em; margin-bottom: 20px;">📈 Tu Evolución</h2>
+                <canvas id="graficaSimulacros" style="max-height: 300px;"></canvas>
+            </div>
             <div class="card">
                 <h2 style="font-size: 2em; margin-bottom: 20px;">📝 Simulacros</h2>
                 <div id="simulacros-container"></div>
@@ -884,7 +890,94 @@
                 </div>
             </div>
         </div>
-        
+        <div id="quiz" class="content">
+            <div class="card">
+                <h2 style="font-size: 2em; margin-bottom: 30px; text-align: center;">🎲 Quiz Rápido</h2>
+                
+                <div id="quiz-inicio" style="text-align: center;">
+                    <p style="font-size: 1.2em; margin-bottom: 30px;">
+                        Pon a prueba tus conocimientos con 5 preguntas aleatorias
+                    </p>
+                    <button onclick="iniciarQuiz()" style="
+                        padding: 15px 40px;
+                        font-size: 1.2em;
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        box-shadow: 0 5px 20px rgba(102, 126, 234, 0.3);
+                    ">🚀 Comenzar Quiz</button>
+                </div>
+                
+                <div id="quiz-juego" style="display: none;">
+                    <div style="background: #f3f4f6; padding: 20px; border-radius: 10px; margin-bottom: 20px;">
+                        <div style="display: flex; justify-content: space-between; margin-bottom: 10px;">
+                            <span style="font-weight: bold;">Pregunta <span id="quiz-num">1</span>/5</span>
+                            <span style="font-weight: bold; color: #10b981;">Aciertos: <span id="quiz-aciertos">0</span></span>
+                        </div>
+                        <div style="background: #e5e7eb; height: 8px; border-radius: 5px; overflow: hidden;">
+                            <div id="quiz-progreso" style="width: 20%; height: 100%; background: linear-gradient(90deg, #667eea, #764ba2); transition: width 0.3s;"></div>
+                        </div>
+                    </div>
+                    
+                    <div id="quiz-pregunta" style="
+                        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+                        color: white;
+                        padding: 30px;
+                        border-radius: 15px;
+                        margin-bottom: 30px;
+                        font-size: 1.3em;
+                        line-height: 1.6;
+                        min-height: 100px;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        text-align: center;
+                    "></div>
+                    
+                    <div id="quiz-opciones" style="display: grid; gap: 15px;"></div>
+                    
+                    <div id="quiz-feedback" style="
+                        margin-top: 20px;
+                        padding: 20px;
+                        border-radius: 10px;
+                        display: none;
+                        font-size: 1.1em;
+                    "></div>
+                </div>
+                
+                <div id="quiz-resultado" style="display: none; text-align: center;">
+                    <div style="font-size: 5em; margin: 20px 0;" id="quiz-emoji">🎉</div>
+                    <h3 style="font-size: 2em; margin-bottom: 20px;" id="quiz-titulo">¡Excelente!</h3>
+                    <p style="font-size: 1.5em; margin-bottom: 30px;">
+                        Tu puntaje: <span id="quiz-puntaje-final" style="color: #667eea; font-weight: bold;">0</span>/5
+                    </p>
+                    <button onclick="iniciarQuiz()" style="
+                        padding: 15px 40px;
+                        font-size: 1.2em;
+                        background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-weight: bold;
+                        margin-right: 10px;
+                    ">🔄 Intentar de nuevo</button>
+                    <button onclick="showTab('inicio')" style="
+                        padding: 15px 40px;
+                        font-size: 1.2em;
+                        background: #6b7280;
+                        color: white;
+                        border: none;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        font-weight: bold;
+                    ">🏠 Volver al inicio</button>
+                </div>
+            </div>
+        </div>
         <div id="tips" class="content">
             <div class="card">
                 <h2 style="font-size: 2em; margin-bottom: 30px;">💡 Tips</h2>
@@ -1376,9 +1469,308 @@
                     document.getElementById(`sim${i}-notas`).value = data.notas || '';
                 }
             }
+            dibujarGraficaSimulacros();
         }
-
+                // ============ QUIZ ALEATORIO ============
+        const preguntasQuiz = [
+            {
+                pregunta: "Si 3:5 = 9:x, ¿cuánto vale x?",
+                opciones: ["12", "15", "18", "20"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Cuál es la fórmula de la velocidad?",
+                opciones: ["v = d × t", "v = d / t", "v = t / d", "v = d + t"],
+                correcta: 1
+            },
+            {
+                pregunta: "(-8) + 12 - (-5) = ?",
+                opciones: ["9", "1", "-1", "15"],
+                correcta: 0
+            },
+            {
+                pregunta: "¿Cuál es la unidad SI de masa?",
+                opciones: ["gramo", "kilogramo", "libra", "tonelada"],
+                correcta: 1
+            },
+            {
+                pregunta: "En y = 2x + 3, ¿cuál es la pendiente?",
+                opciones: ["3", "2", "5", "1"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Qué tipo de texto defiende una opinión?",
+                opciones: ["Narrativo", "Descriptivo", "Expositivo", "Argumentativo"],
+                correcta: 3
+            },
+            {
+                pregunta: "1/2 + 1/3 = ?",
+                opciones: ["2/5", "5/6", "3/6", "1/6"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Cuántos metros hay en 5 kilómetros?",
+                opciones: ["500", "5000", "50000", "500000"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Qué registro usarías en una carta formal?",
+                opciones: ["Informal", "Coloquial", "Formal", "Vulgar"],
+                correcta: 2
+            },
+            {
+                pregunta: "(-6) × (-4) = ?",
+                opciones: ["-24", "24", "-10", "10"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Cuál es la fórmula del área de un triángulo?",
+                opciones: ["A = b × h", "A = (b × h) / 2", "A = b + h", "A = 2 × b × h"],
+                correcta: 1
+            },
+            {
+                pregunta: "En física, ¿qué mide el Newton?",
+                opciones: ["Masa", "Fuerza", "Velocidad", "Energía"],
+                correcta: 1
+            },
+            {
+                pregunta: "¿Qué conector indica consecuencia?",
+                opciones: ["porque", "pero", "por lo tanto", "aunque"],
+                correcta: 2
+            },
+            {
+                pregunta: "Convierte 0.75 a fracción:",
+                opciones: ["1/4", "2/3", "3/4", "4/5"],
+                correcta: 2
+            },
+            {
+                pregunta: "¿Cuántos gramos hay en 2.5 kg?",
+                opciones: ["250", "2500", "25000", "25"],
+                correcta: 1
+            }
+        ];
+        
+        let quizActual = {
+            preguntas: [],
+            actual: 0,
+            aciertos: 0
+        };
+        
+        function iniciarQuiz() {
+            // Seleccionar 5 preguntas aleatorias
+            const todasPreguntas = [...preguntasQuiz];
+            quizActual.preguntas = [];
+            
+            for (let i = 0; i < 5; i++) {
+                const indice = Math.floor(Math.random() * todasPreguntas.length);
+                quizActual.preguntas.push(todasPreguntas[indice]);
+                todasPreguntas.splice(indice, 1);
+            }
+            
+            quizActual.actual = 0;
+            quizActual.aciertos = 0;
+            
+            document.getElementById('quiz-inicio').style.display = 'none';
+            document.getElementById('quiz-resultado').style.display = 'none';
+            document.getElementById('quiz-juego').style.display = 'block';
+            
+            mostrarPreguntaQuiz();
+        }
+        
+        function mostrarPreguntaQuiz() {
+            const pregunta = quizActual.preguntas[quizActual.actual];
+            
+            document.getElementById('quiz-num').textContent = quizActual.actual + 1;
+            document.getElementById('quiz-aciertos').textContent = quizActual.aciertos;
+            document.getElementById('quiz-progreso').style.width = ((quizActual.actual + 1) / 5 * 100) + '%';
+            document.getElementById('quiz-pregunta').textContent = pregunta.pregunta;
+            document.getElementById('quiz-feedback').style.display = 'none';
+            
+            let opcionesHTML = '';
+            pregunta.opciones.forEach((opcion, idx) => {
+                opcionesHTML += `
+                    <button onclick="verificarRespuestaQuiz(${idx})" style="
+                        padding: 20px;
+                        font-size: 1.1em;
+                        background: white;
+                        border: 2px solid #e5e7eb;
+                        border-radius: 10px;
+                        cursor: pointer;
+                        text-align: left;
+                        transition: all 0.3s;
+                        font-weight: 500;
+                    " onmouseover="this.style.borderColor='#667eea'; this.style.transform='translateX(10px)'" 
+                       onmouseout="this.style.borderColor='#e5e7eb'; this.style.transform='translateX(0)'">
+                        ${String.fromCharCode(65 + idx)}. ${opcion}
+                    </button>
+                `;
+            });
+            
+            document.getElementById('quiz-opciones').innerHTML = opcionesHTML;
+        }
+        
+        function verificarRespuestaQuiz(indice) {
+            const pregunta = quizActual.preguntas[quizActual.actual];
+            const feedback = document.getElementById('quiz-feedback');
+            const opciones = document.getElementById('quiz-opciones').children;
+            
+            // Deshabilitar botones
+            for (let btn of opciones) {
+                btn.disabled = true;
+                btn.style.cursor = 'not-allowed';
+                btn.style.opacity = '0.6';
+            }
+            
+            if (indice === pregunta.correcta) {
+                quizActual.aciertos++;
+                opciones[indice].style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                opciones[indice].style.color = 'white';
+                opciones[indice].style.borderColor = '#10b981';
+                
+                feedback.style.background = '#d1fae5';
+                feedback.style.border = '2px solid #10b981';
+                feedback.style.color = '#065f46';
+                feedback.innerHTML = '✅ <strong>¡Correcto!</strong> Excelente respuesta.';
+            } else {
+                opciones[indice].style.background = 'linear-gradient(135deg, #ef4444 0%, #dc2626 100%)';
+                opciones[indice].style.color = 'white';
+                opciones[indice].style.borderColor = '#ef4444';
+                
+                opciones[pregunta.correcta].style.background = 'linear-gradient(135deg, #10b981 0%, #059669 100%)';
+                opciones[pregunta.correcta].style.color = 'white';
+                opciones[pregunta.correcta].style.borderColor = '#10b981';
+                
+                feedback.style.background = '#fee2e2';
+                feedback.style.border = '2px solid #ef4444';
+                feedback.style.color = '#991b1b';
+                feedback.innerHTML = `❌ <strong>Incorrecto.</strong> La respuesta correcta es: <strong>${pregunta.opciones[pregunta.correcta]}</strong>`;
+            }
+            
+            feedback.style.display = 'block';
+            
+            // Continuar después de 2 segundos
+            setTimeout(() => {
+                quizActual.actual++;
+                if (quizActual.actual < 5) {
+                    mostrarPreguntaQuiz();
+                } else {
+                    mostrarResultadoQuiz();
+                }
+            }, 2000);
+        }
+        
+        function mostrarResultadoQuiz() {
+            document.getElementById('quiz-juego').style.display = 'none';
+            document.getElementById('quiz-resultado').style.display = 'block';
+            
+            const puntaje = quizActual.aciertos;
+            document.getElementById('quiz-puntaje-final').textContent = puntaje;
+            
+            let emoji, titulo;
+            if (puntaje === 5) {
+                emoji = '🏆';
+                titulo = '¡PERFECTO!';
+            } else if (puntaje >= 4) {
+                emoji = '🎉';
+                titulo = '¡Excelente!';
+            } else if (puntaje >= 3) {
+                emoji = '👍';
+                titulo = '¡Bien!';
+            } else if (puntaje >= 2) {
+                emoji = '📚';
+                titulo = 'Sigue estudiando';
+            } else {
+                emoji = '💪';
+                titulo = 'No te rindas';
+            }
+            
+            document.getElementById('quiz-emoji').textContent = emoji;
+            document.getElementById('quiz-titulo').textContent = titulo;
+            
+            // Guardar estadística
+            const quizzesHoy = parseInt(localStorage.getItem('quizzesHoy') || '0') + 1;
+            localStorage.setItem('quizzesHoy', quizzesHoy);
+        }
+        
         function renderAchievements() {
+            function dibujarGraficaSimulacros() {
+                    const fechas = [];
+                    const puntajes = [];
+                    const ctx = document.getElementById('graficaSimulacros');
+                    
+                    if (!ctx) return;
+                    
+                    for (let i = 1; i <= 6; i++) {
+                        const saved = localStorage.getItem(`simulacro${i}`);
+                        if (saved) {
+                            const data = JSON.parse(saved);
+                            if (data.fecha && data.total) {
+                                fechas.push(`Sim ${i}`);
+                                puntajes.push(parseFloat(data.total));
+                            }
+                        }
+                    }
+                    
+                    // Destruir gráfica anterior si existe
+                    if (window.miGrafica) {
+                        window.miGrafica.destroy();
+                    }
+                    
+                    // Crear nueva gráfica
+                    window.miGrafica = new Chart(ctx, {
+                        type: 'line',
+                        data: {
+                            labels: fechas,
+                            datasets: [{
+                                label: 'Puntaje Total',
+                                data: puntajes,
+                                borderColor: '#667eea',
+                                backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                                tension: 0.4,
+                                fill: true,
+                                pointRadius: 6,
+                                pointHoverRadius: 8,
+                                pointBackgroundColor: '#667eea',
+                                pointBorderColor: '#fff',
+                                pointBorderWidth: 2
+                            }]
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: true,
+                            plugins: {
+                                legend: {
+                                    display: true,
+                                    labels: {
+                                        font: { size: 14, weight: 'bold' },
+                                        color: '#4b5563'
+                                    }
+                                },
+                                tooltip: {
+                                    backgroundColor: 'rgba(0,0,0,0.8)',
+                                    padding: 12,
+                                    titleFont: { size: 14 },
+                                    bodyFont: { size: 13 }
+                                }
+                            },
+                            scales: {
+                                y: {
+                                    beginAtZero: true,
+                                    max: 100,
+                                    ticks: {
+                                        callback: function(value) { return value + '%'; },
+                                        font: { size: 12 }
+                                    },
+                                    grid: { color: '#e5e7eb' }
+                                },
+                                x: {
+                                    ticks: { font: { size: 12 } },
+                                    grid: { display: false }
+                                }
+                            }
+                        }
+                    });
+                }
             const achievements = [
                 { 
                     id: 'first-day', 
@@ -2665,6 +3057,7 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
     </script>
 </body>
 </html>
+
 
 
 
