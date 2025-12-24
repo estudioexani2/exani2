@@ -2072,23 +2072,6 @@ function obtenerExplicacion(materia, tema) {
             const exp = explicaciones[tema];
             if (exp) {
                 return `
-                    <strong style="color: #1e40af;">📚 Explicación completa:</strong><br>
-                    ${exp.texto}
-                `;
-            } else {
-                return `
-                    <strong style="color: #1e40af;">📚 Concepto importante:</strong><br>
-                    Este tema es fundamental para el EXANI-II. Busca videos y ejercicios para practicarlo.
-                    <div class="tema-formula">💡 Tip: Practica con ejercicios del CENEVAL</div>
-                `;
-            }
-        }
-                
-                // Continuaré con los demás temas...
-            
-            const exp = explicaciones[tema];
-            if (exp) {
-                return `
                     <strong style="color: #1e40af;">📚 Explicación:</strong><br>
                     ${exp.texto}
                     <div class="tema-formula">${exp.formula}</div>
@@ -2122,6 +2105,7 @@ function obtenerExplicacion(materia, tema) {
     </script>
 </body>
 </html>
+
 
 
 
