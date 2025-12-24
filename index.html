@@ -1006,7 +1006,34 @@
                 </div>
             </div>
         </div>
-        
+        <div id="recursos" class="content">
+            <div class="card">
+                <h2 style="font-size: 2em; margin-bottom: 30px;">🔗 Recursos Útiles</h2>
+                
+                <h3 style="color: #667eea; margin: 20px 0;">📚 Guías EXANI-II</h3>
+                <a href="https://www.ceneval.edu.mx/" target="_blank" class="resource-link">
+                    🌐 CENEVAL Oficial - Guías y Simuladores
+                </a>
+                <a href="https://www.youtube.com/results?search_query=exani+ii+guia" target="_blank" class="resource-link">
+                    📺 Videos Tutoriales EXANI-II
+                </a>
+                
+                <h3 style="color: #667eea; margin: 20px 0;">🧮 Matemáticas</h3>
+                <a href="https://www.khanacademy.org/math" target="_blank" class="resource-link">
+                    📐 Khan Academy - Matemáticas
+                </a>
+                
+                <h3 style="color: #667eea; margin: 20px 0;">📖 Comprensión Lectora</h3>
+                <a href="https://www.readtheory.org/" target="_blank" class="resource-link">
+                    📚 Ejercicios de Lectura en Español
+                </a>
+                
+                <h3 style="color: #667eea; margin: 20px 0;">🌍 Inglés</h3>
+                <a href="https://www.duolingo.com/" target="_blank" class="resource-link">
+                    🗣️ Duolingo - Práctica de Inglés
+                </a>
+            </div>
+        </div>
         <div id="logros" class="content">
             <div class="card">
                 <h2 style="font-size: 2em; margin-bottom: 30px; text-align: center;">🏆 Logros</h2>
@@ -1339,8 +1366,10 @@
             const diaActual = today.getDay();
             
             const temasHoy = obtenerTemasHoy(semanaActual, diaActual);
-            document.getElementById('temas-hoy').innerHTML = temasHoy || 'El plan inicia el Lunes 23 de Diciembre. ¡Prepárate!';
-            
+            const temasHoyElement = document.getElementById('temas-hoy');
+            if (temasHoyElement) {
+                temasHoyElement.innerHTML = temasHoy || 'El plan inicia el Lunes 23 de Diciembre. ¡Prepárate!';
+            }
             const html = `
                 <div class="stat-card" style="border-top-color: #667eea;">
                     <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">PROGRESO TOTAL</h3>
@@ -1388,9 +1417,13 @@
             const diaTexto = dias[dia];
             const semanaKey = 'semana' + semana;
             
-            if (!studyPlan[semanaKey]) return null;
+            if (!studyPlan[semanaKey]) {
+                return 'No hay plan para esta semana aún.';
+            }
             const diaData = studyPlan[semanaKey].dias.find(d => d.dia === diaTexto);
-            if (!diaData) return null;
+            if (!diaData) {
+                return 'No hay temas programados para hoy. ¡Descansa o repasa!';
+            }
             
             return `<strong>${diaData.materia}</strong><br>` + diaData.temas.map(t => `• ${t}`).join('<br>');
         }
@@ -3057,6 +3090,7 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
     </script>
 </body>
 </html>
+
 
 
 
