@@ -285,7 +285,7 @@
         <div class="header">
             <h1>📚 Plan de Estudio EXANI-II</h1>
             <p style="font-size: 1.3em; margin-top: 10px;">Ingeniería en Tecnología de Software</p>
-            <p style="opacity: 0.9; margin-top: 10px;">Inicio: Lunes 23 Diciembre 2024</p>
+            <p style="opacity: 0.9; margin-top: 10px;">Inicio: Lunes 22 Diciembre 2025</p>
         </div>
         
         <div class="tabs">
@@ -1158,8 +1158,7 @@
             ]}
         };
 
-        const startDate = new Date(2024, 11, 23); // 23 de diciembre de 2024
-        let timerInterval = null;
+        const startDate = new Date(2025, 11, 22); // 22 de diciembre de 2024 (mes 11 = diciembre)        let timerInterval = null;
         let timeLeft = 25 * 60;
         let isRunning = false;
 
@@ -1417,15 +1416,74 @@
             const diaTexto = dias[dia];
             const semanaKey = 'semana' + semana;
             
+            // Obtener temas de hoy
+            let temasHoyHTML = '';
             if (!studyPlan[semanaKey]) {
-                return 'No hay plan para esta semana aún.';
-            }
-            const diaData = studyPlan[semanaKey].dias.find(d => d.dia === diaTexto);
-            if (!diaData) {
-                return 'No hay temas programados para hoy. ¡Descansa o repasa!';
+                temasHoyHTML = 'No hay plan para esta semana aún.';
+            } else {
+                const diaData = studyPlan[semanaKey].dias.find(d => d.dia === diaTexto);
+                if (!diaData) {
+                    temasHoyHTML = 'No hay temas programados para hoy. ¡Descansa o repasa!';
+                } else {
+                    temasHoyHTML = `<strong>${diaData.materia}</strong><br>` + diaData.temas.map(t => `• ${t}`).join('<br>');
+                }
             }
             
-            return `<strong>${diaData.materia}</strong><br>` + diaData.temas.map(t => `• ${t}`).join('<br>');
+            // Buscar temas pendientes de días anteriores
+            let temasPendientes = [];
+            const today = new Date();
+            const daysSinceStart = Math.floor((today - startDate) / (24 * 60 * 60 * 1000));
+            
+            // Recorrer todas las semanas y días hasta hoy
+            for (let s = 1; s <= semana; s++) {
+                const sk = 'semana' + s;
+                if (!studyPlan[sk]) continue;
+                
+                studyPlan[sk].dias.forEach((diaObj, diaIdx) => {
+                    // Si es de esta semana, solo revisar días anteriores
+                    if (s === semana) {
+                        const diaIndex = dias.indexOf(diaObj.dia);
+                        if (diaIndex >= dia) return; // Saltar días futuros
+                    }
+                    
+                    // Revisar temas de este día
+                    diaObj.temas.forEach((tema, temaIdx) => {
+                        const key = `${sk}-${diaIdx}-${temaIdx}`;
+                        const checked = localStorage.getItem(key) === 'true';
+                        if (!checked) {
+                            temasPendientes.push({
+                                semana: s,
+                                dia: diaObj.dia,
+                                materia: diaObj.materia,
+                                tema: tema
+                            });
+                        }
+                    });
+                });
+            }
+            
+            // Construir mensaje final
+            let mensajeFinal = temasHoyHTML;
+            
+            if (temasPendientes.length > 0) {
+                mensajeFinal += '<br><br><strong style="color: #dc2626;">⚠️ Temas pendientes de días anteriores:</strong><br>';
+                
+                // Agrupar por semana
+                const porSemana = {};
+                temasPendientes.forEach(p => {
+                    if (!porSemana[p.semana]) porSemana[p.semana] = [];
+                    porSemana[p.semana].push(p);
+                });
+                
+                Object.keys(porSemana).sort().forEach(s => {
+                    mensajeFinal += `<br><strong style="color: #f59e0b;">Semana ${s}:</strong><br>`;
+                    porSemana[s].forEach(p => {
+                        mensajeFinal += `<span style="font-size: 0.95em;">• ${p.dia} - ${p.materia}: ${p.tema}</span><br>`;
+                    });
+                });
+            }
+            
+            return mensajeFinal;
         }
 
         function renderSimulacros() {
@@ -3042,6 +3100,624 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
                     `,
                     formula: "Examen: 3h, ~130 preguntas = 1.4 min/pregunta"
                 },
+                // ==================== SEMANA 3 ====================
+                "Probabilidad clásica": {
+                    texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Medir la posibilidad de que ocurra un evento. Valor entre 0 (imposible) y 1 (seguro)</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Concepto fundamental:</h4>
+                        <div style="background: #e0f2fe; padding: 20px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-size: 20px; font-weight: bold; text-align: center; margin: 10px 0;">
+                                P(A) = Casos favorables / Casos totales
+                            </p>
+                            <p style="margin: 10px 0;"><strong>Casos favorables:</strong> Los que nos interesan</p>
+                            <p style="margin: 5px 0;"><strong>Casos totales:</strong> Todos los posibles resultados</p>
+                            <p style="margin: 10px 0; color: #3b82f6;"><strong>Resultado:</strong> Número entre 0 y 1 (o 0% y 100%)</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Propiedades:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>0 ≤ P(A) ≤ 1</strong> (o 0% ≤ P(A) ≤ 100%)</p>
+                            <p style="margin: 5px 0;"><strong>Evento imposible:</strong> P(A) = 0</p>
+                            <p style="margin: 5px 0;"><strong>Evento seguro:</strong> P(A) = 1</p>
+                            <p style="margin: 5px 0;"><strong>Suma de probabilidades:</strong> P(A) + P(no A) = 1</p>
+                            <p style="margin: 5px 0;"><strong>En porcentaje:</strong> Multiplicar por 100</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎲 Ejemplos clásicos:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #e0f2fe;">
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Situación</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Cálculo</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Resultado</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Lanzar dado (obtener 3)</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">1/6</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">≈ 0.167 o 16.7%</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Lanzar moneda (cara)</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">1/2</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">0.5 o 50%</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Sacar as de baraja</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">4/52</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">≈ 0.077 o 7.7%</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Al lanzar un dado, ¿P(obtener 5)? <em>(R: 1/6 ≈ 0.167)</em></li>
+                            <li>Urna con 3 rojas y 7 azules. ¿P(roja)? <em>(R: 3/10 = 0.3 = 30%)</em></li>
+                            <li>¿P(obtener número par en dado)? <em>(R: 3/6 = 1/2 = 50%)</em></li>
+                            <li>Baraja 52 cartas. ¿P(corazón)? <em>(R: 13/52 = 1/4 = 25%)</em></li>
+                            <li>Si P(lluvia) = 0.3, ¿P(no lluvia)? <em>(R: 0.7 = 70%)</em></li>
+                        </ol>
+                    `,
+                    formula: "P(A) = casos favorables / casos totales | 0 ≤ P ≤ 1"
+                },
+
+                "Frecuencias": {
+                    texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Número de veces que aparece un dato. Puede ser absoluta (número) o relativa (proporción)</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Tipos de frecuencia:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #e0f2fe;">
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Tipo</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Definición</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Fórmula</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Absoluta (fa)</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Veces que aparece el dato</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Contar directamente</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Relativa (fr)</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Proporción respecto al total</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">fr = fa / n</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Porcentual (%)</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Frecuencia en porcentaje</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">% = fr × 100</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Acumulada (Fa)</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Suma acumulativa</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Suma hasta ese valor</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Ejemplo completo:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Datos:</strong> Calificaciones: 7, 8, 7, 9, 7, 8, 10, 7 (n=8)</p>
+                            <table style="width: 100%; margin: 10px 0; border-collapse: collapse;">
+                                <tr style="background: #bfdbfe;">
+                                    <th style="border: 1px solid #3b82f6; padding: 5px;">Calif.</th>
+                                    <th style="border: 1px solid #3b82f6; padding: 5px;">fa</th>
+                                    <th style="border: 1px solid #3b82f6; padding: 5px;">fr</th>
+                                    <th style="border: 1px solid #3b82f6; padding: 5px;">%</th>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">7</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">4</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">4/8 = 0.5</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">50%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">8</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">2</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">2/8 = 0.25</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">25%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">9</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">1</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">1/8 = 0.125</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">12.5%</td>
+                                </tr>
+                                <tr>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">10</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">1</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">1/8 = 0.125</td>
+                                    <td style="border: 1px solid #e0f2fe; padding: 5px;">12.5%</td>
+                                </tr>
+                            </table>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Datos: 2,3,2,4,2,5. ¿Frecuencia absoluta de 2? <em>(R: 3)</em></li>
+                            <li>Si fa=5 y n=20, ¿frecuencia relativa? <em>(R: 5/20 = 0.25)</em></li>
+                            <li>Si fr=0.4, ¿porcentaje? <em>(R: 40%)</em></li>
+                            <li>¿Qué es más útil para comparar conjuntos de diferente tamaño? <em>(R: Frecuencia relativa)</em></li>
+                            <li>Si 15 de 50 prefieren azul, ¿fr? <em>(R: 15/50 = 0.3 = 30%)</em></li>
+                        </ol>
+                    `,
+                    formula: "fr = fa/n | % = fr × 100 | Suma de fr = 1"
+                },
+
+                "Concordancia nominal": {
+                    texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Sustantivos, artículos y adjetivos deben concordar en género (masc/fem) y número (sing/plur)</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Reglas de concordancia:</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0;"><strong>1. Artículo + Sustantivo + Adjetivo</strong></p>
+                            <p style="margin-left: 20px;">✅ <strong>El</strong> perro <strong>negro</strong> (masc. sing.)</p>
+                            <p style="margin-left: 20px;">✅ <strong>La</strong> casa <strong>grande</strong> (fem. sing.)</p>
+                            <p style="margin-left: 20px;">✅ <strong>Los</strong> libros <strong>nuevos</strong> (masc. plur.)</p>
+                            <p style="margin-left: 20px;">✅ <strong>Las</strong> flores <strong>rojas</strong> (fem. plur.)</p>
+                            <p style="margin-left: 20px; color: #dc2626;">❌ El casa grande (género no concuerda)</p>
+                            <p style="margin-left: 20px; color: #dc2626;">❌ Los libro nuevo (número no concuerda)</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">📐 Casos especiales:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fce7f3;">
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Caso</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Regla</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Ejemplo</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Adjetivo antes</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">También debe concordar</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Hermosas flores</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Varios sustantivos</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Adjetivo en plural</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">El perro y gato negros</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Masc. + Fem.</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Adjetivo masculino</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Niños y niñas contentos</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🔑 Artículos en español:</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Determinados:</strong> el, la, los, las</p>
+                            <p style="margin: 5px 0;"><strong>Indeterminados:</strong> un, una, unos, unas</p>
+                            <p style="margin: 5px 0;"><strong>Neutro:</strong> lo (lo bueno, lo malo)</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Corrige: "El mesas redondo" <em>(R: Las mesas redondas)</em></li>
+                            <li>¿Es correcto? "Los gatos negros" <em>(R: Sí, concuerda)</em></li>
+                            <li>Completa: "La ___ blancas" <em>(R: casas/flores/nubes - fem. plur.)</em></li>
+                            <li>Corrige: "Un niñas feliz" <em>(R: Unas niñas felices)</em></li>
+                            <li>¿Cuál concuerda? "El libro rojo" o "El libro roja" <em>(R: El libro rojo)</em></li>
+                        </ol>
+                    `,
+                    formula: "Artículo + Sustantivo + Adjetivo = Mismo género y número"
+                },
+
+                "Concordancia verbal": {
+                    texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>El verbo debe concordar con el sujeto en número (singular/plural) y persona (1ª, 2ª, 3ª)</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Personas gramaticales:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fce7f3;">
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Persona</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Singular</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Plural</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>1ª</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Yo como</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Nosotros comemos</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>2ª</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Tú comes</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Ustedes comen</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>3ª</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Él/Ella come</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Ellos comen</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">📐 Errores comunes:</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0;"><strong>ERROR 1: Sujeto plural, verbo singular</strong></p>
+                            <p style="margin-left: 20px; color: #dc2626;">❌ Los niños corre</p>
+                            <p style="margin-left: 20px; color: #16a34a;">✅ Los niños corren</p>
+                            
+                            <p style="margin: 15px 0 8px;"><strong>ERROR 2: Sujeto colectivo</strong></p>
+                            <p style="margin-left: 20px; color: #16a34a;">✅ La gente canta (singular)</p>
+                            <p style="margin-left: 20px; color: #16a34a;">✅ El grupo estudia (singular)</p>
+                            
+                            <p style="margin: 15px 0 8px;"><strong>ERROR 3: Sujeto compuesto</strong></p>
+                            <p style="margin-left: 20px; color: #dc2626;">❌ Juan y María estudia</p>
+                            <p style="margin-left: 20px; color: #16a34a;">✅ Juan y María estudian (plural)</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🔑 Casos especiales:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Sujeto lejos del verbo:</strong> Identifica bien el sujeto</li>
+                            <li>"Los libros que están en la mesa <u>son</u> míos" (libros=sujeto)</li>
+                            <li><strong>Con "haber":</strong> Siempre singular → "Hay niños" (no "Hayn")</li>
+                            <li><strong>Usted/Ustedes:</strong> 3ª persona → "Usted come" (como él/ella)</li>
+                        </ul>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Corrige: "Los perros ladra" <em>(R: Los perros ladran)</em></li>
+                            <li>¿Es correcto? "Nosotros comemos" <em>(R: Sí)</em></li>
+                            <li>Completa: "María y Pedro ___" (estudiar) <em>(R: estudian)</em></li>
+                            <li>¿Correcto? "Hay problemas" o "Hayn problemas" <em>(R: Hay problemas)</em></li>
+                            <li>Corrige: "Tú come rápido" <em>(R: Tú comes rápido)</em></li>
+                        </ol>
+                    `,
+                    formula: "Verbo = concuerda con sujeto en persona y número"
+                },
+
+                "Notación científica": {
+                    texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Forma de escribir números muy grandes o muy pequeños de manera compacta</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Formato estándar:</h4>
+                        <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                            <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">
+                                a × 10<sup>n</sup>
+                            </p>
+                            <p style="margin: 10px 0;"><strong>Donde:</strong></p>
+                            <p style="margin: 5px 0;"><strong>a</strong> = número entre 1 y 10 (1 ≤ a < 10)</p>
+                            <p style="margin: 5px 0;"><strong>n</strong> = exponente (entero positivo o negativo)</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Cómo convertir:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0; font-weight: bold;">NÚMEROS GRANDES (n positivo):</p>
+                            <p style="margin-left: 20px;">3000 → Mover punto 3 lugares → 3 × 10³</p>
+                            <p style="margin-left: 20px;">450,000 → Mover 5 lugares → 4.5 × 10⁵</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">NÚMEROS PEQUEÑOS (n negativo):</p>
+                            <p style="margin-left: 20px;">0.003 → Mover punto 3 lugares → 3 × 10⁻³</p>
+                            <p style="margin-left: 20px;">0.000045 → Mover 5 lugares → 4.5 × 10⁻⁵</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🔢 Operaciones:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fef3c7;">
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Operación</th>
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Regla</th>
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Ejemplo</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;"><strong>Multiplicación</strong></td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">Multiplica a, suma exponentes</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">(2×10³)(3×10²) = 6×10⁵</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;"><strong>División</strong></td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">Divide a, resta exponentes</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">(6×10⁵)÷(2×10³) = 3×10²</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Escribe 5000 en notación científica <em>(R: 5 × 10³)</em></li>
+                            <li>Escribe 0.0007 en notación científica <em>(R: 7 × 10⁻⁴)</em></li>
+                            <li>Convierte 3.2 × 10⁴ a número normal <em>(R: 32,000)</em></li>
+                            <li>(2×10³)(4×10²) = ? <em>(R: 8×10⁵ = 800,000)</em></li>
+                            <li>¿Cuál es mayor: 5×10³ o 2×10⁴? <em>(R: 2×10⁴)</em></li>
+                        </ol>
+                    `,
+                    formula: "a × 10ⁿ donde 1 ≤ a < 10"
+                },
+
+                "Factores primos": {
+                    texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+<p>Descomponer un número como producto de números primos</p><h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 ¿Qué es un número primo?</h4>
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;"><strong>Número primo:</strong> Solo divisible entre 1 y él mismo</p>
+                        <p style="margin: 5px 0;"><strong>Primeros primos:</strong> 2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47...</p>
+                        <p style="margin: 5px 0; color: #f59e0b;"><strong>Nota:</strong> 1 NO es primo, 2 es el único primo par</p>
+                    </div>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Método de descomposición:</h4>
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 8px 0; font-weight: bold;">Ejemplo: Descomponer 60</p>
+                        <pre style="background: white; padding: 10px; border-radius: 5px; font-family: 'Courier New';">60 | 2    (60 ÷ 2 = 30)
+30 | 2    (30 ÷ 2 = 15)
+15 | 3    (15 ÷ 3 = 5)
+5 | 5    (5 ÷ 5 = 1)
+1 |
+</pre>
+<p style="margin: 8px 0; font-weight: bold;">Resultado: 60 = 2² × 3 × 5</p>
+</div><h4 style="color: #f59e0b; margin: 15px 0 10px;">🔑 Pasos:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Divide entre el primo más pequeño</strong> que sea divisor</li>
+                        <li><strong>Empieza con 2</strong> - si es par, divide entre 2</li>
+                        <li><strong>Si ya no es par</strong>, prueba con 3, 5, 7, 11...</li>
+                        <li><strong>Continúa</strong> hasta llegar a 1</li>
+                        <li><strong>Escribe el resultado</strong> con exponentes si se repiten</li>
+                    </ol>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">💡 Aplicaciones:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Calcular <strong>MCD</strong> (Máximo Común Divisor)</li>
+                        <li>Calcular <strong>mcm</strong> (mínimo común múltiplo)</li>
+                        <li>Simplificar fracciones</li>
+                        <li>Resolver problemas de divisibilidad</li>
+                    </ul>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Descompón 12 en factores primos <em>(R: 2² × 3)</em></li>
+                        <li>Descompón 30 <em>(R: 2 × 3 × 5)</em></li>
+                        <li>Descompón 100 <em>(R: 2² × 5²)</em></li>
+                        <li>¿Es 17 un número primo? <em>(R: Sí)</em></li>
+                        <li>Descompón 45 <em>(R: 3² × 5)</em></li>
+                    </ol>
+                `,
+                formula: "Dividir sucesivamente entre primos: 2, 3, 5, 7, 11..."
+            },
+
+            "Leyes de Newton": {
+                texto: `
+                    <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Las tres leyes fundamentales que describen el movimiento y las fuerzas</p>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Las 3 Leyes:</h4>
+                    <div style="background: #ede9fe; padding: 20px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-size: 18px; font-weight: bold; margin: 10px 0; color: #8b5cf6;">
+                            1ª LEY - INERCIA
+                        </p>
+                        <p style="margin: 5px 0 15px 20px;">Un objeto en reposo permanece en reposo, y un objeto en movimiento permanece en movimiento rectilíneo uniforme, a menos que actúe una fuerza externa.</p>
+                        <p style="margin-left: 20px;"><em>Ejemplo: Pasajeros hacia adelante al frenar bruscamente</em></p>
+                        
+                        <p style="font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #8b5cf6;">
+                            2ª LEY - FUERZA
+                        </p>
+                        <p style="margin: 5px 0 10px 20px; font-family: 'Courier New'; font-size: 20px;">F = m × a</p>
+                        <p style="margin: 5px 0 15px 20px;">La fuerza es directamente proporcional a la masa y la aceleración</p>
+                        <p style="margin-left: 20px;">F (Newtons), m (kg), a (m/s²)</p>
+                        
+                        <p style="font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #8b5cf6;">
+                            3ª LEY - ACCIÓN Y REACCIÓN
+                        </p>
+                        <p style="margin: 5px 0 15px 20px;">Por cada acción hay una reacción de igual magnitud pero en sentido contrario</p>
+                        <p style="margin-left: 20px;"><em>Ejemplo: Al empujar una pared, la pared te empuja a ti</em></p>
+                    </div>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Segunda Ley (la más usada):</h4>
+                    <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;"><strong>F = m × a</strong></p>
+                        <p style="margin: 5px 0;">Despejes:</p>
+                        <p style="font-family: 'Courier New'; margin: 5px 0;">a = F / m</p>
+                        <p style="font-family: 'Courier New'; margin: 5px 0;">m = F / a</p>
+                        <p style="margin: 10px 0 5px;">Unidad de fuerza: <strong>Newton (N)</strong></p>
+                        <p style="margin-left: 20px;">1 N = 1 kg·m/s²</p>
+                    </div>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Si m=5kg y a=2m/s², ¿qué fuerza se aplica? <em>(R: F=10 N)</em></li>
+                        <li>¿Qué ley explica usar cinturón de seguridad? <em>(R: 1ª Ley, Inercia)</em></li>
+                        <li>F=20N, m=4kg. ¿Aceleración? <em>(R: a=5 m/s²)</em></li>
+                        <li>Al patear una pelota, ¿qué ley actúa? <em>(R: 3ª, acción-reacción)</em></li>
+                        <li>¿Cuál ley es F=ma? <em>(R: 2ª Ley de Newton)</em></li>
+                    </ol>
+                `,
+                formula: "1ª:Inercia | 2ª:F=m×a | 3ª:Acción=Reacción"
+            },
+
+            "Diagramas de fuerzas": {
+                texto: `
+                    <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Representación gráfica de todas las fuerzas que actúan sobre un objeto</p>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Tipos de fuerzas comunes:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #ede9fe;">
+                            <th style="border: 1px solid #8b5cf6; padding: 8px;">Fuerza</th>
+                            <th style="border: 1px solid #8b5cf6; padding: 8px;">Símbolo</th>
+                            <th style="border: 1px solid #8b5cf6; padding: 8px;">Dirección</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;"><strong>Peso</strong></td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">W o P</td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">Hacia abajo (vertical)</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;"><strong>Normal</strong></td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">N</td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">Perpendicular a la superficie</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;"><strong>Fricción</strong></td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">f o Fr</td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">Opuesta al movimiento</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;"><strong>Tensión</strong></td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">T</td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">A lo largo de la cuerda</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;"><strong>Aplicada</strong></td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">F</td>
+                            <td style="border: 1px solid #ede9fe; padding: 8px;">Dirección del empuje/jalón</td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Cómo dibujar un diagrama:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Dibuja el objeto</strong> como un punto o cuadrado</li>
+                        <li><strong>Identifica TODAS las fuerzas</strong> que actúan sobre él</li>
+                        <li><strong>Dibuja flechas</strong> desde el centro del objeto</li>
+                        <li><strong>Longitud de flecha</strong> = magnitud de la fuerza</li>
+                        <li><strong>Dirección de flecha</strong> = dirección de la fuerza</li>
+                        <li><strong>Etiqueta cada fuerza</strong> con su nombre y valor</li>
+                    </ol>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">⚖️ Equilibrio de fuerzas:</h4>
+                    <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;"><strong>∑F = 0</strong> (equilibrio)</p>
+                        <p style="margin: 5px 0;">Si la suma de fuerzas es CERO → objeto en equilibrio (reposo o MRU)</p>
+                        <p style="margin: 5px 0;">Si ∑F ≠ 0 → objeto tiene aceleración (F = ma)</p>
+                        <p style="margin: 10px 0 5px; font-weight: bold;">Ejemplo libro sobre mesa:</p>
+                        <p style="margin-left: 20px;">Peso (↓) = 10 N</p>
+                        <p style="margin-left: 20px;">Normal (↑) = 10 N</p>
+                        <p style="margin-left: 20px;">∑F = 10 - 10 = 0 → Equilibrio ✓</p>
+                    </div>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Libro sobre mesa. ¿Qué 2 fuerzas actúan? <em>(R: Peso ↓ y Normal ↑)</em></li>
+                        <li>Si W=50N y N=50N, ¿está en equilibrio? <em>(R: Sí, ∑F=0)</em></li>
+                        <li>Empujas con 30N, fricción 10N. ¿Fuerza neta? <em>(R: 20N en dirección del empuje)</em></li>
+                        <li>¿Qué fuerza siempre apunta hacia abajo? <em>(R: Peso)</em></li>
+                        <li>¿Qué fuerza se opone al movimiento? <em>(R: Fricción)</em></li>
+                    </ol>
+                `,
+                formula: "∑F = 0 (equilibrio) | ∑F ≠ 0 (aceleración, F=ma)"
+            },
+
+            "Evaluación de forma y contenido": {
+                texto: `
+                    <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Analizar un texto en dos dimensiones: CÓMO está escrito (forma) y QUÉ dice (contenido)</p>
+                    
+                    <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Forma vs Contenido:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #d1fae5;">
+                            <th style="border: 1px solid #10b981; padding: 8px;">FORMA (Cómo)</th>
+                            <th style="border: 1px solid #10b981; padding: 8px;">CONTENIDO (Qué)</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #d1fae5; padding: 8px;">
+                                • Ortografía<br>
+                                • Gramática<br>
+                                • Puntuación<br>
+                                • Estructura<br>
+                                • Vocabulario<br>
+                                • Cohesión
+                            </td>
+                            <td style="border: 1px solid #d1fae5; padding: 8px;">
+                                • Ideas principales<br>
+                                • Argumentos<br>
+                                • Coherencia lógica<br>
+                                • Veracidad<br>
+                                • Profundidad<br>
+                                • Relevancia
+                            </td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="color: #10b981; margin: 15px 0 10px;">📐 Criterios de evaluación:</h4>
+                    <div style="background: #d1fae5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-weight: bold; margin-bottom: 10px;">FORMA:</p>
+                        <p style="margin: 5px 0;">✓ ¿Hay errores ortográficos?</p>
+                        <p style="margin: 5px 0;">✓ ¿La gramática es correcta?</p>
+                        <p style="margin: 5px 0;">✓ ¿Usa bien la puntuación?</p>
+                        <p style="margin: 5px 0;">✓ ¿Está bien organizado?</p>
+                        <p style="margin: 5px 0;">✓ ¿El vocabulario es apropiado?</p>
+                        
+                        <p style="font-weight: bold; margin: 20px 0 10px;">CONTENIDO:</p>
+                        <p style="margin: 5px 0;">✓ ¿Las ideas son claras?</p>
+                        <p style="margin: 5px 0;">✓ ¿Los argumentos son sólidos?</p>
+                        <p style="margin: 5px 0;">✓ ¿Hay coherencia entre ideas?</p>
+                        <p style="margin: 5px 0;">✓ ¿La información es verídica?</p>
+                        <p style="margin: 5px 0;">✓ ¿Es relevante al tema?</p>
+                    </div>
+                    
+                    <h4 style="color: #10b981; margin: 15px 0 10px;">🔑 Preguntas clave:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Forma:</strong> ¿Se lee fácilmente? ¿Hay errores que distraen?</li>
+                        <li><strong>Contenido:</strong> ¿Es convincente? ¿Aprend í algo nuevo?</li>
+                        <li><strong>Ambos:</strong> Un texto puede tener buena forma pero mal contenido (y viceversa)</li>
+                    </ul>
+                    
+                    <h4 style="color: #10b981; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>"El agua hierbe a 50°C" - ¿Error de forma o contenido? <em>(R: Contenido, dato falso)</em></li>
+                        <li>"Los perro ladra" - ¿Error de forma o contenido? <em>(R: Forma, gramática)</em></li>
+                        <li>Texto bien escrito pero sin argumentos sólidos - ¿Qué falla? <em>(R: Contenido)</em></li>
+                        <li>¿La ortografía es forma o contenido? <em>(R: Forma)</em></li>
+                        <li>¿La coherencia de ideas es forma o contenido? <em>(R: Contenido)</em></li>
+                    </ol>
+                `,
+                formula: "Forma = CÓMO se dice | Contenido = QUÉ se dice"
+            },
+
+            "Matemáticas + Aritmética + Física": {
+                texto: `
+                    <h4 style="color: #ef4444; margin-bottom: 10px;">📖 ¿Qué debes hacer?</h4>
+                    <p>Mini-simulacro enfocado en las áreas más técnicas y con fórmulas</p>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">🎯 Estructura del simulacro:</h4>
+                    <div style="background: #fee2e2; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;"><strong>Matemáticas:</strong> 8-10 preguntas</p>
+                        <p style="margin-left: 20px;">• Razones, proporciones, ecuaciones, probabilidad</p>
+                        
+                        <p style="margin: 10px 0 5px;"><strong>Aritmética:</strong> 8-10 preguntas</p>
+                        <p style="margin-left: 20px;">• Operaciones, fracciones, potencias, notación científica</p>
+                        
+                        <p style="margin: 10px 0 5px;"><strong>Física:</strong> 6-8 preguntas</p>
+                        <p style="margin-left: 20px;">• Cinemática, fuerzas, leyes de Newton</p>
+                        
+                        <p style="margin: 10px 0 5px; font-weight: bold; color: #ef4444;">Total: 22-28 preguntas en 35-40 minutos</p>
+                    </div>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">📐 Fórmulas clave a repasar ANTES:</h4>
+                    <div style="background: #fee2e2; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-weight: bold; margin-bottom: 5px;">MATEMÁTICAS:</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• a/b = c/d → a×d = b×c</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• P(A) = favorables/totales</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• y = mx + b</p>
+                        
+                        <p style="font-weight: bold; margin: 15px 0 5px;">ARITMÉTICA:</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• aⁿ × aᵐ = aⁿ⁺ᵐ</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• % = (parte/total) × 100</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• Notación: a × 10ⁿ</p>
+                        
+                        <p style="font-weight: bold; margin: 15px 0 5px;">FÍSICA:</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• v = d/t</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• F = m × a</p>
+                        <p style="font-family: 'Courier New'; margin: 3px 0;">• a = Δv/Δt</p>
+                    </div>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">🔑 Estrategia:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Ten tu hoja de fórmulas</strong> a la mano (en el examen real no la tendrás)</li>
+                        <li><strong>Identifica qué te piden</strong> antes de empezar a calcular</li>
+                        <li><strong>Verifica unidades</strong> - deben ser consistentes</li>
+                        <li><strong>Si no sabes</strong>, elimina opciones absurdas</li>
+                        <li><strong>Revisa cálculos</strong> si te sobra tiempo</li>
+                    </ul>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">✏️ Después del simulacro:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Calcula % de aciertos POR MATERIA</li>
+                        <li>¿Cuál área estuvo más difícil?</li>
+                        <li>¿Fueron errores de concepto o de cálculo?</li>
+                        <li>¿Te faltó tiempo o lo manejaste bien?</li>
+                        <li>Meta: >70% en cada área</li>
+                    </ol>
+                `,
+                formula: "Simulacro mixto = Practica cambiar entre materias rápidamente"
+            },
 
 
 
@@ -3074,11 +3750,8 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
             renderSimulacros();
             renderAchievements();
             actualizarProgreso();
+            renderDashboard(); // Agregamos esta línea ANTES del setTimeout
             
-            // Renderizar dashboard después de un pequeño delay
-            setTimeout(() => {
-                renderDashboard();
-            }, 100);
             
             const sessions = localStorage.getItem('pomodoroSessions') || '0';
             document.getElementById('session-counter').textContent = 'Sesiones hoy: ' + sessions;
@@ -3094,6 +3767,7 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
     </script>
 </body>
 </html>
+
 
 
 
