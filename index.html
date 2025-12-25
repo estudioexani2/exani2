@@ -1367,8 +1367,12 @@
             const temasHoy = obtenerTemasHoy(semanaActual, diaActual);
             const temasHoyElement = document.getElementById('temas-hoy');
             if (temasHoyElement) {
-                temasHoyElement.innerHTML = temasHoy || 'El plan inicia el Lunes 23 de Diciembre. ¡Prepárate!';
+                temasHoyElement.innerHTML = temasHoy || 'El plan inicia el Lunes 22 de Diciembre. ¡Prepárate!';
             }
+            
+            const dashboardElement = document.getElementById('dashboard-stats');
+            if (!dashboardElement) return; // Si no existe, salir
+            
             const html = `
                 <div class="stat-card" style="border-top-color: #667eea;">
                     <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">PROGRESO TOTAL</h3>
@@ -1391,9 +1395,9 @@
                     <div style="font-size: 0.9em; color: #9ca3af;">Total acumulado</div>
                 </div>
             `;
-            document.getElementById('dashboard-stats').innerHTML = html;
+            dashboardElement.innerHTML = html;
         }
-
+        
         function calcularRacha(studyDays) {
             if (studyDays.length === 0) return 0;
             studyDays.sort().reverse();
@@ -3746,30 +3750,37 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
             }
         }
         window.onload = function() {
+            // Ejecutar inmediatamente al cargar
+            renderDashboard();
+            
             renderCalendario();
             renderSimulacros();
             renderAchievements();
             actualizarProgreso();
             
             const sessions = localStorage.getItem('pomodoroSessions') || '0';
-            document.getElementById('session-counter').textContent = 'Sesiones hoy: ' + sessions;
+            const sessionCounter = document.getElementById('session-counter');
+            if (sessionCounter) {
+                sessionCounter.textContent = 'Sesiones hoy: ' + sessions;
+            }
             
             const lastDate = localStorage.getItem('lastVisit');
             const today = new Date().toISOString().split('T')[0];
             if (lastDate !== today) {
                 localStorage.setItem('pomodoroSessions', '0');
-                document.getElementById('session-counter').textContent = 'Sesiones hoy: 0';
+                if (sessionCounter) {
+                    sessionCounter.textContent = 'Sesiones hoy: 0';
+                }
             }
             localStorage.setItem('lastVisit', today);
             
-            // Renderizar dashboard AL FINAL, después de que todo esté listo
-            setTimeout(() => {
-                renderDashboard();
-            }, 50);
+            // Renderizar una segunda vez después de 100ms por si acaso
+            setTimeout(renderDashboard, 100);
         };
     </script>
 </body>
 </html>
+
 
 
 
