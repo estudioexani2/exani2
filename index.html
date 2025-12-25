@@ -898,7 +898,7 @@
                     <p style="font-size: 1.2em; margin-bottom: 30px;">
                         Pon a prueba tus conocimientos con 5 preguntas aleatorias
                     </p>
-                    <button onclick="iniciarQuiz()" style="
+                    <button onclick="iniciarQuizWrapper()" style="
                         padding: 15px 40px;
                         font-size: 1.2em;
                         background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -954,7 +954,7 @@
                     <p style="font-size: 1.5em; margin-bottom: 30px;">
                         Tu puntaje: <span id="quiz-puntaje-final" style="color: #667eea; font-weight: bold;">0</span>/5
                     </p>
-                    <button onclick="iniciarQuiz()" style="
+                    <button onclick="iniciarQuizWrapper()" style="
                         padding: 15px 40px;
                         font-size: 1.2em;
                         background: linear-gradient(135deg, #10b981 0%, #059669 100%);
@@ -1687,7 +1687,55 @@
             actual: 0,
             aciertos: 0
         };
-        
+        function iniciarQuizWrapper() {
+            iniciarQuiz().catch(error => {
+                console.error("Error en quiz:", error);
+                document.getElementById('quiz-inicio').innerHTML = `
+                    <div style="text-align: center;">
+                        <div style="font-size: 3em; margin-bottom: 20px;">❌</div>
+                        <p style="font-size: 1.3em; color: #dc2626;">
+                            Error al generar preguntas.<br>Usando preguntas de respaldo...
+                        </p>
+                    </div>
+                `;
+                setTimeout(() => {
+                    quizActual.preguntas = [
+                        {
+                            pregunta: "¿Cuál es la fórmula de la velocidad?",
+                            opciones: ["v = d × t", "v = d / t", "v = t / d", "v = d + t"],
+                            correcta: 1
+                        },
+                        {
+                            pregunta: "Si 3:5 = 9:x, ¿cuánto vale x?",
+                            opciones: ["12", "15", "18", "20"],
+                            correcta: 1
+                        },
+                        {
+                            pregunta: "(-8) + 12 - (-5) = ?",
+                            opciones: ["9", "1", "-1", "15"],
+                            correcta: 0
+                        },
+                        {
+                            pregunta: "¿Qué tipo de texto defiende una opinión?",
+                            opciones: ["Narrativo", "Descriptivo", "Expositivo", "Argumentativo"],
+                            correcta: 3
+                        },
+                        {
+                            pregunta: "1/2 + 1/3 = ?",
+                            opciones: ["2/5", "5/6", "3/6", "1/6"],
+                            correcta: 1
+                        }
+                    ];
+                    quizActual.actual = 0;
+                    quizActual.aciertos = 0;
+                    document.getElementById('quiz-inicio').style.display = 'none';
+                    document.getElementById('quiz-resultado').style.display = 'none';
+                    document.getElementById('quiz-juego').style.display = 'block';
+                    mostrarPreguntaQuiz();
+                }, 2000);
+            });
+        }
+
         async function iniciarQuiz() {
             // Mostrar mensaje de carga
             document.getElementById('quiz-inicio').innerHTML = `
@@ -1704,7 +1752,9 @@
             
             // Generar preguntas con IA
             const preguntasGeneradas = await generarPreguntasConIA(temas, materia);
-            
+            console.log("Temas del día:", temas);
+            console.log("Materia:", materia);
+            console.log("Preguntas generadas:", preguntasGeneradas);
             quizActual.preguntas = preguntasGeneradas;
             quizActual.actual = 0;
             quizActual.aciertos = 0;
@@ -3824,6 +3874,7 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
     </script>
 </body>
 </html>
+
 
 
 
