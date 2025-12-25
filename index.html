@@ -1470,7 +1470,10 @@
             let mensajeFinal = temasHoyHTML;
             
             if (temasPendientes.length > 0) {
-                mensajeFinal += '<br><br><strong style="color: #dc2626;">⚠️ Temas pendientes de días anteriores:</strong><br>';
+                mensajeFinal += `
+                    <div style="background: rgba(220, 38, 38, 0.15); border-left: 4px solid #dc2626; padding: 15px; border-radius: 8px; margin-top: 20px;">
+                        <strong style="color: #7f1d1d; font-size: 1.1em;">⚠️ Temas pendientes de días anteriores:</strong>
+                `;
                 
                 // Agrupar por semana
                 const porSemana = {};
@@ -1480,11 +1483,18 @@
                 });
                 
                 Object.keys(porSemana).sort().forEach(s => {
-                    mensajeFinal += `<br><strong style="color: #f59e0b;">Semana ${s}:</strong><br>`;
+                    mensajeFinal += `
+                        <div style="background: white; border-radius: 6px; padding: 12px; margin-top: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                            <strong style="color: #ea580c; font-size: 1.05em;">📚 Semana ${s}:</strong>
+                            <div style="margin-top: 8px;">
+                    `;
                     porSemana[s].forEach(p => {
-                        mensajeFinal += `<span style="font-size: 0.95em;">• ${p.dia} - ${p.materia}: ${p.tema}</span><br>`;
+                        mensajeFinal += `<div style="color: #1f2937; font-size: 0.95em; padding: 4px 0; padding-left: 10px; border-left: 2px solid #fed7aa;">• <strong>${p.dia}</strong> - ${p.materia}: ${p.tema}</div>`;
                     });
+                    mensajeFinal += `</div></div>`;
                 });
+                
+                mensajeFinal += `</div>`;
             }
             
             return mensajeFinal;
@@ -3814,6 +3824,7 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
     </script>
 </body>
 </html>
+
 
 
 
