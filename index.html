@@ -3816,7 +3816,692 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
                 `,
                 formula: "Simulacro mixto = Practica cambiar entre materias rápidamente"
             },
+                // ==================== SEMANA 4 ====================
+                "Medidas de tendencia central": {
+                    texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Valores que representan el "centro" de un conjunto de datos: Media, Mediana y Moda</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Las 3 medidas principales:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #e0f2fe;">
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Medida</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Definición</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Cómo calcular</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Media (x̄)</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Promedio aritmético</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Suma de datos ÷ cantidad</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Mediana</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Valor central</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Ordenar datos, tomar el del medio</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Moda</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Valor más frecuente</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">El que más se repite</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Ejemplo completo:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0; font-weight: bold;">Datos: 3, 5, 7, 5, 9, 5, 4</p>
+                            
+                            <p style="margin: 15px 0 5px; font-weight: bold;">MEDIA:</p>
+                            <p style="font-family: 'Courier New'; margin: 5px 0;">x̄ = (3+5+7+5+9+5+4) / 7</p>
+                            <p style="font-family: 'Courier New'; margin: 5px 0;">x̄ = 38 / 7 = 5.43</p>
+                            
+                            <p style="margin: 15px 0 5px; font-weight: bold;">MEDIANA:</p>
+                            <p style="margin: 5px 0;">1. Ordenar: 3, 4, 5, 5, 5, 7, 9</p>
+                            <p style="margin: 5px 0;">2. Tomar el del medio (posición 4): <strong>5</strong></p>
+                            <p style="margin: 5px 0; color: #3b82f6;">Si hay cantidad PAR de datos, promedia los 2 centrales</p>
+                            
+                            <p style="margin: 15px 0 5px; font-weight: bold;">MODA:</p>
+                            <p style="margin: 5px 0;">El 5 aparece 3 veces (más que los demás)</p>
+                            <p style="margin: 5px 0;">Moda = <strong>5</strong></p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🔑 Casos especiales:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Sin moda:</strong> Todos aparecen la misma cantidad de veces</li>
+                            <li><strong>Bimodal:</strong> Dos valores empatados como más frecuentes</li>
+                            <li><strong>Multimodal:</strong> Más de dos modas</li>
+                            <li><strong>Media sensible:</strong> Se afecta mucho por valores extremos</li>
+                            <li><strong>Mediana robusta:</strong> No se afecta por valores extremos</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Datos: 2,4,6,8. ¿Media? <em>(R: 5)</em></li>
+                            <li>Datos: 1,3,5,7,9. ¿Mediana? <em>(R: 5)</em></li>
+                            <li>Datos: 2,2,3,4,2,5. ¿Moda? <em>(R: 2)</em></li>
+                            <li>Si todos los datos son iguales, ¿media=mediana=moda? <em>(R: Sí)</em></li>
+                            <li>Datos: 10,20,30,40. ¿Mediana? <em>(R: 25, promedio de 20 y 30)</em></li>
+                        </ol>
+                    `,
+                    formula: "Media = Σx/n | Mediana = valor central | Moda = más frecuente"
+                },
 
+                "Media, mediana y moda": {
+                    texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Profundización en el cálculo y aplicaciones de cada medida</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Cuándo usar cada una:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #e0f2fe;">
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Medida</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Ventaja</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Cuándo usarla</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Media</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Usa todos los datos</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Datos sin valores extremos</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Mediana</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">No afectada por extremos</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Datos con outliers</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Moda</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Identifica valor típico</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Datos categóricos</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Ejemplo comparativo:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0; font-weight: bold;">Salarios en empresa (miles $):</p>
+                            <p style="margin: 5px 0;">5, 6, 6, 7, 7, 7, 8, 8, 100</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Media:</strong> (5+6+6+7+7+7+8+8+100)/9 = 17.1 mil</p>
+                            <p style="margin-left: 20px; color: #dc2626;">❌ No representa bien: nadie gana cerca de 17</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Mediana:</strong> Ordenados: 5,6,6,7,<u>7</u>,7,8,8,100</p>
+                            <p style="margin-left: 20px; color: #16a34a;">✅ 7 mil es más representativo</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Moda:</strong> 7 mil (aparece 3 veces)</p>
+                            <p style="margin-left: 20px; color: #16a34a;">✅ El salario más común</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🔑 Propiedades importantes:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Media ponderada:</strong> Cuando algunos datos tienen más "peso"</li>
+                            <li>Ejemplo: Calif. = 0.3×tareas + 0.7×examen</li>
+                            <li><strong>Distribución simétrica:</strong> Media ≈ Mediana ≈ Moda</li>
+                            <li><strong>Distribución asimétrica:</strong> Las tres son diferentes</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Edades: 5,5,10,15,80. ¿Mejor medida? <em>(R: Mediana, por el 80)</em></li>
+                            <li>Colores preferidos: rojo,azul,rojo,verde,rojo. ¿Qué usar? <em>(R: Moda)</em></li>
+                            <li>Si Media=10 y todos los datos aumentan +5, ¿nueva media? <em>(R: 15)</em></li>
+                            <li>Datos: 1,2,3,4,5. ¿Media=Mediana? <em>(R: Sí, ambas=3)</em></li>
+                            <li>¿Cuál es más afectada por un valor extremo? <em>(R: Media)</em></li>
+                        </ol>
+                    `,
+                    formula: "Elige según contexto: Media (general), Mediana (extremos), Moda (categorías)"
+                },
+
+                "Uso correcto de comas y puntos": {
+                    texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Reglas de puntuación para separar ideas y dar claridad al texto</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Usos de la COMA (,):</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0; font-weight: bold;">1. ENUMERACIÓN:</p>
+                            <p style="margin-left: 20px;">✅ Compré manzanas, peras, uvas y naranjas</p>
+                            <p style="margin-left: 20px; color: #ec4899;">Nota: Antes de "y" final NO va coma</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">2. VOCATIVO (llamar a alguien):</p>
+                            <p style="margin-left: 20px;">✅ María, ven aquí</p>
+                            <p style="margin-left: 20px;">✅ Ven aquí, María</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">3. ACLARACIÓN:</p>
+                            <p style="margin-left: 20px;">✅ Juan, mi hermano, llegó tarde</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">4. CONECTORES:</p>
+                            <p style="margin-left: 20px;">✅ Estudié mucho, sin embargo, reprobé</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">5. ANTES DE "PERO", "MAS", "AUNQUE":</p>
+                            <p style="margin-left: 20px;">✅ Quiero ir, pero no puedo</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">📐 Usos del PUNTO (.):</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0; font-weight: bold;">PUNTO Y SEGUIDO (.)</p>
+                            <p style="margin-left: 20px;">Separa oraciones del mismo párrafo</p>
+                            <p style="margin-left: 20px;">✅ Hoy es lunes. Mañana es martes.</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">PUNTO Y APARTE (. ¶)</p>
+                            <p style="margin-left: 20px;">Separa párrafos (ideas diferentes)</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">PUNTO FINAL (.)</p>
+                            <p style="margin-left: 20px;">Al terminar el texto completo</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">❌ Errores comunes:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fce7f3;">
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Error</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Correcto</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">❌ Hola como estás</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">✅ Hola, ¿cómo estás?</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">❌ Luis, y María vinieron</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">✅ Luis y María vinieron</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">❌ Compré pan leche y huevos</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">✅ Compré pan, leche y huevos</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Corrige: "Hola Juan como estás" <em>(R: Hola, Juan, ¿cómo estás?)</em></li>
+                            <li>¿Va coma antes de "y"? "Rojo, azul, y verde" <em>(R: No, "Rojo, azul y verde")</em></li>
+                            <li>Separa dos ideas: "Estudié aprobé" <em>(R: Estudié. Aprobé. o Estudié y aprobé)</em></li>
+                            <li>Agrega comas: "María mi hermana llegó" <em>(R: María, mi hermana, llegó)</em></li>
+                            <li>¿Va coma? "Quiero ir pero no puedo" <em>(R: Sí, "Quiero ir, pero no puedo")</em></li>
+                        </ol>
+                    `,
+                    formula: "Coma = pausa breve | Punto = pausa completa (nueva oración)"
+                },
+
+                "Conectores lógicos": {
+                    texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Palabras que unen oraciones y párrafos mostrando la relación lógica entre ideas</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Tipos de conectores:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fce7f3;">
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Tipo</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Conectores</th>
+                                <th style="border: 1px solid #ec4899; padding: 8px;">Ejemplo</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Adición</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">además, también, asimismo, igualmente</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Estudié. Además, repasé</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Contraste</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">pero, sin embargo, no obstante, aunque</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Estudié, pero reprobé</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Causa</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">porque, ya que, debido a, pues</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Aprobé porque estudié</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Consecuencia</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">por lo tanto, así que, entonces, por eso</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Estudié, por lo tanto aprobé</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Secuencia</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">primero, luego, después, finalmente</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Primero estudié, luego dormí</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Ejemplo</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">por ejemplo, como, tal como, así</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">Frutas, por ejemplo, manzanas</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;"><strong>Conclusión</strong></td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">en conclusión, en resumen, en fin</td>
+                                <td style="border: 1px solid #fce7f3; padding: 8px;">En conclusión, es difícil</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">📐 Cómo elegir el conector:</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0;"><strong>Pregúntate: ¿Qué relación hay entre las ideas?</strong></p>
+                            <p style="margin-left: 20px;">• ¿La segunda AGREGA info? → además, también</p>
+                            <p style="margin-left: 20px;">• ¿La segunda CONTRADICE? → pero, sin embargo</p>
+                            <p style="margin-left: 20px;">• ¿La segunda es CAUSA? → porque, ya que</p>
+                            <p style="margin-left: 20px;">• ¿La segunda es EFECTO? → por lo tanto, así que</p>
+                            <p style="margin-left: 20px;">• ¿Indicas ORDEN? → primero, luego, después</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🔑 Tips importantes:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Los conectores van seguidos de coma: "Sin embargo, aprobé"</li>
+                            <li>No uses el mismo conector repetidamente</li>
+                            <li>Varía: "además" → "también" → "asimismo"</li>
+                            <li>El conector debe reflejar la relación REAL entre ideas</li>
+                        </ul>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Completa: "Llovió, ___ salí" (contraste) <em>(R: sin embargo / pero)</em></li>
+                            <li>"Aprobé ___ estudié" (causa) <em>(R: porque / ya que)</em></li>
+                            <li>"Estudié, ___ aprobé" (consecuencia) <em>(R: por lo tanto / así que)</em></li>
+                            <li>"Me gusta leer. ___, me gusta escribir" (adición) <em>(R: Además / También)</em></li>
+                            <li>¿Qué tipo es "sin embargo"? <em>(R: Contraste)</em></li>
+                        </ol>
+                    `,
+                    formula: "Conectores = cohesión textual | Elige según relación lógica"
+                },
+
+                "Mínimo común múltiplo": {
+                    texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>El menor número que es múltiplo de dos o más números dados</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Concepto:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Múltiplo:</strong> Resultado de multiplicar un número por cualquier entero</p>
+                            <p style="margin-left: 20px;">Múltiplos de 3: 3, 6, 9, 12, 15, 18, 21, 24...</p>
+                            <p style="margin-left: 20px;">Múltiplos de 4: 4, 8, 12, 16, 20, 24, 28...</p>
+                            <p style="margin: 10px 0 5px;"><strong>mcm(3,4):</strong> El menor que está en ambas listas = <strong>12</strong></p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Método 1: Factorización prima</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0; font-weight: bold;">Ejemplo: mcm(12, 18)</p>
+                            <pre style="background: white; padding: 10px; border-radius: 5px; font-family: 'Courier New';">
+12 = 2² × 3
+18 = 2 × 3²
+                            </pre>
+                            <p style="margin: 10px 0 5px;"><strong>Paso:</strong> Toma cada factor con el MAYOR exponente</p>
+                            <p style="margin-left: 20px;">2² (mayor entre 2² y 2¹)</p>
+                            <p style="margin-left: 20px;">3² (mayor entre 3¹ y 3²)</p>
+                            <p style="margin: 10px 0 5px; font-weight: bold;">mcm = 2² × 3² = 4 × 9 = 36</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Método 2: Divisiones sucesivas</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0; font-weight: bold;">Ejemplo: mcm(6, 8)</p>
+                            <pre style="background: white; padding: 10px; border-radius: 5px; font-family: 'Courier New';">
+6, 8 | 2    (divide los que puedas)
+3, 4 | 2    (solo el 4 es divisible)
+3, 2 | 2
+3, 1 | 3
+1, 1 |
+                            </pre>
+                            <p style="margin: 10px 0 5px; font-weight: bold;">mcm = 2 × 2 × 2 × 3 = 24</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🔑 Aplicaciones:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Sumar fracciones con diferente denominador</li>
+                            <li>Problemas de sincronización (cada cuánto coinciden)</li>
+                            <li>Encontrar el menor múltiplo común</li>
+                        </ul>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>mcm(4, 6) = ? <em>(R: 12)</em></li>
+                            <li>mcm(3, 5) = ? <em>(R: 15, son primos entre sí)</em></li>
+                            <li>mcm(10, 15) = ? <em>(R: 30)</em></li>
+                        <li>Para sumar 1/4 + 1/6, ¿qué mcm necesitas? <em>(R: mcm(4,6)=12)</em></li>
+                        <li>mcm(8, 12) = ? <em>(R: 24)</em></li>
+                    </ol>
+                `,
+                formula: "mcm = producto de factores primos con MAYOR exponente"
+            },
+
+            "Máximo común divisor": {
+                texto: `
+                    <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>El mayor número que divide exactamente a dos o más números dados</p>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Concepto:</h4>
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;"><strong>Divisor:</strong> Número que divide exactamente (sin residuo)</p>
+                        <p style="margin-left: 20px;">Divisores de 12: 1, 2, 3, 4, 6, 12</p>
+                        <p style="margin-left: 20px;">Divisores de 18: 1, 2, 3, 6, 9, 18</p>
+                        <p style="margin: 10px 0 5px;"><strong>MCD(12,18):</strong> El mayor común = <strong>6</strong></p>
+                    </div>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Método 1: Factorización prima</h4>
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0; font-weight: bold;">Ejemplo: MCD(24, 36)</p>
+                        <pre style="background: white; padding: 10px; border-radius: 5px; font-family: 'Courier New';">
+                        24 = 2³ × 3
+36 = 2² × 3²
+</pre>
+<p style="margin: 10px 0 5px;"><strong>Paso:</strong> Toma factores COMUNES con MENOR exponente</p>
+<p style="margin-left: 20px;">2² (menor entre 2³ y 2²)</p>
+<p style="margin-left: 20px;">3¹ (menor entre 3¹ y 3²)</p>
+<p style="margin: 10px 0 5px; font-weight: bold;">MCD = 2² × 3 = 4 × 3 = 12</p>
+</div><h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Método 2: Divisiones sucesivas</h4>
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0; font-weight: bold;">Ejemplo: MCD(18, 24)</p>
+                        <pre style="background: white; padding: 10px; border-radius: 5px; font-family: 'Courier New';">18, 24 | 2    (ambos son divisibles)
+9, 12 | 3    (ambos son divisibles)
+3,  4 |      (ya no hay común)
+</pre>
+<p style="margin: 10px 0 5px; font-weight: bold;">MCD = 2 × 3 = 6</p>
+<p style="margin: 5px 0; color: #f59e0b;">Solo multiplicas los divisores que dividen a AMBOS</p>
+</div>
+<h4 style="color: #f59e0b; margin: 15px 0 10px;">🔑 Aplicaciones:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Simplificar fracciones</li>
+                        <li>Dividir cantidades en partes iguales lo más grande posible</li>
+                        <li>Problemas de distribución</li>
+                    </ul>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>MCD(12, 18) = ? <em>(R: 6)</em></li>
+                        <li>MCD(15, 25) = ? <em>(R: 5)</em></li>
+                        <li>Para simplificar 18/24, ¿qué MCD necesitas? <em>(R: MCD(18,24)=6 → 3/4)</em></li>
+                        <li>MCD(7, 11) = ? <em>(R: 1, son primos entre sí)</em></li>
+                        <li>MCD(20, 30) = ? <em>(R: 10)</em></li>
+                    </ol>
+                `,
+                formula: "MCD = producto de factores primos COMUNES con MENOR exponente"
+            },
+
+            "Trabajo y energía": {
+                texto: `
+                    <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Trabajo: energía transferida por una fuerza. Energía: capacidad de realizar trabajo</p>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Fórmulas fundamentales:</h4>
+<div style="background: #ede9fe; padding: 20px; border-radius: 8px; margin: 10px 0;">
+<p style="font-size: 18px; font-weight: bold; margin: 10px 0; color: #8b5cf6;">TRABAJO (W)</p>
+<p style="font-family: 'Courier New'; font-size: 20px; margin: 5px 0;">W = F × d × cos(θ)</p>
+<p style="margin: 5px 0;">Si la fuerza es paralela al movimiento: <strong>W = F × d</strong></p>
+<p style="margin: 5px 0;">Unidad: Joule (J) = N·m</p><p style="font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #8b5cf6;">ENERGÍA CINÉTICA (Ec)</p>
+                        <p style="font-family: 'Courier New'; font-size: 20px; margin: 5px 0;">Ec = ½ m v²</p>
+                        <p style="margin: 5px 0;">Energía del movimiento</p>
+                        <p style="margin: 5px 0;">m = masa (kg), v = velocidad (m/s)</p>
+                        
+                        <p style="font-size: 18px; font-weight: bold; margin: 20px 0 10px; color: #8b5cf6;">ENERGÍA POTENCIAL (Ep)</p>
+                        <p style="font-family: 'Courier New'; font-size: 20px; margin: 5px 0;">Ep = m g h</p>
+                        <p style="margin: 5px 0;">Energía por posición/altura</p>
+                        <p style="margin: 5px 0;">g = 9.8 m/s² (gravedad), h = altura (m)</p>
+                    </div>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Teorema trabajo-energía:</h4>
+                    <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;"><strong>W = ΔEc</strong></p>
+                        <p style="margin: 5px 0;">El trabajo realizado = cambio en energía cinética</p>
+                        <p style="margin: 10px 0 5px; font-weight: bold;">Ejemplo:</p>
+                        <p style="margin-left: 20px;">Un auto aumenta de 10 m/s a 20 m/s (m=1000kg)</p>
+                        <p style="margin-left: 20px;">Ec₁ = ½(1000)(10²) = 50,000 J</p>
+                        <p style="margin-left: 20px;">Ec₂ = ½(1000)(20²) = 200,000 J</p>
+                        <p style="margin-left: 20px;">W = 200,000 - 50,000 = 150,000 J</p>
+                    </div>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🔑 Conceptos clave:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Trabajo positivo:</strong> Fuerza en dirección del movimiento</li>
+                        <li><strong>Trabajo negativo:</strong> Fuerza opuesta al movimiento (fricción)</li>
+                        <li><strong>Trabajo cero:</strong> Fuerza perpendicular al movimiento</li>
+                        <li><strong>Principio:</strong> La energía se transforma, no se crea ni destruye</li>
+                        <li><strong>Unidades:</strong> 1 Joule = 1 Newton × 1 metro</li>
+                    </ul>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Empujas con 20N y mueves un objeto 5m. ¿Trabajo? <em>(R: W=100 J)</em></li>
+                        <li>Un auto de 800kg va a 10 m/s. ¿Ec? <em>(R: 40,000 J)</em></li>
+                        <li>Objeto de 5kg a 10m de altura. ¿Ep? (g=10) <em>(R: 500 J)</em></li>
+                        <li>Si Ec=50J y m=2kg, ¿velocidad? <em>(R: 50=½(2)v² → v=√50≈7.07 m/s)</em></li>
+                        <li>¿Qué energía tiene un objeto en reposo en el suelo? <em>(R: 0, no tiene Ec ni Ep)</em></li>
+                    </ol>
+                `,
+                formula: "W=F×d | Ec=½mv² | Ep=mgh | W=ΔEc"
+            },
+
+            "Falsos cognados": {
+                texto: `
+                    <h4 style="color: #06b6d4; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Palabras en inglés que se parecen al español pero significan algo DIFERENTE</p>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">🎯 Falsos cognados más comunes:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #cffafe;">
+                            <th style="border: 1px solid #06b6d4; padding: 8px;">Inglés</th>
+                            <th style="border: 1px solid #06b6d4; padding: 8px;">Parece</th>
+                            <th style="border: 1px solid #06b6d4; padding: 8px;">Significa</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Actually</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">❌ Actualmente</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">✅ En realidad</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Exit</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">❌ Éxito</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">✅ Salida</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Embarrassed</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">❌ Embarazada</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">✅ Avergonzado/a</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Library</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">❌ Librería</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">✅ Biblioteca</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Sensible</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">❌ Sensible</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">✅ Sensato/razonable</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Intend</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">❌ Intentar</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">✅ Tener la intención</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Carpet</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">❌ Carpeta</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">✅ Alfombra</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Embarrassed</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">❌ Embarazada</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">✅ Avergonzado</td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">📐 Traducciones correctas:</h4>
+                    <div style="background: #cffafe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;"><strong>Actualmente →</strong> Currently / Nowadays</p>
+                        <p style="margin: 5px 0;"><strong>Éxito →</strong> Success</p>
+                        <p style="margin: 5px 0;"><strong>Embarazada →</strong> Pregnant</p>
+                        <p style="margin: 5px 0;"><strong>Librería →</strong> Bookstore</p>
+                        <p style="margin: 5px 0;"><strong>Sensible →</strong> Sensitive</p>
+                        <p style="margin: 5px 0;"><strong>Intentar →</strong> Try / Attempt</p>
+                        <p style="margin: 5px 0;"><strong>Carpeta →</strong> Folder</p>
+                    </div>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">🔑 Cómo evitar errores:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>NO traduzcas palabra por palabra</li>
+                        <li>Lee el CONTEXTO completo de la oración</li>
+                        <li>Si parece demasiado obvio, probablemente es falso cognado</li>
+                        <li>Memoriza los más comunes (los del examen)</li>
+                    </ul>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>"I'm embarrassed" significa: <em>(R: Estoy avergonzado, NO embarazada)</em></li>
+                        <li>"Actually, I agree" significa: <em>(R: En realidad, estoy de acuerdo)</em></li>
+                        <li>"Where's the exit?" ¿Qué busca? <em>(R: La salida, NO el éxito)</em></li>
+                        <li>¿Cómo dices "librería" en inglés? <em>(R: Bookstore, NO library)</em></li>
+                        <li>"She is sensible" significa: <em>(R: Ella es sensata, NO sensible)</em></li>
+                    </ol>
+                `,
+                formula: "Falso cognado = Parece español pero significa otra cosa"
+            },
+
+            "Comprensión de lectura": {
+                texto: `
+                    <h4 style="color: #06b6d4; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Entender textos en inglés: idea principal, detalles específicos, vocabulario en contexto</p>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">🎯 Tipos de preguntas en el examen:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #cffafe;">
+                            <th style="border: 1px solid #06b6d4; padding: 8px;">Tipo</th>
+                            <th style="border: 1px solid #06b6d4; padding: 8px;">Pregunta típica</th>
+                            <th style="border: 1px solid #06b6d4; padding: 8px;">Estrategia</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Idea principal</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">What is the text about?</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">Lee título y primer párrafo</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Detalles</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">According to the text...</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">Busca info específica (scanning)</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Vocabulario</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">The word "X" means...</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">Usa contexto, no traduzcas literal</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #cffafe; padding: 8px;"><strong>Inferencia</strong></td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">The author suggests...</td>
+                            <td style="border: 1px solid #cffafe; padding: 8px;">Lee entre líneas, deduce</td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">📐 Estrategia paso a paso:</h4>
+                    <div style="background: #cffafe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 8px 0; font-weight: bold;">ANTES DE LEER:</p>
+                        <p style="margin-left: 20px;">1. Lee las PREGUNTAS primero</p>
+                        <p style="margin-left: 20px;">2. Identifica palabras clave en las preguntas</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">DURANTE LA LECTURA:</p>
+                        <p style="margin-left: 20px;">3. Lee el título y primer párrafo con atención</p>
+                        <p style="margin-left: 20px;">4. Busca las respuestas específicas</p>
+                        <p style="margin-left: 20px;">5. Subraya información relevante</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">AL RESPONDER:</p>
+                        <p style="margin-left: 20px;">6. Elimina opciones obviamente incorrectas</p>
+                        <p style="margin-left: 20px;">7. Busca evidencia en el texto</p>
+                        <p style="margin-left: 20px;">8. NO inventes, la respuesta ESTÁ en el texto</p>
+                    </div>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">🔑 Tips importantes:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>NO traduzcas palabra por palabra - desperdicio de tiempo</li>
+                        <li>Enfócate en SUSTANTIVOS y VERBOS - son las palabras clave</li>
+                        <li>Si no entiendes una palabra, usa el CONTEXTO</li>
+                        <li>Las respuestas suelen estar en ORDEN en el texto</li>
+                        <li>Practica leyendo noticias en inglés diariamente (BBC, CNN)</li>
+                    </ul>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Texto: "Dogs are loyal pets". Pregunta: "What is the text about?" <em>(R: Dogs)</em></li>
+                        <li>Si no sabes "huge", pero dice "The elephant is huge", ¿qué significa? <em>(R: Grande/enorme)</em></li>
+                        <li>¿Qué lees primero: texto o preguntas? <em>(R: Preguntas)</em></li>
+                        <li>¿Qué técnica usas para encontrar una fecha? <em>(R: Scanning)</em></li>
+                        <li>¿Las respuestas están en orden? <em>(R: Generalmente sí)</em></li>
+                    </ol>
+                `,
+                formula: "Lee preguntas → Busca en texto → Elimina opciones → Responde"
+            },
+
+            "Módulo general completo": {
+                texto: `
+                    <h4 style="color: #ef4444; margin-bottom: 10px;">📖 ¿Qué debes hacer?</h4>
+                    <p>Simulacro COMPLETO del módulo general: Matemáticas, Español, Física e Inglés</p>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">🎯 Estructura del simulacro:</h4>
+                    <div style="background: #fee2e2; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;"><strong>Pensamiento Matemático:</strong> ~25 preguntas</p>
+                        <p style="margin: 5px 0;"><strong>Comprensión Lectora:</strong> ~25 preguntas</p>
+                        <p style="margin: 5px 0;"><strong>Redacción Indirecta:</strong> ~15 preguntas</p>
+                        <p style="margin: 5px 0;"><strong>Aritmética:</strong> ~15 preguntas</p>
+                        <p style="margin: 5px 0;"><strong>Física:</strong> ~15 preguntas</p>
+                        <p style="margin: 5px 0;"><strong>Inglés:</strong> ~15 preguntas</p>
+                        <p style="margin: 15px 0 5px; font-weight: bold; font-size: 18px; color: #ef4444;">
+                            TOTAL: ~110 preguntas en 2.5 horas (150 minutos)
+                        </p>
+                    </div>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">📐 Distribución de tiempo sugerida:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #fee2e2;">
+                            <th style="border: 1px solid #ef4444; padding: 8px;">Materia</th>
+                            <th style="border: 1px solid #ef4444; padding: 8px;">Preguntas</th>
+                            <th style="border: 1px solid #ef4444; padding: 8px;">Tiempo</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Matemáticas</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">25</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">35-40 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Comprensión</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">25</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">30-35 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Redacción</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">15</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">20 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Aritmética</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">15</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">20-25 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Física</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">15</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">20 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Inglés</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">15</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">15-20 min</td>
+                        </tr>
+                        <tr style="background: #fecaca;">
+                            <td style="border: 1px solid #ef4444; padding: 8px;"><strong>Revisión</strong></td>
+                            <td style="border: 1px solid #ef4444; padding: 8px;">-</td>
+                            <td style="border: 1px solid #ef4444; padding: 8px;"><strong>10-15 min</strong></td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">🔑 Instrucciones CRÍTICAS:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Simula condiciones reales:</strong> Lugar tranquilo, sin interrupciones</li>
+                        <li><strong>Sin celular, sin música,</strong> solo tú, lápiz y calculadora</li>
+                        <li><strong>Cronometra exactamente</strong> 2.5 horas</li>
+                        <li><strong>NO hagas pausas</strong> - es continuo en el examen real</li>
+                        <li><strong>Responde TODO</strong> - nunca dejes en blanco</li>
+                        <li><strong>Hoja de respuestas:</strong> Usa una simulada o marca en hoja aparte</li>
+                    </ul>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">✏️ Análisis POST-simulacro (OBLIGATORIO):</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Calcula % de aciertos TOTAL y POR MATERIA</li>
+                        <li>Identifica tu materia MÁS DÉBIL</li>
+                        <li>Anota CADA error: ¿concepto, cálculo o lectura?</li>
+                        <li>¿Te faltó tiempo? ¿En qué materia?</li>
+                        <li>Meta mínima: 70% total para aprobar</li>
+                    </ol>
+                `,
+                formula: "Simulacro completo = Práctica real + Análisis profundo = Mejora garantizada"
+            },
 
 
 
@@ -3874,6 +4559,7 @@ formula: "v = d/t | d = v×t | t = d/v | 1 km/h = 1/3.6 m/s"
     </script>
 </body>
 </html>
+
 
 
 
