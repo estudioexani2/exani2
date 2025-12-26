@@ -1760,38 +1760,6 @@
             }, 2000);
         }
         
-        function mostrarResultadoQuiz() {
-            document.getElementById('quiz-juego').style.display = 'none';
-            document.getElementById('quiz-resultado').style.display = 'block';
-            
-            const puntaje = quizActual.aciertos;
-            document.getElementById('quiz-puntaje-final').textContent = puntaje;
-            
-            let emoji, titulo;
-            if (puntaje === 5) {
-                emoji = '🏆';
-                titulo = '¡PERFECTO!';
-            } else if (puntaje >= 4) {
-                emoji = '🎉';
-                titulo = '¡Excelente!';
-            } else if (puntaje >= 3) {
-                emoji = '👍';
-                titulo = '¡Bien!';
-            } else if (puntaje >= 2) {
-                emoji = '📚';
-                titulo = 'Sigue estudiando';
-            } else {
-                emoji = '💪';
-                titulo = 'No te rindas';
-            }
-            
-            document.getElementById('quiz-emoji').textContent = emoji;
-            document.getElementById('quiz-titulo').textContent = titulo;
-            
-            // Guardar estadística
-            const quizzesHoy = parseInt(localStorage.getItem('quizzesHoy') || '0') + 1;
-            localStorage.setItem('quizzesHoy', quizzesHoy);
-        }
         
         function renderAchievements() {
             function dibujarGraficaSimulacros() {
@@ -9710,6 +9678,7 @@ javascript                // ==================== SEMANA 4 ====================
     </script>
 </body>
 </html>
+
 
 
 
