@@ -1268,6 +1268,66 @@
                 }
             }
 
+            function guardarNotas(semana, diaIdx, temaIdx) {
+                const notasKey = `notas-${semana}-${diaIdx}-${temaIdx}`;
+                const textarea = document.getElementById(notasKey);
+                const valor = textarea.value.trim();
+
+                // Guardar en localStorage
+                localStorage.setItem(notasKey, valor);
+
+                // Detectar si es una URL de YouTube y mostrar preview
+                const previewDiv = document.getElementById(`preview-${semana}-${diaIdx}-${temaIdx}`);
+                const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
+                const match = valor.match(youtubeRegex);
+
+                if (match) {
+                    const videoId = match[1];
+                    previewDiv.innerHTML = `
+                        <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 8px;">
+                            <p style="margin: 0 0 10px 0; font-weight: bold; color: #1e40af;">
+                                🎥 Video de YouTube detectado
+                            </p>
+                            <a href="https://www.youtube.com/watch?v=${videoId}" 
+                            target="_blank" 
+                            style="
+                                display: inline-block;
+                                padding: 8px 16px;
+                                background: #ef4444;
+                                color: white;
+                                text-decoration: none;
+                                border-radius: 6px;
+                                font-weight: bold;
+                                transition: background 0.3s;
+                            "
+                            onmouseover="this.style.background='#dc2626'"
+                            onmouseout="this.style.background='#ef4444'">
+                                ▶️ Ver video en YouTube
+                            </a>
+                            <div style="margin-top: 10px;">
+                                <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" 
+                                    alt="Thumbnail" 
+                                    style="width: 100%; max-width: 320px; border-radius: 8px; cursor: pointer;"
+                                    onclick="window.open('https://www.youtube.com/watch?v=${videoId}', '_blank')">
+                            </div>
+                        </div>
+                    `;
+                } else if (valor) {
+                    previewDiv.innerHTML = `
+                        <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 8px;">
+                            <p style="margin: 0; color: #065f46; font-size: 0.9em;">
+                                ✅ Notas guardadas correctamente
+                            </p>
+                        </div>
+                    `;
+                    setTimeout(() => {
+                        previewDiv.innerHTML = '';
+                    }, 2000);
+                } else {
+                    previewDiv.innerHTML = '';
+                }
+            }
+
             function renderCalendario() {
                 const container = document.getElementById('calendario');
                 let html = '';
@@ -1292,22 +1352,48 @@
                             const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
                             const checked = localStorage.getItem(key) === 'true';
                             const explicacion = obtenerExplicacion(dia.materia, tema);
+                            const notasKey = `notas-${semanaKey}-${diaIdx}-${temaIdx}`;
+                            const notasGuardadas = localStorage.getItem(notasKey) || '';
 
                             html += `<div>
-                            <div class="tema">
-                                <input type="checkbox" class="checkbox" ${checked ? 'checked' : ''} 
-                                    onchange="toggleTema('${semanaKey}', ${diaIdx}, ${temaIdx})">
-                                <span class="tema-text ${checked ? 'checked' : ''}" 
-                                    style="cursor: pointer;" 
-                                    onclick="toggleExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx})"
-                                    title="Haz clic para ver explicación">
-                                    ${tema} 💡
-                                </span>
-                            </div>
-                            <div id="exp-${semanaKey}-${diaIdx}-${temaIdx}" class="tema-explicacion">
-                                ${explicacion}
-                            </div>
-                        </div>`;
+                                <div class="tema">
+                                    <input type="checkbox" class="checkbox" ${checked ? 'checked' : ''} 
+                                        onchange="toggleTema('${semanaKey}', ${diaIdx}, ${temaIdx})">
+                                    <span class="tema-text ${checked ? 'checked' : ''}" 
+                                        style="cursor: pointer;" 
+                                        onclick="toggleExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx})"
+                                        title="Haz clic para ver explicación">
+                                        ${tema} ${notasGuardadas ? '📝' : '💡'}
+                                    </span>
+                                </div>
+                                <div id="exp-${semanaKey}-${diaIdx}-${temaIdx}" class="tema-explicacion">
+                                    ${explicacion}
+                                    
+                                    <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #e5e7eb;">
+                                        <h4 style="color: #667eea; margin-bottom: 10px;">📝 Mis Notas</h4>
+                                        <textarea 
+                                            id="notas-${semanaKey}-${diaIdx}-${temaIdx}"
+                                            placeholder="Pega aquí la URL del video de YouTube que viste, o escribe tus notas personales...
+                        Ejemplo: https://www.youtube.com/watch?v=..."
+                                            style="
+                                                width: 100%;
+                                                min-height: 80px;
+                                                padding: 12px;
+                                                border: 2px solid #e5e7eb;
+                                                border-radius: 8px;
+                                                font-family: inherit;
+                                                font-size: 0.95em;
+                                                resize: vertical;
+                                                transition: border-color 0.3s;
+                                            "
+                                            onblur="guardarNotas('${semanaKey}', ${diaIdx}, ${temaIdx})"
+                                            onfocus="this.style.borderColor='#667eea'"
+                                            onblur="this.style.borderColor='#e5e7eb'; guardarNotas('${semanaKey}', ${diaIdx}, ${temaIdx})"
+                                        >${notasGuardadas}</textarea>
+                                        <div id="preview-${semanaKey}-${diaIdx}-${temaIdx}" style="margin-top: 10px;"></div>
+                                    </div>
+                                </div>
+                            </div>`;
                         });
 
                         html += `</div></div>`;
