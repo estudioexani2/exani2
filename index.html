@@ -4511,6 +4511,714 @@
                 `,
                         formula: "Simulacro completo = Práctica real + Análisis profundo = Mejora garantizada"
                     },
+                    // ==================== SEMANA 5 - PROFUNDIZACIÓN ====================
+                "Representación gráfica de funciones": {
+                    texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Cómo dibujar e interpretar funciones matemáticas en el plano cartesiano</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Tipos de funciones comunes:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #e0f2fe;">
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Función</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Ecuación</th>
+                                <th style="border: 1px solid #3b82f6; padding: 8px;">Gráfica</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Lineal</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">y = mx + b</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Línea recta</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Cuadrática</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">y = ax² + bx + c</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Parábola (U o ∩)</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Constante</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">y = k</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">Línea horizontal</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Absoluto</strong></td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">y = |x|</td>
+                                <td style="border: 1px solid #e0f2fe; padding: 8px;">V</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Graficar función lineal (y = mx + b):</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0; font-weight: bold;">Ejemplo: y = 2x + 1</p>
+                            <p style="margin: 8px 0;"><strong>Paso 1:</strong> Encuentra b (donde cruza eje y)</p>
+                            <p style="margin-left: 20px;">b = 1, marca punto (0, 1)</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Paso 2:</strong> Usa la pendiente m = 2</p>
+                            <p style="margin-left: 20px;">m = 2 = subir 2, avanzar 1 a la derecha</p>
+                            <p style="margin-left: 20px;">Desde (0,1) → sube 2 → (1,3)</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Paso 3:</strong> Une los puntos</p>
+                            <p style="margin-left: 20px;">Traza línea recta por (0,1) y (1,3)</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Interpretar gráficas:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Pendiente positiva (m>0):</strong> Sube de izq. a der. /</p>
+                            <p style="margin: 5px 0;"><strong>Pendiente negativa (m<0):</strong> Baja de izq. a der. \</p>
+                            <p style="margin: 5px 0;"><strong>m grande:</strong> Más inclinada</p>
+                            <p style="margin: 5px 0;"><strong>m pequeña:</strong> Menos inclinada</p>
+                            <p style="margin: 5px 0;"><strong>Intersección en x:</strong> Donde y = 0</p>
+                            <p style="margin: 5px 0;"><strong>Intersección en y:</strong> Donde x = 0 (b)</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🔑 Cuadráticas (parábolas):</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si <strong>a > 0</strong>: parábola abre ARRIBA (U)</li>
+                            <li>Si <strong>a < 0</strong>: parábola abre ABAJO (∩)</li>
+                            <li><strong>Vértice:</strong> Punto más bajo/alto de la parábola</li>
+                            <li><strong>Eje de simetría:</strong> Línea vertical por el vértice</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>En y = 3x - 2, ¿dónde cruza el eje y? <em>(R: (0, -2))</em></li>
+                            <li>Si m = -1, ¿la recta sube o baja? <em>(R: Baja)</em></li>
+                            <li>¿Qué gráfica tiene y = 5? <em>(R: Línea horizontal en y=5)</em></li>
+                            <li>En y = x², ¿abre arriba o abajo? <em>(R: Arriba, a=1>0)</em></li>
+                            <li>¿Cuál tiene mayor pendiente: y=2x o y=5x? <em>(R: y=5x)</em></li>
+                        </ol>
+                    `,
+                    formula: "Lineal: y=mx+b | Cuadrática: y=ax²+bx+c | m=pendiente, b=intersección"
+                },
+
+                "Textos literarios": {
+                    texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Características de textos narrativos, líricos y dramáticos</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Los 3 géneros literarios:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #d1fae5;">
+                                <th style="border: 1px solid #10b981; padding: 8px;">Género</th>
+                                <th style="border: 1px solid #10b981; padding: 8px;">Características</th>
+                                <th style="border: 1px solid #10b981; padding: 8px;">Ejemplos</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;"><strong>NARRATIVO</strong></td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Cuenta una historia con personajes, trama, tiempo y lugar</td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Cuento, novela, fábula</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;"><strong>LÍRICO</strong></td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Expresa sentimientos y emociones, usa verso y rima</td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Poema, oda, soneto</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;"><strong>DRAMÁTICO</strong></td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Escrito para ser representado, todo en diálogos</td>
+                                <td style="border: 1px solid #d1fae5; padding: 8px;">Obra de teatro, tragedia, comedia</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">📐 NARRATIVO - Elementos:</h4>
+                        <div style="background: #d1fae5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Narrador:</strong> Quien cuenta la historia</p>
+                            <p style="margin-left: 20px;">• 1ª persona: "Yo caminaba..." (protagonista)</p>
+                            <p style="margin-left: 20px;">• 3ª persona: "Él caminaba..." (omnisciente)</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Personajes:</strong> Protagonista, antagonista, secundarios</p>
+                            <p style="margin: 5px 0;"><strong>Ambiente:</strong> Tiempo y lugar donde ocurre</p>
+                            <p style="margin: 5px 0;"><strong>Trama:</strong> Secuencia de eventos (inicio, desarrollo, clímax, desenlace)</p>
+                        </div>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">📐 LÍRICO - Recursos:</h4>
+                        <div style="background: #d1fae5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Metáfora:</strong> Comparación implícita</p>
+                            <p style="margin-left: 20px;">"Tus ojos son dos luceros" (ojos = estrellas)</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Símil:</strong> Comparación con "como"</p>
+                            <p style="margin-left: 20px;">"Blanco como la nieve"</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Personificación:</strong> Dar cualidades humanas a objetos</p>
+                            <p style="margin-left: 20px;">"El viento susurraba secretos"</p>
+                            
+                            <p style="margin: 10px 0 5px;"><strong>Rima:</strong> Coincidencia de sonidos al final</p>
+                            <p style="margin-left: 20px;">Consonante (todo igual) o asonante (solo vocales)</p>
+                        </div>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">📐 DRAMÁTICO - Formato:</h4>
+                        <div style="background: #d1fae5; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 5px 0;"><strong>Diálogos:</strong> Lo que dicen los personajes</p>
+                            <p style="margin: 5px 0;"><strong>Acotaciones:</strong> Indicaciones escénicas (en paréntesis)</p>
+                            <p style="margin: 5px 0;"><strong>Actos y escenas:</strong> Divisiones de la obra</p>
+                            <p style="margin: 5px 0;"><strong>Monólogo:</strong> Personaje habla solo</p>
+                        </div>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Un cuento es género: <em>(R: Narrativo)</em></li>
+                            <li>"Tus ojos son estrellas" es: <em>(R: Metáfora)</em></li>
+                            <li>Texto solo con diálogos es: <em>(R: Dramático)</em></li>
+                            <li>¿Qué expresa principalmente el género lírico? <em>(R: Sentimientos/emociones)</em></li>
+                            <li>"Había una vez..." ¿Qué género? <em>(R: Narrativo)</em></li>
+                        </ol>
+                    `,
+                    formula: "Narrativo=cuenta | Lírico=siente | Dramático=representa"
+                },
+
+                "Porcentajes": {
+                    texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Calcular porcentajes, aumentos, descuentos y porcentaje de cambio</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Fórmula básica:</h4>
+                        <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                            <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">
+                                % = (parte / total) × 100
+                            </p>
+                            <p style="margin: 10px 0;">O también:</p>
+                            <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">
+                                parte = (% × total) / 100
+                            </p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Tipos de problemas:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0; font-weight: bold;">1. CALCULAR PORCENTAJE:</p>
+                            <p style="margin-left: 20px;">De 50 estudiantes, 10 aprobaron. ¿Qué %?</p>
+                            <p style="margin-left: 20px;">% = (10/50) × 100 = 20%</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">2. CALCULAR LA PARTE:</p>
+                            <p style="margin-left: 20px;">¿Cuánto es el 30% de 200?</p>
+                            <p style="margin-left: 20px;">parte = (30 × 200) / 100 = 60</p>
+                            <p style="margin-left: 20px;">O más rápido: 200 × 0.30 = 60</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">3. CALCULAR EL TOTAL:</p>
+                            <p style="margin-left: 20px;">Si 20 es el 40%, ¿cuál es el total?</p>
+                            <p style="margin-left: 20px;">total = (20 × 100) / 40 = 50</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Aumentos y Descuentos:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0; font-weight: bold;">AUMENTO del X%:</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;">Precio final = Precio inicial × (1 + X/100)</p>
+                            <p style="margin-left: 20px;">Ej: $100 + 20% = 100 × 1.20 = $120</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">DESCUENTO del X%:</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;">Precio final = Precio inicial × (1 - X/100)</p>
+                            <p style="margin-left: 20px;">Ej: $100 - 20% = 100 × 0.80 = $80</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">PORCENTAJE DE CAMBIO:</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 5px 0;">% cambio = [(Nuevo - Viejo) / Viejo] × 100</p>
+                            <p style="margin-left: 20px;">Ej: De $50 a $75 = [(75-50)/50]×100 = 50% de aumento</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🔑 Conversiones rápidas:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fef3c7;">
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Porcentaje</th>
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Decimal</th>
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Fracción</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">10%</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">0.10</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">1/10</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">25%</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">0.25</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">1/4</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">50%</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">0.50</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">1/2</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">75%</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">0.75</td>
+                                <td style="border: 1px solid #fef3c7; padding: 8px;">3/4</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>¿Cuánto es el 20% de 150? <em>(R: 30)</em></li>
+                            <li>De 80 estudiantes, 20 son mujeres. ¿Qué %? <em>(R: 25%)</em></li>
+                            <li>$200 con 15% de descuento = ? <em>(R: $170)</em></li>
+                            <li>$50 + 30% de aumento = ? <em>(R: $65)</em></li>
+                            <li>De $40 a $50, ¿qué % aumentó? <em>(R: 25%)</em></li>
+                        </ol>
+                    `,
+                    formula: "%=(parte/total)×100 | Aumento: ×(1+X/100) | Descuento: ×(1-X/100)"
+                },
+
+                "Conservación de la energía": {
+                    texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>La energía no se crea ni se destruye, solo se transforma de un tipo a otro</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Principio fundamental:</h4>
+                        <div style="background: #ede9fe; padding: 20px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                            <p style="font-size: 22px; font-weight: bold; margin: 10px 0; color: #8b5cf6;">
+                                ENERGÍA TOTAL = CONSTANTE
+                            </p>
+                            <p style="font-size: 20px; margin: 10px 0;">
+                                Ec + Ep = constante
+                            </p>
+                            <p style="margin: 10px 0;">(En ausencia de fricción)</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Ecuación de conservación:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;">
+                                <strong>Ec₁ + Ep₁ = Ec₂ + Ep₂</strong>
+                            </p>
+                            <p style="margin: 5px 0;">Donde:</p>
+                            <p style="font-family: 'Courier New'; margin: 3px 0;">Ec = ½mv²  (energía cinética)</p>
+                            <p style="font-family: 'Courier New'; margin: 3px 0;">Ep = mgh  (energía potencial)</p>
+                            <p style="margin: 10px 0 5px;">En el punto 1 y punto 2 de la trayectoria</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Ejemplo clásico - Péndulo:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0; font-weight: bold;">Punto A (arriba): Máxima altura</p>
+                            <p style="margin-left: 20px;">Ep = máxima, Ec = 0 (sin movimiento)</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">Punto B (abajo): Sin altura</p>
+                            <p style="margin-left: 20px;">Ep = 0, Ec = máxima (máxima velocidad)</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">En TODO momento:</p>
+                            <p style="margin-left: 20px;">Ep (A) = Ec (B)</p>
+                            <p style="margin-left: 20px;">La energía solo cambia de forma</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🔑 Transformaciones de energía:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Caída libre:</strong> Ep → Ec (altura → velocidad)</li>
+                            <li><strong>Lanzamiento hacia arriba:</strong> Ec → Ep (velocidad → altura)</li>
+                            <li><strong>Montaña rusa:</strong> Ep ⇄ Ec constantemente</li>
+                            <li><strong>Resorte:</strong> Ep elástica ⇄ Ec</li>
+                            <li><strong>Con fricción:</strong> Energía → Calor (se "pierde")</li>
+                        </ul>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Objeto cae de 10m. Si Ep inicial=100J, ¿Ec final? <em>(R: 100J)</em></li>
+                            <li>En el punto más alto de una trayectoria, ¿qué es máxima? <em>(R: Ep)</em></li>
+                            <li>En el punto más bajo, ¿qué es máxima? <em>(R: Ec)</em></li>
+                            <li>¿La energía total se mantiene? <em>(R: Sí, se conserva)</em></li>
+                            <li>Si v=0 en la cima, ¿Ec=? <em>(R: 0)</em></li>
+                        </ol>
+                    `,
+                    formula: "Ec + Ep = constante | Ec₁+Ep₁ = Ec₂+Ep₂"
+                },
+
+                "Cohesión gramatical y semántica": {
+                    texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Mecanismos que dan unidad y fluidez al texto (gramatical) y relación lógica de ideas (semántica)</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 COHESIÓN GRAMATICAL:</h4>
+                        <div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="margin: 8px 0; font-weight: bold;">1. CONECTORES:</p>
+                            <p style="margin-left: 20px;">Palabras que unen oraciones (además, sin embargo, por lo tanto)</p>
+                            <p style="margin-left: 20px;">✅ "Estudié. Además, repasé."</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">2. PRONOMBRES:</p>
+                            <p style="margin-left: 20px;">Evitan repetir sustantivos</p>
+                            <p style="margin-left: 20px;">❌ "Juan llegó. Juan comió."</p>
+                            <p style="margin-left: 20px;">✅ "Juan llegó. Él comió."</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">3. SINÓNIMOS:</p>
+                            <p style="margin-left: 20px;">Evitan repetir la misma palabra</p>
+                            <p style="margin-left: 20px;">❌ "El auto es rojo. El auto es rápido."</p>
+                            <p style="margin-left: 20px;">✅ "El auto es rojo. El vehículo es rápido."</p>
+                            
+                            <p style="margin: 15px 0 8px; font-weight: bold;">4. ELIPSIS:</p>
+                            <p style="margin-left: 20px;">Omitir palabras que se sobrentienden</p>
+                            <p style="margin-left: 20px;">✅ "Juan come manzanas y María, peras" (omite "come")</p>
+                        </div>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 010px;">📐 COHESIÓN SEMÁNTICA:</h4>
+<div style="background: #fce7f3; padding: 15px; border-radius: 8px; margin: 10px 0;">
+<p style="margin: 8px 0; font-weight: bold;">COHERENCIA LÓGICA:</p>
+<p style="margin-left: 20px;">Las ideas deben tener sentido juntas</p>
+<p style="margin-left: 20px;">❌ "Me gusta el fútbol. Los gatos son mamíferos." (no hay relación)</p>
+<p style="margin-left: 20px;">✅ "Me gusta el fútbol. Por eso juego cada semana." (hay relación)</p>
+<p style="margin: 15px 0 8px; font-weight: bold;">CAMPO SEMÁNTICO:</p>
+                        <p style="margin-left: 20px;">Palabras relacionadas por significado</p>
+                        <p style="margin-left: 20px;">Medicina: doctor, hospital, paciente, enfermedad</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">PROGRESIÓN TEMÁTICA:</p>
+                        <p style="margin-left: 20px;">Cada oración agrega info nueva sobre el tema</p>
+                        <p style="margin-left: 20px;">No repetir exactamente lo mismo</p>
+                    </div>
+                    
+                    <h4 style="color: #ec4899; margin: 15px 0 10px;">🔑 Señales de FALTA de cohesión:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Repetición excesiva de palabras</li>
+                        <li>Ideas que no se conectan lógicamente</li>
+                        <li>Falta de conectores entre párrafos</li>
+                        <li>Cambios bruscos de tema</li>
+                        <li>Ambigüedad en pronombres (¿a quién se refiere?)</li>
+                    </ul>
+                    
+                    <h4 style="color: #ec4899; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Mejora: "María llegó. María comió." <em>(R: María llegó. Ella comió)</em></li>
+                        <li>¿Qué falta? "Llovió ___ salí" <em>(R: pero/sin embargo - conector)</em></li>
+                        <li>¿Hay coherencia? "Amo los perros. Pi=3.14" <em>(R: No, sin relación)</em></li>
+                        <li>¿Qué tipo de cohesión usa sinónimos? <em>(R: Gramatical)</em></li>
+                        <li>Evitar repetir "casa": usa... <em>(R: Sinónimo: hogar/vivienda/domicilio)</em></li>
+                    </ol>
+                `,
+                formula: "Cohesión gramatical = conectores, pronombres | Cohesión semántica = coherencia lógica"
+            },
+
+            "Simulacro de Aritmética": {
+                texto: `
+                    <h4 style="color: #ef4444; margin-bottom: 10px;">📖 ¿Qué debes hacer?</h4>
+                    <p>Simulacro enfocado SOLO en aritmética: 40-50 preguntas en 60 minutos</p>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">🎯 Temas a cubrir:</h4>
+                    <div style="background: #fee2e2; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;">✓ Operaciones con enteros</p>
+                        <p style="margin: 5px 0;">✓ Fracciones y decimales</p>
+                        <p style="margin: 5px 0;">✓ Potencias y raíces</p>
+                        <p style="margin: 5px 0;">✓ Jerarquía de operaciones</p>
+                        <p style="margin: 5px 0;">✓ Notación científica</p>
+                        <p style="margin: 5px 0;">✓ Factores primos</p>
+                        <p style="margin: 5px 0;">✓ MCD y mcm</p>
+                        <p style="margin: 5px 0;">✓ Porcentajes</p>
+                        <p style="margin: 5px 0;">✓ Regla de tres</p>
+                        <p style="margin: 5px 0;">✓ Progresiones</p>
+                    </div>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">📐 Distribución sugerida:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #fee2e2;">
+                            <th style="border: 1px solid #ef4444; padding: 8px;">Tema</th>
+                            <th style="border: 1px solid #ef4444; padding: 8px;">Preguntas</th>
+                            <th style="border: 1px solid #ef4444; padding: 8px;">Tiempo</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Fracciones y decimales</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">8-10</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">12 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Porcentajes</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">8-10</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">12 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Potencias y raíces</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">6-8</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">10 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">MCD y mcm</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">6-8</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">10 min</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">Resto de temas</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">10-14</td>
+                            <td style="border: 1px solid #fee2e2; padding: 8px;">16 min</td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="color: #ef4444; margin: 15px 0 10px;">🔑 Fórmulas a tener a mano:</h4>
+<div style="background: #fee2e2; padding: 15px; border-radius: 8px; margin: 10px 0;">
+<p style="font-family: 'Courier New'; margin: 3px 0;">• aⁿ × aᵐ = aⁿ⁺ᵐ</p>
+<p style="font-family: 'Courier New'; margin: 3px 0;">• aⁿ ÷ aᵐ = aⁿ⁻ᵐ</p>
+<p style="font-family: 'Courier New'; margin: 3px 0;">• (aⁿ)ᵐ = aⁿˣᵐ</p>
+<p style="font-family: 'Courier New'; margin: 3px 0;">• % = (parte/total) × 100</p>
+<p style="font-family: 'Courier New'; margin: 3px 0;">• Regla de 3: X = (C×B)/A</p>
+<p style="font-family: 'Courier New'; margin: 3px 0;">• mcm = factores con MAYOR exp.</p>
+<p style="font-family: 'Courier New'; margin: 3px 0;">• MCD = factores comunes MENOR exp.</p>
+</div>
+<h4 style="color: #ef4444; margin: 15px 0 10px;">✏️ Después del simulacro:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>¿Cuál tema te costó MÁS? Refuérzalo esta semana</li>
+                        <li>¿Errores de concepto o de cálculo?</li>
+                        <li>¿Manejaste bien el tiempo?</li>
+                        <li>Meta: >75% de aciertos</li>
+                        <li>Repite los ejercicios que fallaste</li>
+                    </ol>
+                `,
+                formula: "Práctica intensiva de aritmética = Dominio garantizado"
+            },
+
+            // ==================== SEMANA 6 - PROFUNDIZACIÓN ====================
+            "Desviación estándar (conceptual)": {
+                texto: `
+                    <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Medida de DISPERSIÓN: qué tan alejados están los datos de la media</p>
+                    
+                    <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Concepto (sin fórmula compleja):</h4>
+                    <div style="background: #e0f2fe; padding: 20px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 8px 0; font-weight: bold;">DESVIACIÓN ESTÁNDAR (σ)</p>
+                        <p style="margin: 5px 0;">Indica qué tan "dispersos" o "agrupados" están los datos respecto a la media</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold; color: #3b82f6;">σ PEQUEÑA:</p>
+                        <p style="margin-left: 20px;">Los datos están CERCA de la media (poco dispersos)</p>
+                        <p style="margin-left: 20px;">Ejemplo: 5, 5, 5, 5, 5 (todos iguales, σ=0)</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold; color: #3b82f6;">σ GRANDE:</p>
+                        <p style="margin-left: 20px;">Los datos están LEJOS de la media (muy dispersos)</p>
+                        <p style="margin-left: 20px;">Ejemplo: 1, 3, 5, 7, 9 (muy variados)</p>
+                    </div>
+                    
+                    <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Interpretación visual:</h4>
+                    <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 8px 0; font-weight: bold;">DATOS AGRUPADOS (σ pequeña):</p>
+                        <p style="margin-left: 20px; font-family: monospace;">
+                            Media<br>
+                            ↓<br>
+                            ●●●●● (todos cerca)
+                        </p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">DATOS DISPERSOS (σ grande):</p>
+                        <p style="margin-left: 20px; font-family: monospace;">
+                            Media<br>
+                            ↓<br>
+                            ●    ●    ●    ●    ● (alejados)
+                        </p>
+                    </div>
+                    
+                    <h4 style="color: #3b82f6; margin: 15px 0 10px;">🔑 Comparación con rango:</h4>
+                    <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                        <tr style="background: #e0f2fe;">
+                            <th style="border: 1px solid #3b82f6; padding: 8px;">Medida</th>
+                            <th style="border: 1px solid #3b82f6; padding: 8px;">Qué mide</th>
+                            <th style="border: 1px solid #3b82f6; padding: 8px;">Fórmula simple</th>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Rango</strong></td>
+                            <td style="border: 1px solid #e0f2fe; padding: 8px;">Diferencia máx-mín</td>
+                            <td style="border: 1px solid #e0f2fe; padding: 8px;">Rango = Máx - Mín</td>
+                        </tr>
+                        <tr>
+                            <td style="border: 1px solid #e0f2fe; padding: 8px;"><strong>Desv. Estándar</strong></td>
+                            <td style="border: 1px solid #e0f2fe; padding: 8px;">Dispersión promedio</td>
+                            <td style="border: 1px solid #e0f2fe; padding: 8px;">Compleja (no memorizar)</td>
+                        </tr>
+                    </table>
+                    
+                    <h4 style="color: #3b82f6; margin: 15px 0 10px;">🔑 Aplicaciones:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Comparar variabilidad entre conjuntos de datos</li>
+                        <li>Control de calidad (productos consistentes = σ baja)</li>
+                        <li>Estadísticas deportivas (jugadores consistentes)</li>
+                        <li>Riesgo financiero (inversiones con σ alta = más riesgo)</li>
+                    </ul>
+                    
+                    <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Datos: 5,5,5,5. ¿σ es grande o pequeña? <em>(R: Pequeña, σ=0)</em></li>
+                        <li>Datos: 1,50,100. ¿σ es grande o pequeña? <em>(R: Grande, muy dispersos)</em></li>
+                        <li>¿σ grande significa datos cercanos o lejanos? <em>(R: Lejanos de la media)</em></li>
+                        <li>¿Qué mide σ? <em>(R: Dispersión/variabilidad)</em></li>
+                        <li>Dos grupos con misma media pero uno con σ mayor. ¿Cuál es más variable? <em>(R: El de σ mayor)</em></li>
+                    </ol>
+                `,
+                formula: "σ pequeña = datos agrupados | σ grande = datos dispersos"
+            },
+
+            "Lectura cronometrada": {
+                texto: `
+                    <h4 style="color: #06b6d4; margin-bottom: 10px;">📖 ¿Qué debes hacer?</h4>
+                    <p>Practicar lectura en inglés con límite de tiempo para mejorar velocidad y comprensión</p>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">🎯 Metas de velocidad:</h4>
+                    <div style="background: #cffafe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;"><strong>Principiante:</strong> 100-150 palabras/minuto</p>
+                        <p style="margin: 5px 0;"><strong>Intermedio:</strong> 150-200 palabras/minuto</p>
+                        <p style="margin: 5px 0;"><strong>Avanzado:</strong> 200-250 palabras/minuto</p>
+                        <p style="margin: 5px 0;"><strong>Nativo:</strong> 250-300 palabras/minuto</p>
+                        <p style="margin: 15px 0 5px; font-weight: bold; color: #06b6d4;">Meta para EXANI-II: 150-200 ppm con 70% comprensión</p>
+                    </div>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">📐 Cómo practicar:</h4>
+                    <div style="background: #cffafe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 8px 0; font-weight: bold;">PASO 1: Elige un texto</p>
+                        <p style="margin-left: 20px;">• 200-300 palabras</p>
+                        <p style="margin-left: 20px;">• Nivel intermedio</p>
+                        <p style="margin-left: 20px;">• Tema general (noticias, ciencia, cultura)</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">PASO 2: Configura timer</p>
+                        <p style="margin-left: 20px;">• Para 250 palabras: 90 segundos (meta: 166 ppm)</p>
+                        <p style="margin-left: 20px;">• Cronómetro visible</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">PASO 3: Lee enfocado</p>
+                        <p style="margin-left: 20px;">• NO traduzcas palabra por palabra</p>
+                        <p style="margin-left: 20px;">• NO releas (solo si es crítico)</p>
+                        <p style="margin-left: 20px;">• Usa dedo/lápiz para seguir línea</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">PASO 4: Responde preguntas</p>
+                        <p style="margin-left: 20px;">• 5-7 preguntas de comprensión</p>
+                        <p style="margin-left: 20px;">• Sin ver el texto</p>
+                    </div>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">🔑 Técnicas para aumentar velocidad:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>Evita subvocalizar:</strong> No "pronunciar" mentalmente cada palabra</li>
+                        <li><strong>Lectura por bloques:</strong> Lee grupos de 3-4 palabras juntas</li>
+                        <li><strong>Usa visión periférica:</strong> Capta palabras alrededor</li>
+                        <li><strong>No regresiones:</strong> Evita volver atrás</li>
+                        <li><strong>Practica diario:</strong> 15 minutos cada día</li>
+                    </ul>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">📊 Calcula tu velocidad:</h4>
+                    <div style="background: #cffafe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;">
+                            <strong>ppm = (palabras totales × 60) / segundos</strong>
+                        </p>
+                        <p style="margin: 10px 0 5px;">Ejemplo:</p>
+                        <p style="margin-left: 20px;">Leíste 250 palabras en 90 segundos</p>
+                        <p style="margin-left: 20px;">ppm = (250 × 60) / 90 = 166 ppm</p>
+                    </div>
+                    
+                    <h4 style="color: #06b6d4; margin: 15px 0 10px;">✏️ Plan de práctica semanal:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>Lunes: Artículo corto (150 palabras, 60 seg)</li>
+                        <li>Martes: Artículo medio (200 palabras, 80 seg)</li>
+                        <li>Miércoles: Artículo largo (300 palabras, 120 seg)</li>
+                        <li>Jueves: Repite el que más te costó</li>
+                        <li>Viernes: Simulacro (3 textos, 10 min total)</li>
+                    </ol>
+                `,
+                formula: "ppm = (palabras × 60) / segundos | Meta: 150-200 ppm con comprensión"
+            },
+
+            "Progresión aritmética": {
+                texto: `
+                    <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Sucesión de números donde la diferencia entre términos consecutivos es constante</p>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Elementos:</h4>
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;"><strong>a₁</strong> = Primer término</p>
+                        <p style="margin: 5px 0;"><strong>d</strong> = Diferencia común (constante)</p>
+                        <p style="margin: 5px 0;"><strong>aₙ</strong> = Término n-ésimo</p>
+                        <p style="margin: 5px 0;"><strong>n</strong> = Posición del término</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">Ejemplo: 2, 5, 8, 11, 14...</p>
+                        <p style="margin-left: 20px;">a₁ = 2</p>
+                        <p style="margin-left: 20px;">d = 3 (cada término aumenta 3)</p>
+                    </div>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Fórmula del término n-ésimo:</h4>
+                    <div style="background: #fef3c7; padding: 20px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                        <p style="font-size: 24px; font-weight: bold; margin: 10px 0;">
+                            aₙ = a₁ + (n - 1) × d
+                        </p>
+                        <p style="margin: 10px 0;">Ejemplo: Encontrar el 10º término de: 2, 5, 8, 11...</p>
+                        <p style="margin: 5px 0;">a₁ = 2, d = 3, n = 10</p>
+                        <p style="margin: 5px 0;">a₁₀ = 2 + (10-1)×3 = 2 + 27 = <strong>29</strong></p>
+                    </div>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Suma de n términos:</h4>
+                    <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;">
+                            <strong>Sₙ = n × (a₁ + aₙ) / 2</strong>
+                        </p>
+                        <p style="margin: 5px 0;">O también:</p>
+                        <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;">
+                            <strong>Sₙ = n × [2a₁ + (n-1)d] / 2</strong>
+                        </p>
+                        
+                        <p style="margin: 15px 0 8px;">Ejemplo: Suma de primeros 5 términos de: 2, 5, 8, 11, 14</p>
+                        <p style="margin-left: 20px;">n=5, a₁=2, a₅=14</p>
+                        <p style="margin-left: 20px;">S₅ = 5×(2+14)/2 = 5×16/2 = <strong>40</strong></p>
+                    </div>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">🔑 Cómo identificar:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li>Resta dos términos consecutivos</li>
+                        <li>Si la diferencia es SIEMPRE la misma → es P.A.</li>
+                        <li>Ejemplo: 3, 7, 11, 15 → d=4 (siempre)</li>
+                        <li>Contra-ejemplo: 2, 4, 8, 16 → NO es P.A. (es P.G.)</li>
+                    </ul>
+                    
+                    <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>En 5, 8, 11, 14... ¿cuál es d? <em>(R: 3)</em></li>
+                        <li>Si a₁=10, d=4, ¿cuál es a₅? <em>(R: a₅=10+(5-1)×4=26)</em></li>
+                        <li>¿Es P.A.? 2, 4, 6, 8 <em>(R: Sí, d=2)</em></li>
+                        <li>Suma de 1+2+3+4+5 <em>(R: S₅=5×(1+5)/2=15)</em></li>
+                        <li>Si a₁=7, a₁₀=34, ¿cuál es d? <em>(R: 34=7+(10-1)d → d=3)</em></li>
+                    </ol>
+                `,
+                formula: "aₙ = a₁ + (n-1)d | Sₙ = n(a₁+aₙ)/2"
+            },
+
+            "Cantidad de movimiento": {
+                texto: `
+                    <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                    <p>Momento lineal: producto de masa por velocidad. Se conserva en choques</p>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Definición:</h4>
+                    <div style="background: #ede9fe; padding: 20px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                        <p style="font-size: 24px; font-weight: bold; margin: 10px 0; color: #8b5cf6;">
+                            p = m × v
+                        </p>
+                        <p style="margin: 10px 0;">Donde:</p>
+                        <p style="margin: 5px 0;"><strong>p</strong> = cantidad de movimiento (momento lineal)</p>
+                        <p style="margin: 5px 0;"><strong>m</strong> = masa (kg)</p>
+                        <p style="margin: 5px 0;"><strong>v</strong> = velocidad (m/s)</p>
+                        <p style="margin: 10px 0;"><strong>Unidad:</strong> kg·m/s</p>
+                    </div>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Conservación del momento:</h4>
+                    <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="font-size: 20px; font-weight: bold; margin: 10px 0; text-align: center;">
+                            p_antes = p_después
+                        </p>
+                        <p style="margin: 10px 0;">En un choque o explosión:</p>
+                        <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0; text-align: center;">
+                            m₁v₁ + m₂v₂ = m₁v₁' + m₂v₂'
+                        </p>
+                        <p style="margin: 10px 0; text-align: center;">(antes = después)</p>
+                    </div>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Ejemplo - Choque:</h4>
+                    <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 8px 0; font-weight: bold;">Situación:</p>
+                        <p style="margin-left: 20px;">Auto A: m=1000kg, v=10 m/s →</p>
+                        <p style="margin-left: 20px;">Auto B: m=800kg, v=0 m/s (detenido)</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">ANTES del choque:</p>
+                        <p style="margin-left: 20px;">p_total = 1000×10 + 800×0 = 10,000 kg·m/s</p>
+                        
+                        <p style="margin: 15px 0 8px; font-weight: bold;">DESPUÉS del choque:</p>
+                        <p style="margin-left: 20px;">p_total = 10,000 kg·m/s (SE CONSERVA)</p>
+                        <p style="margin-left: 20px;">Si quedan juntos: (1000+800)v' = 10,000</p>
+                        <p style="margin-left: 20px;">v' = 10,000/1800 ≈ 5.6 m/s</p>
+                    </div>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🔑 Conceptos importantes:</h4>
+                    <ul style="margin-left: 20px; line-height: 1.8;">
+                        <li><strong>p es vector:</strong> Tiene magnitud Y dirección</li>
+                        <li><strong>Mayor masa o velocidad</strong> → mayor p</li>
+                        <li><strong>p=0:</strong> Objeto en reposo O fuerzas balanceadas</li>
+                        <li><strong>Conservación:</strong> Si no hay fuerzas externas</li>
+                        <li><strong>Impulso:</strong> Cambio en cantidad de movimiento</li>
+                    </ul>
+                    
+                    <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                    <ol style="margin-left: 20px; line-height: 1.8;">
+                        <li>m=5kg, v=10m/s. ¿p=? <em>(R: 50 kg·m/s)</em></li>
+                        <li>¿Quién tiene mayor p: camión a 20m/s o bicicleta a 50m/s? <em>(R: Depende de las masas)</em></li>
+                        <li>En choque, ¿se conserva p? <em>(R: Sí, siempre)</em></li>
+                        <li>Si p=100 y m=20, ¿v=? <em>(R: 5 m/s)</em></li>
+                        <li>Objeto en reposo, ¿p=? <em>(R: 0)</em></li>
+                    </ol>
+                `,
+                formula: "p = m×v | Conservación: p_antes = p_después"
+            },
 
 
 
@@ -4570,6 +5278,7 @@
 </body>
 
 </html>
+
 
 
 
