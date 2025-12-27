@@ -6,6 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">    <title>Plan de Estudio EXANI-II - Completo</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
     <style>
         * {
             margin: 0;
@@ -32,6 +35,32 @@
             border-radius: 15px;
             margin-bottom: 20px;
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .login-btn {
+            background: white;
+            color: #667eea;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(255,255,255,0.2);
+            padding: 8px 15px;
+            border-radius: 20px;
+        }
+        
+        .user-avatar {
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
         }
 
         .header h1 {
@@ -374,9 +403,15 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>📚 Plan de Estudio EXANI-II</h1>
-            <p style="font-size: 1.3em; margin-top: 10px;">Ingeniería en Tecnología de Software</p>
-            <p style="opacity: 0.9; margin-top: 10px;">Inicio: Lunes 22 Diciembre 2025</p>
+            <div>
+                <h1>📚 Plan de Estudio EXANI-II</h1>
+                <p style="font-size: 1.3em; margin-top: 10px;">Ingeniería en Tecnología de Software</p>
+                <p style="opacity: 0.9; margin-top: 10px;">Inicio: Lunes 22 Diciembre 2025</p>
+                <p id="sync-status" style="font-size:0.9em;margin-top:5px;">⚠️ Sin sincronizar</p>
+            </div>
+            <div id="auth-container">
+                <button class="login-btn" onclick="loginWithGoogle()">🔐 Iniciar Sesión</button>
+            </div>
         </div>
 
         <div class="tabs">
@@ -1086,6 +1121,65 @@
         </div>
 
         <script>
+            // Firebase Config
+            const firebaseConfig = {
+                {
+                  apiKey: "AIzaSyDF_w_2vUsFDxICC25vKhC6_Hb2CLgrIqY",
+                  authDomain: "estudios-62931.firebaseapp.com",
+                  databaseURL: "https://estudios-62931-default-rtdb.firebaseio.com",
+                  projectId: "estudios-62931",
+                  storageBucket: "estudios-62931.firebasestorage.app",
+                  messagingSenderId: "477164966422",
+                  appId: "1:477164966422:web:86a95f789998d8018c1b37",
+                  measurementId: "G-T0G8R3S2K1"
+                }
+            };
+            
+            firebase.initializeApp(firebaseConfig);
+            const auth = firebase.auth();
+            const db = firebase.database();
+            let currentUser = null;
+            
+            // Auth
+            auth.onAuthStateChanged(user => {
+                if (user) {
+                    currentUser = user;
+                    document.getElementById('auth-container').innerHTML = `
+                        <div class="user-info">
+                            <img src="${user.photoURL}" class="user-avatar">
+                            <span>${user.displayName}</span>
+                            <button class="login-btn" onclick="auth.signOut()">Salir</button>
+                        </div>
+                    `;
+                    syncDown();
+                } else {
+                    document.getElementById('auth-container').innerHTML = 
+                        '<button class="login-btn" onclick="loginWithGoogle()">🔐 Iniciar Sesión</button>';
+                }
+            });
+            
+            function loginWithGoogle() {
+                auth.signInWithPopup(new firebase.auth.GoogleAuthProvider());
+            }
+            
+            function syncDown() {
+                if (!currentUser) return;
+                db.ref('users/' + currentUser.uid).once('value').then(snap => {
+                    const data = snap.val();
+                    if (data) {
+                        Object.keys(data).forEach(key => localStorage.setItem(key, data[key]));
+                        renderCalendario();
+                        actualizarProgreso();
+                        document.getElementById('sync-status').textContent = '✅ Sincronizado';
+                    }
+                });
+            }
+            
+            function syncUp(key, value) {
+                if (!currentUser) return;
+                db.ref('users/' + currentUser.uid + '/' + key).set(value);
+            }
+            
             const materias = {
                 "Pensamiento Matemático": "#3b82f6",
                 "Comprensión Lectora": "#10b981",
@@ -1244,6 +1338,7 @@
                 const key = `${semana}-${diaIdx}-${temaIdx}`;
                 const checked = localStorage.getItem(key) === 'true';
                 localStorage.setItem(key, (!checked).toString());
+                syncUp(key, (!checked).toString());
                 if (!checked) {
                     const today = new Date().toISOString().split('T')[0];
                     const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
@@ -1317,6 +1412,7 @@
                 
                 // Guardar en localStorage
                 localStorage.setItem(notasKey, valor);
+                syncUp(notasKey, valor);
                 
                 // Actualizar preview
                 const previewDiv = document.getElementById(`preview-${semana}-${diaIdx}-${temaIdx}`);
@@ -1723,6 +1819,7 @@
                     notas: document.getElementById(`sim${num}-notas`).value
                 };
                 localStorage.setItem(`simulacro${num}`, JSON.stringify(data));
+                syncUp(`simulacro${num}`, JSON.stringify(data))
                 checkAchievements();
             }
 
@@ -4422,5 +4519,6 @@
 </body>
 
 </html>
+
 
 
