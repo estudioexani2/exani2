@@ -1268,50 +1268,62 @@
                 }
             }
 
-            function guardarNotas(semana, diaIdx, temaIdx) {
-                const notasKey = `notas-${semana}-${diaIdx}-${temaIdx}`;
-                const textarea = document.getElementById(notasKey);
-                const valor = textarea.value.trim();
-
-                // Guardar en localStorage
-                localStorage.setItem(notasKey, valor);
-
-                // Detectar si es una URL de YouTube y mostrar preview
-                const previewDiv = document.getElementById(`preview-${semana}-${diaIdx}-${temaIdx}`);
+            function generarPreviewHTML(valor, semana, diaIdx, temaIdx) {
+                if (!valor) return '';
+                
                 const youtubeRegex = /(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/)([a-zA-Z0-9_-]{11})/;
                 const match = valor.match(youtubeRegex);
-
+                
                 if (match) {
                     const videoId = match[1];
-                    previewDiv.innerHTML = `
+                    return `
                         <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 8px;">
                             <p style="margin: 0 0 10px 0; font-weight: bold; color: #1e40af;">
                                 🎥 Video de YouTube detectado
                             </p>
                             <a href="https://www.youtube.com/watch?v=${videoId}" 
-                            target="_blank" 
-                            style="
-                                display: inline-block;
-                                padding: 8px 16px;
-                                background: #ef4444;
-                                color: white;
-                                text-decoration: none;
-                                border-radius: 6px;
-                                font-weight: bold;
-                                transition: background 0.3s;
-                            "
-                            onmouseover="this.style.background='#dc2626'"
-                            onmouseout="this.style.background='#ef4444'">
+                               target="_blank" 
+                               style="
+                                   display: inline-block;
+                                   padding: 8px 16px;
+                                   background: #ef4444;
+                                   color: white;
+                                   text-decoration: none;
+                                   border-radius: 6px;
+                                   font-weight: bold;
+                                   transition: background 0.3s;
+                               "
+                               onmouseover="this.style.background='#dc2626'"
+                               onmouseout="this.style.background='#ef4444'">
                                 ▶️ Ver video en YouTube
                             </a>
                             <div style="margin-top: 10px;">
                                 <img src="https://img.youtube.com/vi/${videoId}/hqdefault.jpg" 
-                                    alt="Thumbnail" 
-                                    style="width: 100%; max-width: 320px; border-radius: 8px; cursor: pointer;"
-                                    onclick="window.open('https://www.youtube.com/watch?v=${videoId}', '_blank')">
+                                     alt="Thumbnail" 
+                                     style="width: 100%; max-width: 320px; border-radius: 8px; cursor: pointer;"
+                                     onclick="window.open('https://www.youtube.com/watch?v=${videoId}', '_blank')">
                             </div>
                         </div>
                     `;
+                }
+                
+                return '';
+            }
+            
+            function guardarNotas(semana, diaIdx, temaIdx) {
+                const notasKey = `notas-${semana}-${diaIdx}-${temaIdx}`;
+                const textarea = document.getElementById(notasKey);
+                const valor = textarea.value.trim();
+                
+                // Guardar en localStorage
+                localStorage.setItem(notasKey, valor);
+                
+                // Actualizar preview
+                const previewDiv = document.getElementById(`preview-${semana}-${diaIdx}-${temaIdx}`);
+                const previewHTML = generarPreviewHTML(valor, semana, diaIdx, temaIdx);
+                
+                if (previewHTML) {
+                    previewDiv.innerHTML = previewHTML;
                 } else if (valor) {
                     previewDiv.innerHTML = `
                         <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 8px;">
@@ -1374,7 +1386,7 @@
                                         <textarea 
                                             id="notas-${semanaKey}-${diaIdx}-${temaIdx}"
                                             placeholder="Pega aquí la URL del video de YouTube que viste, o escribe tus notas personales...
-                        Ejemplo: https://www.youtube.com/watch?v=..."
+                                        Ejemplo: https://www.youtube.com/watch?v=..."
                                             style="
                                                 width: 100%;
                                                 min-height: 80px;
@@ -1386,11 +1398,12 @@
                                                 resize: vertical;
                                                 transition: border-color 0.3s;
                                             "
-                                            onblur="guardarNotas('${semanaKey}', ${diaIdx}, ${temaIdx})"
                                             onfocus="this.style.borderColor='#667eea'"
                                             onblur="this.style.borderColor='#e5e7eb'; guardarNotas('${semanaKey}', ${diaIdx}, ${temaIdx})"
                                         >${notasGuardadas}</textarea>
-                                        <div id="preview-${semanaKey}-${diaIdx}-${temaIdx}" style="margin-top: 10px;"></div>
+                                        <div id="preview-${semanaKey}-${diaIdx}-${temaIdx}" style="margin-top: 10px;">
+                                            ${generarPreviewHTML(notasGuardadas, semanaKey, diaIdx, temaIdx)}
+                                        </div>
                                     </div>
                                 </div>
                             </div>`;
@@ -4409,3 +4422,4 @@
 </body>
 
 </html>
+
