@@ -1517,6 +1517,11 @@
 
                             if (pendingList) pendingList.innerHTML = pendingHTML || '<p style="color: #9ca3af;">No hay solicitudes pendientes.</p>';
                             if (activeList) activeList.innerHTML = activeHTML || '<p style="color: #9ca3af;">No hay usuarios activos.</p>';
+                        }).catch(error => {
+                            console.error("Error al cargar panel de admin:", error);
+                            const errorMsg = `<p style="color: #ef4444;">No tienes permisos para ver esto. Asegúrate de ser admin y configurar las reglas de Firebase.<br><small>${error.message}</small></p>`;
+                            if (pendingList) pendingList.innerHTML = errorMsg;
+                            if (activeList) activeList.innerHTML = errorMsg;
                         });
                     }
 
