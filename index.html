@@ -408,7 +408,7 @@
         <h1 style="color: #667eea; font-size: 2.5em; margin-bottom: 20px;">📚 Plan de Estudio EXANI-II</h1>
         <p style="color: #6b7280; font-size: 1.2em; margin-bottom: 30px;">Inicia sesión para acceder a tu plan personalizado</p>
 
-        <button class="login-btn" onclick="loginWithGoogle()" style="font-size: 18px; padding: 15px 30px;">
+        <button onclick="loginWithGoogle()" style="background: #4285f4; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4); transition: all 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width: 20px; margin-right: 10px; vertical-align: middle;">
             Iniciar Sesión con Google
         </button>
@@ -1207,22 +1207,43 @@
             
             function syncDown() {
                 if (!currentUser) return;
+                const statusEl = document.getElementById('sync-status');
+                if (statusEl) statusEl.textContent = '🔄 Descargando datos...';
+                
                 db.ref('users/' + currentUser.uid).once('value').then(snap => {
                     const data = snap.val();
                     if (data) {
-                        Object.keys(data).forEach(key => localStorage.setItem(key, data[key]));
+                        Object.keys(data).forEach(key => {
+                            if (key !== 'lastVisit') {
+                                localStorage.setItem(key, data[key]);
+                            }
+                        });
+                        
+                        // Actualizar lastVisit
+                        const today = new Date().toISOString().split('T')[0];
+                        const lastVisit = localStorage.getItem('lastVisit');
+                        if (lastVisit !== today) {
+                            localStorage.setItem('pomodoroSessions', '0');
+                            syncUp('pomodoroSessions', '0');
+                            const sessionCounter = document.getElementById('session-counter');
+                            if (sessionCounter) sessionCounter.textContent = 'Sesiones hoy: 0';
+                        }
+                        localStorage.setItem('lastVisit', today);
+                        syncUp('lastVisit', today);
+                        
                         renderCalendario();
                         actualizarProgreso();
-                        const statusEl = document.getElementById('sync-status');
-                        if (statusEl) statusEl.textContent = '✅ Sincronizado';
-                        loadSimulacros();
                         renderDashboard();
+                        loadSimulacros();
+                        
+                        if (statusEl) statusEl.textContent = '✅ Todos los datos sincronizados';
+                    } else {
+                        if (statusEl) statusEl.textContent = '✅ Conectado (sin datos previos)';
                     }
+                }).catch(err => {
+                    console.error('Error al sincronizar:', err);
+                    if (statusEl) statusEl.textContent = '⚠️ Error al sincronizar';
                 });
-                setTimeout(() => {
-                    const statusEl = document.getElementById('sync-status');
-                    if (statusEl) statusEl.textContent = '✅ Todos los datos sincronizados';
-                }, 1000);
             }
             
             function syncUp(key, value) {
@@ -1389,17 +1410,52 @@
                 const checked = localStorage.getItem(key) === 'true';
                 localStorage.setItem(key, (!checked).toString());
                 syncUp(key, (!checked).toString());
+                
+                // Actualizar días estudiados
+                const today = new Date().toISOString().split('T')[0];
+                const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
+
                 if (!checked) {
-                    const today = new Date().toISOString().split('T')[0];
-                    const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
+                    // Marcar como completado - agregar día si no existe
                     if (!studyDays.includes(today)) {
                         studyDays.push(today);
                         localStorage.setItem('studyDays', JSON.stringify(studyDays));
+                        syncUp('studyDays', JSON.stringify(studyDays));
+                    }
+                } else {
+                    // Desmarcar - verificar si ya no hay temas completados hoy
+                    const hayTemasCompletadosHoy = verificarTemasCompletadosHoy(semana, diaIdx, temaIdx);
+                    if (!hayTemasCompletadosHoy) {
+                        const index = studyDays.indexOf(today);
+                        if (index > -1) {
+                            studyDays.splice(index, 1);
+                            localStorage.setItem('studyDays', JSON.stringify(studyDays));
+                            syncUp('studyDays', JSON.stringify(studyDays));
+                        }
                     }
                 }
+                
                 renderCalendario();
                 actualizarProgreso();
+                renderDashboard();
                 checkAchievements();
+            }
+
+            function verificarTemasCompletadosHoy(semanaActual, diaActual, temaActual) {
+                let hayOtros = false;
+                Object.keys(studyPlan).forEach(semanaKey => {
+                    studyPlan[semanaKey].dias.forEach((dia, diaIdx) => {
+                        dia.temas.forEach((tema, temaIdx) => {
+                            const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
+                            if (key !== `${semanaActual}-${diaActual}-${temaActual}`) {
+                                if (localStorage.getItem(key) === 'true') {
+                                    hayOtros = true;
+                                }
+                            }
+                        });
+                    });
+                });
+                return hayOtros;
             }
 
             function toggleExplicacion(semana, diaIdx, temaIdx) {
@@ -1641,6 +1697,7 @@
                         alert('¡Pomodoro completado! Toma un descanso de 5 minutos.');
                         const sessions = parseInt(localStorage.getItem('pomodoroSessions') || '0') + 1;
                         localStorage.setItem('pomodoroSessions', sessions.toString());
+                        syncUp('pomodoroSessions', sessions.toString());
                         document.getElementById('session-counter').textContent = 'Sesiones hoy: ' + sessions;
                         checkAchievements();
                     }
@@ -1869,7 +1926,7 @@
                     notas: document.getElementById(`sim${num}-notas`).value
                 };
                 localStorage.setItem(`simulacro${num}`, JSON.stringify(data));
-                syncUp(`simulacro${num}`, JSON.stringify(data))
+                syncUp(`simulacro${num}`, JSON.stringify(data));
                 checkAchievements();
             }
 
