@@ -477,6 +477,25 @@
             </div>
         </div>
 
+        <div id="pending-screen"
+            style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%); z-index: 9999; display: none; align-items: center; justify-content: center;">
+            <div
+                style="background: white; padding: 60px; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.3); text-align: center; max-width: 500px;">
+                <h1 style="color: #f59e0b; font-size: 2.5em; margin-bottom: 20px;">⏳ Acceso Pendiente</h1>
+                <p style="color: #6b7280; font-size: 1.2em; margin-bottom: 30px;">Tu solicitud de acceso ha sido
+                    recibida
+                    y está siendo revisada por el administrador.</p>
+                <button onclick="checkUserStatusForce()"
+                    style="background: #f59e0b; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer;">
+                    🔄 Verificar Estado
+                </button>
+                <button onclick="logout()"
+                    style="background: #ef4444; color: white; border: none; padding: 12px 30px; border-radius: 8px; font-size: 16px; font-weight: 600; cursor: pointer; margin-left: 10px;">
+                    Cerrar Sesión
+                </button>
+            </div>
+        </div>
+
         <div id="app-content" style="display: none;">
             <div class="container">
                 <div class="header">
@@ -506,6 +525,8 @@
                     <button class="tab" onclick="showTab('recursos')">🔗 Recursos</button>
                     <button class="tab" onclick="showTab('tips')">💡 Tips</button>
                     <button class="tab" onclick="showTab('logros')">🏆 Logros</button>
+                    <button class="tab" id="admin-tab-btn" onclick="showTab('admin')"
+                        style="display: none; background: #1f2937; color: white;">👑 Admin</button>
                 </div>
 
                 <div id="inicio" class="content active">
@@ -1297,6 +1318,22 @@
                                 id="achievements-container"></div>
                         </div>
                     </div>
+
+                    <div id="admin" class="content">
+                        <div class="card">
+                            <h2 style="font-size: 2em; margin-bottom: 20px;">👑 Panel de Administración</h2>
+
+                            <h3 style="color: #f59e0b; margin: 20px 0;">⏳ Solicitudes Pendientes</h3>
+                            <div id="pending-users-list" style="display: grid; gap: 15px;">
+                                <p style="color: #6b7280;">Cargando solicitudes...</p>
+                            </div>
+
+                            <h3 style="color: #10b981; margin: 30px 0 20px;">✅ Usuarios Activos</h3>
+                            <div id="active-users-list" style="display: grid; gap: 15px;">
+                                <p style="color: #6b7280;">Cargando usuarios...</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
                 <script>
@@ -1336,16 +1373,13 @@
                     auth.onAuthStateChanged(user => {
                         const loginScreen = document.getElementById('login-screen');
                         const appContent = document.getElementById('app-content');
+                        const pendingScreen = document.getElementById('pending-screen');
 
                         if (user) {
                             // Usuario logueado
                             currentUser = user;
 
-                            // Ocultar pantalla de login
-                            if (loginScreen) loginScreen.style.display = 'none';
-                            if (appContent) appContent.style.display = 'block';
-
-                            // Actualizar UI del header
+                            // Mostrar user info (aunque este pendiente, mostramos quien es)
                             const authContainer = document.getElementById('auth-container');
                             if (authContainer) {
                                 authContainer.innerHTML = `
@@ -1357,19 +1391,17 @@
                         `;
                             }
 
-                            // Sincronizar datos
-                            document.getElementById('sync-status').textContent = '🔄 Sincronizando...';
-                            // AGREGA UN PEQUEÑO DELAY:
-                            setTimeout(() => {
-                                syncDown();
-                            }, 500);
+                            // VERIFICAR ESTADO DEL USUARIO
+                            checkUserStatus(user);
+
                         } else {
                             // Usuario NO logueado
                             currentUser = null;
 
-                            // Mostrar pantalla de login
+                            // Mostrar pantalla de login y ocultar otras
                             if (loginScreen) loginScreen.style.display = 'flex';
                             if (appContent) appContent.style.display = 'none';
+                            if (pendingScreen) pendingScreen.style.display = 'none';
                         }
                     });
 
@@ -1384,6 +1416,141 @@
                         }
                     }
 
+
+                    function checkUserStatus(user) {
+                        const userRef = db.ref('users/' + user.uid);
+                        userRef.once('value').then(snapshot => {
+                            const data = snapshot.val();
+                            const loginScreen = document.getElementById('login-screen');
+                            const pendingScreen = document.getElementById('pending-screen');
+                            const appContent = document.getElementById('app-content');
+                            const adminTabBtn = document.getElementById('admin-tab-btn');
+
+                            if (!data) {
+                                // Nuevo usuario: Crear registro con estado PENDIENTE
+                                userRef.set({
+                                    email: user.email,
+                                    displayName: user.displayName,
+                                    photoURL: user.photoURL,
+                                    status: 'pending', // pending, approved, rejected
+                                    role: 'user', // user, admin
+                                    lastLogin: new Date().toISOString()
+                                }).then(() => {
+                                    // Mostrar pantalla de pendiente
+                                    if (loginScreen) loginScreen.style.display = 'none';
+                                    if (appContent) appContent.style.display = 'none';
+                                    if (pendingScreen) pendingScreen.style.display = 'flex';
+                                });
+                            } else {
+                                // Usuario existente: Checar estado
+                                if (data.status === 'approved' || data.role === 'admin') {
+                                    // APROBADO
+                                    if (loginScreen) loginScreen.style.display = 'none';
+                                    if (pendingScreen) pendingScreen.style.display = 'none';
+                                    if (appContent) appContent.style.display = 'block';
+
+                                    // Si es admin, mostrar botón y cargar panel
+                                    if (data.role === 'admin') {
+                                        if (adminTabBtn) adminTabBtn.style.display = 'inline-block';
+                                        renderAdminPanel();
+                                    } else {
+                                        if (adminTabBtn) adminTabBtn.style.display = 'none';
+                                    }
+
+                                    // Sincronizar datos normales
+                                    syncDown();
+                                } else {
+                                    // PENDIENTE O RECHAZADO
+                                    if (loginScreen) loginScreen.style.display = 'none';
+                                    if (appContent) appContent.style.display = 'none';
+                                    if (pendingScreen) pendingScreen.style.display = 'flex';
+                                }
+                            }
+                        });
+                    }
+
+                    function checkUserStatusForce() {
+                        if (currentUser) {
+                            checkUserStatus(currentUser);
+                        }
+                    }
+
+                    function renderAdminPanel() {
+                        const pendingList = document.getElementById('pending-users-list');
+                        const activeList = document.getElementById('active-users-list');
+
+                        db.ref('users').once('value').then(snapshot => {
+                            const users = snapshot.val();
+                            if (!users) return;
+
+                            let pendingHTML = '';
+                            let activeHTML = '';
+
+                            Object.keys(users).forEach(uid => {
+                                const u = users[uid];
+                                const isMe = (uid === currentUser.uid);
+
+                                const card = `
+                                    <div style="background: white; border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between;">
+                                        <div style="display: flex; align-items: center; gap: 10px;">
+                                            <img src="${u.photoURL || 'https://via.placeholder.com/40'}" style="width: 40px; height: 40px; border-radius: 50%;">
+                                            <div>
+                                                <div style="font-weight: bold;">${u.displayName} ${isMe ? '(Tú)' : ''}</div>
+                                                <div style="font-size: 0.8em; color: #6b7280;">${u.email}</div>
+                                                <div style="font-size: 0.8em; color: #9ca3af;">Rol: ${u.role}</div>
+                                            </div>
+                                        </div>
+                                        <div style="display: flex; gap: 10px;">
+                                            ${!isMe && u.status !== 'approved' ? `<button onclick="updateUserStatus('${uid}', 'approved')" style="background: #10b981; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Aprobar</button>` : ''}
+                                            ${!isMe && u.status === 'approved' ? `<button onclick="updateUserStatus('${uid}', 'pending')" style="background: #f59e0b; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Suspender</button>` : ''}
+                                            ${!isMe ? `<button onclick="toggleAdminRole('${uid}', '${u.role === 'admin' ? 'user' : 'admin'}')" style="background: #3b82f6; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">${u.role === 'admin' ? 'Quitar Admin' : 'Hacer Admin'}</button>` : ''}
+                                        </div>
+                                    </div>
+                                `;
+
+                                if (u.status === 'pending') {
+                                    pendingHTML += card;
+                                } else {
+                                    activeHTML += card;
+                                }
+                            });
+
+                            if (pendingList) pendingList.innerHTML = pendingHTML || '<p style="color: #9ca3af;">No hay solicitudes pendientes.</p>';
+                            if (activeList) activeList.innerHTML = activeHTML || '<p style="color: #9ca3af;">No hay usuarios activos.</p>';
+                        });
+                    }
+
+                    function updateUserStatus(uid, status) {
+                        if (confirm(`¿Cambiar estado a ${status}?`)) {
+                            db.ref('users/' + uid).update({ status: status }).then(() => {
+                                renderAdminPanel();
+                            });
+                        }
+                    }
+
+                    function toggleAdminRole(uid, role) {
+                        if (confirm(`¿Cambiar rol a ${role}?`)) {
+                            db.ref('users/' + uid).update({ role: role }).then(() => {
+                                renderAdminPanel();
+                            });
+                        }
+                    }
+
+                    // Función de "puerta trasera" para el primer setup
+                    window.claimAdmin = function () {
+                        if (currentUser) {
+                            db.ref('users/' + currentUser.uid).update({
+                                role: 'admin',
+                                status: 'approved'
+                            }).then(() => {
+                                alert('¡Ahora eres administrador! Recarga la página.');
+                                location.reload();
+                            });
+                        } else {
+                            alert('Debes iniciar sesión primero (aunque te salga la pantalla de pendiente).');
+                        }
+                    };
+
                     function syncDown() {
                         if (!currentUser) return;
                         const statusEl = document.getElementById('sync-status');
@@ -1394,6 +1561,9 @@
                                 const data = snap.val();
                                 if (data) {
                                     Object.keys(data).forEach(key => {
+                                        // Ignorar campos de perfil/auth al sincronizar a localStorage
+                                        if (['status', 'role', 'email', 'photoURL', 'displayName', 'lastLogin'].includes(key)) return;
+
                                         if (key !== 'lastVisit' && key !== 'studyDays') {
                                             try {
                                                 localStorage.setItem(key, data[key]);
@@ -1438,6 +1608,7 @@
 
                             isConnected.then(connected => {
                                 if (!connected && statusEl) {
+
                                     statusEl.textContent = '⚠️ Modo local (sin conexión)';
                                 } else if (statusEl) {
                                     // If connected but sync failed (permissions?), keep previous status or warn
