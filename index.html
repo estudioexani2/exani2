@@ -1427,10 +1427,19 @@
                             const adminTabBtn = document.getElementById('admin-tab-btn');
 
                             if (!data) {
-                                // Nuevo usuario: Crear registro con estado PENDIENTE
+                                // Nuevo usuario: Pedir nombre
+                                let userName = user.displayName;
+                                if (!userName) {
+                                    userName = prompt("¡Bienvenido! Por favor, ingresa tu nombre completo para el administrador:");
+                                }
+                                if (!userName || userName.trim() === "") {
+                                    userName = "Usuario Nuevo";
+                                }
+
+                                // Crear registro con estado PENDIENTE
                                 userRef.set({
                                     email: user.email,
-                                    displayName: user.displayName,
+                                    displayName: userName,
                                     photoURL: user.photoURL,
                                     status: 'pending', // pending, approved, rejected
                                     role: 'user', // user, admin
@@ -1490,28 +1499,41 @@
                                 const u = users[uid];
                                 const isMe = (uid === currentUser.uid);
 
+                                // Lógica de iconos
+                                let avatarUrl;
+                                if (u.role === 'admin') {
+                                    avatarUrl = u.photoURL || 'https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg';
+                                } else {
+                                    avatarUrl = 'https://cdn-icons-png.flaticon.com/512/3135/3135715.png'; // Genérico
+                                }
+
+                                const displayName = u.displayName || 'Sin Nombre';
+                                const email = u.email || 'Sin Email';
+                                const role = u.role || 'user';
+                                const status = u.status || 'pending';
+
                                 const card = `
                                     <div style="background: white; border: 1px solid #e5e7eb; padding: 15px; border-radius: 8px; display: flex; align-items: center; justify-content: space-between;">
                                         <div style="display: flex; align-items: center; gap: 10px;">
-                                            <img src="${u.photoURL || 'https://via.placeholder.com/40'}" style="width: 40px; height: 40px; border-radius: 50%;">
+                                            <img src="${avatarUrl}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid ${u.role === 'admin' ? '#f59e0b' : '#e5e7eb'};">
                                             <div>
-                                                <div style="font-weight: bold;">${u.displayName} ${isMe ? '(Tú)' : ''}</div>
-                                                <div style="font-size: 0.8em; color: #6b7280;">${u.email}</div>
-                                                <div style="font-size: 0.8em; color: #9ca3af;">Rol: ${u.role}</div>
+                                                <div style="font-weight: bold;">${displayName} ${isMe ? '(Tú)' : ''}</div>
+                                                <div style="font-size: 0.8em; color: #6b7280;">${email}</div>
+                                                <div style="font-size: 0.8em; color: #9ca3af;">Rol: ${role} | Estado: ${status}</div>
                                             </div>
                                         </div>
                                         <div style="display: flex; gap: 10px;">
-                                            ${!isMe && u.status !== 'approved' ? `<button onclick="updateUserStatus('${uid}', 'approved')" style="background: #10b981; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Aprobar</button>` : ''}
-                                            ${!isMe && u.status === 'approved' ? `<button onclick="updateUserStatus('${uid}', 'pending')" style="background: #f59e0b; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">Suspender</button>` : ''}
-                                            ${!isMe ? `<button onclick="toggleAdminRole('${uid}', '${u.role === 'admin' ? 'user' : 'admin'}')" style="background: #3b82f6; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">${u.role === 'admin' ? 'Quitar Admin' : 'Hacer Admin'}</button>` : ''}
+                                            ${!isMe && status !== 'approved' ? `<button onclick="updateUserStatus('${uid}', 'approved')" style="background: #10b981; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">✅ Permitir Acceso</button>` : ''}
+                                            ${!isMe && status === 'approved' ? `<button onclick="updateUserStatus('${uid}', 'pending')" style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">🚫 Quitar Acceso</button>` : ''}
+                                            ${!isMe ? `<button onclick="toggleAdminRole('${uid}', '${role === 'admin' ? 'user' : 'admin'}')" style="background: #3b82f6; color: white; border: none; padding: 5px 10px; border-radius: 5px; cursor: pointer;">${role === 'admin' ? '🔽 Quitar Admin' : '⭐ Hacer Admin'}</button>` : ''}
                                         </div>
                                     </div>
                                 `;
 
-                                if (u.status === 'pending') {
-                                    pendingHTML += card;
-                                } else {
+                                if (status === 'approved') {
                                     activeHTML += card;
+                                } else {
+                                    pendingHTML += card;
                                 }
                             });
 
