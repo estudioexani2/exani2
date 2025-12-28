@@ -457,7 +457,7 @@
         <h1 style="color: #667eea; font-size: 2.5em; margin-bottom: 20px;">📚 Plan de Estudio EXANI-II</h1>
         <p style="color: #6b7280; font-size: 1.2em; margin-bottom: 30px;">Inicia sesión para acceder a tu plan personalizado</p>
 
-        <button onclick="loginWithGoogle()" style="background: #4285f4; color: white; border: none; padding: 15px 40px; border-radius: 8px; font-size: 18px; font-weight: bold; cursor: pointer; display: flex; align-items: center; gap: 12px; box-shadow: 0 4px 12px rgba(66, 133, 244, 0.4); transition: all 0.3s;" onmouseover="this.style.transform='scale(1.05)'" onmouseout="this.style.transform='scale(1)'">
+        <button onclick="loginWithGoogle()" style="background: white; color: #4285f4; border: 2px solid #e8e8e8; padding: 15px 40px; border-radius: 8px; font-size: 18px; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); transition: all 0.3s; margin: 0 auto;" onmouseover="this.style.boxShadow='0 4px 12px rgba(0, 0, 0, 0.15)'" onmouseout="this.style.boxShadow='0 2px 8px rgba(0, 0, 0, 0.1)'">
             <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" style="width: 20px; margin-right: 10px; vertical-align: middle;">
             Iniciar Sesión con Google
         </button>
@@ -1332,6 +1332,9 @@
                         loadSimulacros();
                         
                         if (statusEl) statusEl.textContent = '✅ Todos los datos sincronizados';
+                        setTimeout(() => {
+                            if (statusEl) statusEl.textContent = '✅ Sincronizado';
+                        }, 1000);
                     } else {
                         if (statusEl) statusEl.textContent = '✅ Conectado (sin datos previos)';
                     }
@@ -1508,51 +1511,24 @@
                 localStorage.setItem(key, (!checked).toString());
                 syncUp(key, (!checked).toString());
                 
-                // Actualizar días estudiados
+                // Actualizar días estudiados SOLO si marca como completado HOY
                 const today = new Date().toISOString().split('T')[0];
-                const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
-
+                
                 if (!checked) {
-                    // Marcar como completado - agregar día si no existe
+                    // SOLO marcar el día si completa un tema HOY
+                    const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
                     if (!studyDays.includes(today)) {
                         studyDays.push(today);
                         localStorage.setItem('studyDays', JSON.stringify(studyDays));
                         syncUp('studyDays', JSON.stringify(studyDays));
                     }
-                } else {
-                    // Desmarcar - verificar si ya no hay temas completados hoy
-                    const hayTemasCompletadosHoy = verificarTemasCompletadosHoy(semana, diaIdx, temaIdx);
-                    if (!hayTemasCompletadosHoy) {
-                        const index = studyDays.indexOf(today);
-                        if (index > -1) {
-                            studyDays.splice(index, 1);
-                            localStorage.setItem('studyDays', JSON.stringify(studyDays));
-                            syncUp('studyDays', JSON.stringify(studyDays));
-                        }
-                    }
                 }
+                // NO hacer nada al desmarcar - mantener el día registrado
                 
                 renderCalendario();
                 actualizarProgreso();
                 renderDashboard();
                 checkAchievements();
-            }
-
-            function verificarTemasCompletadosHoy(semanaActual, diaActual, temaActual) {
-                let hayOtros = false;
-                Object.keys(studyPlan).forEach(semanaKey => {
-                    studyPlan[semanaKey].dias.forEach((dia, diaIdx) => {
-                        dia.temas.forEach((tema, temaIdx) => {
-                            const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
-                            if (key !== `${semanaActual}-${diaActual}-${temaActual}`) {
-                                if (localStorage.getItem(key) === 'true') {
-                                    hayOtros = true;
-                                }
-                            }
-                        });
-                    });
-                });
-                return hayOtros;
             }
 
             function toggleExplicacion(semana, diaIdx, temaIdx) {
@@ -5534,6 +5510,7 @@
         }  
                 window.onload = function () {
                     // Ejecutar inmediatamente al cargar
+                    limpiarDiasViejos(); 
                     renderDashboard();
     
                     renderCalendario();
@@ -5562,11 +5539,36 @@
                 // Renderizar una segunda vez después de 100ms por si acaso
                 setTimeout(renderDashboard, 100);
             };
+
+            function limpiarDiasViejos() {
+                const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
+                const hoy = new Date();
+                
+                // Filtrar solo días donde realmente hay temas completados
+                const diasValidos = studyDays.filter(dia => {
+                    let hayTemas = false;
+                    Object.keys(studyPlan).forEach(semanaKey => {
+                        studyPlan[semanaKey].dias.forEach((diaObj, diaIdx) => {
+                            diaObj.temas.forEach((tema, temaIdx) => {
+                                const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
+                                if (localStorage.getItem(key) === 'true') {
+                                    hayTemas = true;
+                                }
+                            });
+                        });
+                    });
+                    return hayTemas;
+                });
+                
+                localStorage.setItem('studyDays', JSON.stringify(diasValidos));
+                syncUp('studyDays', JSON.stringify(diasValidos));
+            }
         </script>
     </div>
 </body>
 
 </html>
+
 
 
 
