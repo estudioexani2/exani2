@@ -1517,26 +1517,14 @@
                 localStorage.setItem(key, (!checked).toString());
                 syncUp(key, (!checked).toString());
                 
-                // ===== REEMPLAZA TODO ESTE BLOQUE =====
-                const today = new Date().toISOString().split('T')[0];
-                
-                if (!checked) {  // SOLO si está marcando como completado
-                    const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
-                    
-                    // SOLO AGREGAR EL DÍA SI NO EXISTE YA
-                    if (!studyDays.includes(today)) {
-                        studyDays.push(today);
-                        localStorage.setItem('studyDays', JSON.stringify(studyDays));
-                        syncUp('studyDays', JSON.stringify(studyDays));
-                    }
-                }
+                // NO sincronizar studyDays - se calculará dinámicamente
                 
                 renderCalendario();
                 actualizarProgreso();
                 renderDashboard();
                 checkAchievements();
             }
-
+            
             function toggleExplicacion(semana, diaIdx, temaIdx) {
                 const expId = `exp-${semana}-${diaIdx}-${temaIdx}`;
                 const element = document.getElementById(expId);
@@ -1895,49 +1883,120 @@
 
             function renderDashboard() {
                 const progresoGeneral = calcularProgresoGeneral();
-                const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
-                const racha = calcularRacha(studyDays);
+                
+                // CALCULAR días estudiados dinámicamente
+                const diasConTemasCompletados = new Set();
+                
+                Object.keys(studyPlan).forEach(semanaKey => {
+                    studyPlan[semanaKey].dias.forEach((diaObj, diaIdx) => {
+                        let diaCompletado = false;
+                        
+                        diaObj.temas.forEach((tema, temaIdx) => {
+                            const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
+                            if (localStorage.getItem(key) === 'true') {
+                                diaCompletado = true;
+                            }
+                        });
+                        
+                        if (diaCompletado) {
+                            // Usar semana-dia como identificador único
+                            diasConTemasCompletados.add(`${semanaKey}-${diaIdx}`);
+                        }
+                    });
+                });
+                
+                const totalDiasEstudiados = diasConTemasCompletados.size;
+                
+                // Calcular racha (días consecutivos con temas completados)
+                const racha = calcularRachaDinamica();
                 const sessions = localStorage.getItem('pomodoroSessions') || '0';
-
+            
                 const today = new Date();
                 const daysSinceStart = Math.floor((today - startDate) / (24 * 60 * 60 * 1000));
                 const semanaActual = Math.floor(daysSinceStart / 7) + 1;
                 const diaActual = today.getDay();
-
+            
                 const temasHoy = obtenerTemasHoy(semanaActual, diaActual);
                 const temasHoyElement = document.getElementById('temas-hoy');
                 if (temasHoyElement) {
                     temasHoyElement.innerHTML = temasHoy || 'El plan inicia el Lunes 22 de Diciembre. ¡Prepárate!';
                 }
-
+            
                 const dashboardElement = document.getElementById('dashboard-stats');
-                if (!dashboardElement) return; // Si no existe, salir
-
+                if (!dashboardElement) return;
+            
                 const html = `
-                <div class="stat-card" style="border-top-color: #667eea;">
-                    <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">PROGRESO TOTAL</h3>
-                    <div class="numero" style="color: #667eea;">${progresoGeneral}%</div>
-                    <div style="font-size: 0.9em; color: #9ca3af;">Del temario completo</div>
-                </div>
-                <div class="stat-card" style="border-top-color: #10b981;">
-                    <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">RACHA ACTUAL</h3>
-                    <div class="numero" style="color: #10b981;">🔥 ${racha}</div>
-                    <div style="font-size: 0.9em; color: #9ca3af;">Días consecutivos</div>
-                </div>
-                <div class="stat-card" style="border-top-color: #ef4444;">
-                    <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">SESIONES HOY</h3>
-                    <div class="numero" style="color: #ef4444;">${sessions}</div>
-                    <div style="font-size: 0.9em; color: #9ca3af;">Pomodoros completados</div>
-                </div>
-                <div class="stat-card" style="border-top-color: #f59e0b;">
-                    <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">DÍAS ESTUDIADOS</h3>
-                    <div class="numero" style="color: #f59e0b;">${studyDays.length}</div>
-                    <div style="font-size: 0.9em; color: #9ca3af;">Total acumulado</div>
-                </div>
-            `;
+                    <div class="stat-card" style="border-top-color: #667eea;">
+                        <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">PROGRESO TOTAL</h3>
+                        <div class="numero" style="color: #667eea;">${progresoGeneral}%</div>
+                        <div style="font-size: 0.9em; color: #9ca3af;">Del temario completo</div>
+                    </div>
+                    <div class="stat-card" style="border-top-color: #10b981;">
+                        <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">RACHA ACTUAL</h3>
+                        <div class="numero" style="color: #10b981;">🔥 ${racha}</div>
+                        <div style="font-size: 0.9em; color: #9ca3af;">Días consecutivos</div>
+                    </div>
+                    <div class="stat-card" style="border-top-color: #ef4444;">
+                        <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">SESIONES HOY</h3>
+                        <div class="numero" style="color: #ef4444;">${sessions}</div>
+                        <div style="font-size: 0.9em; color: #9ca3af;">Pomodoros completados</div>
+                    </div>
+                    <div class="stat-card" style="border-top-color: #f59e0b;">
+                        <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">DÍAS ESTUDIADOS</h3>
+                        <div class="numero" style="color: #f59e0b;">${totalDiasEstudiados}</div>
+                        <div style="font-size: 0.9em; color: #9ca3af;">Total acumulado</div>
+                    </div>
+                `;
                 dashboardElement.innerHTML = html;
             }
 
+            function calcularRachaDinamica() {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                let racha = 0;
+                let fechaActual = new Date(today);
+                
+                // Retroceder día por día verificando si hay temas completados
+                while (true) {
+                    const daysSinceStart = Math.floor((fechaActual - startDate) / (24 * 60 * 60 * 1000));
+                    
+                    if (daysSinceStart < 0) break; // Antes de la fecha de inicio
+                    
+                    const semanaActual = Math.floor(daysSinceStart / 7) + 1;
+                    const diaActual = fechaActual.getDay();
+                    const semanaKey = 'semana' + semanaActual;
+                    
+                    let hayTemasCompletados = false;
+                    
+                    if (studyPlan[semanaKey]) {
+                        const dias = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
+                        const diaTexto = dias[diaActual];
+                        const diaIdx = studyPlan[semanaKey].dias.findIndex(d => d.dia === diaTexto);
+                        
+                        if (diaIdx !== -1) {
+                            studyPlan[semanaKey].dias[diaIdx].temas.forEach((tema, temaIdx) => {
+                                const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
+                                if (localStorage.getItem(key) === 'true') {
+                                    hayTemasCompletados = true;
+                                }
+                            });
+                        }
+                    }
+                    
+                    if (hayTemasCompletados) {
+                        racha++;
+                    } else {
+                        break; // Se rompe la racha
+                    }
+                    
+                    // Retroceder un día
+                    fechaActual.setDate(fechaActual.getDate() - 1);
+                }
+                
+                return racha;
+            }
+            
             function calcularRacha(studyDays) {
                 if (studyDays.length === 0) return 0;
                 studyDays.sort().reverse();
@@ -5571,13 +5630,11 @@
 
             function resetEstadisticas() {
                 if (confirm('¿Seguro que quieres resetear TODAS las estadísticas? Esto no se puede deshacer.')) {
-                    localStorage.setItem('studyDays', '[]');
                     localStorage.setItem('pomodoroSessions', '0');
                     localStorage.setItem('pomodoroTotalMinutes', '0');
                     localStorage.setItem('pomodoroStreak', '0');
                     
                     if (currentUser) {
-                        syncUp('studyDays', '[]');
                         syncUp('pomodoroSessions', '0');
                         syncUp('pomodoroTotalMinutes', '0');
                         syncUp('pomodoroStreak', '0');
@@ -5592,6 +5649,7 @@
 </body>
 
 </html>
+
 
 
 
