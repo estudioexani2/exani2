@@ -5285,24 +5285,7 @@
                     </div>
                 `;
             }
-        }   
-
-
-                const exp = explicaciones[tema];
-                if (exp) {
-                    return `
-                    <strong style="color: #1e40af;">📚 Explicación:</strong><br>
-                    ${exp.texto}
-                    <div class="tema-formula">${exp.formula}</div>
-                `;
-                } else {
-                    return `
-                    <strong style="color: #1e40af;">📚 Concepto importante:</strong><br>
-                    Este tema es fundamental para el EXANI-II. Busca videos y ejercicios para practicarlo.
-                    <div class="tema-formula">💡 Tip: Practica con ejercicios del CENEVAL</div>
-                `;
-                }
-            
+        }  
             window.onload = function () {
                 // Ejecutar inmediatamente al cargar
                 renderDashboard();
