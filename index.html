@@ -2023,7 +2023,9 @@
                         }
 
                         const dashboardElement = document.getElementById('dashboard-stats');
-                        if (!dashboardElement) return;
+                        const achievementsList = renderAchievements();
+                        const unlockedCount = achievementsList.filter(a => a.check()).length;
+                        const totalAchievements = achievementsList.length;
 
                         const html = `
                     <div class="stat-card" style="border-top-color: #667eea;">
@@ -2032,14 +2034,20 @@
                         <div style="font-size: 0.9em; color: #9ca3af;">Del temario completo</div>
                     </div>
                     
+                    <div class="stat-card" style="border-top-color: #f59e0b;">
+                        <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">LOGROS</h3>
+                        <div class="numero" style="color: #f59e0b;">🏆 ${unlockedCount} / ${totalAchievements}</div>
+                        <div style="font-size: 0.9em; color: #9ca3af;">Desbloqueados</div>
+                    </div>
+
                     <div class="stat-card" style="border-top-color: #ef4444;">
                         <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">SESIONES HOY</h3>
                         <div class="numero" style="color: #ef4444;">${sessions}</div>
                         <div style="font-size: 0.9em; color: #9ca3af;">Pomodoros completados</div>
                     </div>
-                    <div class="stat-card" style="border-top-color: #f59e0b;">
+                    <div class="stat-card" style="border-top-color: #10b981;">
                         <h3 style="font-size: 0.9em; color: #6b7280; margin-bottom: 10px;">DÍAS ESTUDIADOS</h3>
-                        <div class="numero" style="color: #f59e0b;">${totalDiasEstudiados} / ${totalDiasCurso}</div>
+                        <div class="numero" style="color: #10b981;">${totalDiasEstudiados} / ${totalDiasCurso}</div>
                         <div style="font-size: 0.9em; color: #9ca3af;">Total acumulado</div>
                     </div>
                 `;
@@ -2210,84 +2218,6 @@
                     }
 
                     function renderAchievements() {
-                        function dibujarGraficaSimulacros() {
-                            const fechas = [];
-                            const puntajes = [];
-                            const ctx = document.getElementById('graficaSimulacros');
-
-                            if (!ctx) return;
-
-                            for (let i = 1; i <= 6; i++) {
-                                const saved = localStorage.getItem(`simulacro${i}`);
-                                if (saved) {
-                                    const data = JSON.parse(saved);
-                                    if (data.fecha && data.total) {
-                                        fechas.push(`Sim ${i}`);
-                                        puntajes.push(parseFloat(data.total));
-                                    }
-                                }
-                            }
-
-                            // Destruir gráfica anterior si existe
-                            if (window.miGrafica) {
-                                window.miGrafica.destroy();
-                            }
-
-                            // Crear nueva gráfica
-                            window.miGrafica = new Chart(ctx, {
-                                type: 'line',
-                                data: {
-                                    labels: fechas,
-                                    datasets: [{
-                                        label: 'Puntaje Total',
-                                        data: puntajes,
-                                        borderColor: '#667eea',
-                                        backgroundColor: 'rgba(102, 126, 234, 0.1)',
-                                        tension: 0.4,
-                                        fill: true,
-                                        pointRadius: 6,
-                                        pointHoverRadius: 8,
-                                        pointBackgroundColor: '#667eea',
-                                        pointBorderColor: '#fff',
-                                        pointBorderWidth: 2
-                                    }]
-                                },
-                                options: {
-                                    responsive: true,
-                                    maintainAspectRatio: true,
-                                    plugins: {
-                                        legend: {
-                                            display: true,
-                                            labels: {
-                                                font: { size: 14, weight: 'bold' },
-                                                color: '#4b5563'
-                                            }
-                                        },
-                                        tooltip: {
-                                            backgroundColor: 'rgba(0,0,0,0.8)',
-                                            padding: 12,
-                                            titleFont: { size: 14 },
-                                            bodyFont: { size: 13 }
-                                        }
-                                    },
-                                    scales: {
-                                        y: {
-                                            beginAtZero: true,
-                                            max: 100,
-                                            ticks: {
-                                                callback: function (value) { return value + '%'; },
-                                                font: { size: 12 }
-                                            },
-                                            grid: { color: '#e5e7eb' }
-                                        },
-                                        x: {
-                                            ticks: { font: { size: 12 } },
-                                            grid: { display: false }
-                                        }
-                                    }
-                                }
-                            });
-                        }
                         const achievements = [
                             {
                                 id: 'first-day',
@@ -2345,7 +2275,14 @@
                             }
                         ];
 
+                        return achievements;
+                    }
+
+                    function renderAchievementsUI() {
+                        const achievements = renderAchievements();
                         const container = document.getElementById('achievements-container');
+                        if (!container) return;
+
                         let html = '';
 
                         achievements.forEach(ach => {
@@ -2364,9 +2301,87 @@
 
                         container.innerHTML = html;
                     }
-
                     function checkAchievements() {
-                        renderAchievements();
+                        renderAchievementsUI();
+                    }
+
+                    function dibujarGraficaSimulacros() {
+                        const fechas = [];
+                        const puntajes = [];
+                        const ctx = document.getElementById('graficaSimulacros');
+
+                        if (!ctx) return;
+
+                        for (let i = 1; i <= 6; i++) {
+                            const saved = localStorage.getItem(`simulacro${i}`);
+                            if (saved) {
+                                const data = JSON.parse(saved);
+                                if (data.fecha && data.total) {
+                                    fechas.push(`Sim ${i}`);
+                                    puntajes.push(parseFloat(data.total));
+                                }
+                            }
+                        }
+
+                        // Destruir gráfica anterior si existe
+                        if (window.miGrafica) {
+                            window.miGrafica.destroy();
+                        }
+
+                        // Crear nueva gráfica
+                        window.miGrafica = new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: fechas,
+                                datasets: [{
+                                    label: 'Puntaje Total',
+                                    data: puntajes,
+                                    borderColor: '#667eea',
+                                    backgroundColor: 'rgba(102, 126, 234, 0.1)',
+                                    tension: 0.4,
+                                    fill: true,
+                                    pointRadius: 6,
+                                    pointHoverRadius: 8,
+                                    pointBackgroundColor: '#667eea',
+                                    pointBorderColor: '#fff',
+                                    pointBorderWidth: 2
+                                }]
+                            },
+                            options: {
+                                responsive: true,
+                                maintainAspectRatio: true,
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        labels: {
+                                            font: { size: 14, weight: 'bold' },
+                                            color: '#4b5563'
+                                        }
+                                    },
+                                    tooltip: {
+                                        backgroundColor: 'rgba(0,0,0,0.8)',
+                                        padding: 12,
+                                        titleFont: { size: 14 },
+                                        bodyFont: { size: 13 }
+                                    }
+                                },
+                                scales: {
+                                    y: {
+                                        beginAtZero: true,
+                                        max: 100,
+                                        ticks: {
+                                            callback: function (value) { return value + '%'; },
+                                            font: { size: 12 }
+                                        },
+                                        grid: { color: '#e5e7eb' }
+                                    },
+                                    x: {
+                                        ticks: { font: { size: 12 } },
+                                        grid: { display: false }
+                                    }
+                                }
+                            }
+                        });
                     }
                     function obtenerExplicacion(materia, tema) {
                         const explicaciones = {
