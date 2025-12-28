@@ -1315,8 +1315,12 @@
                     const data = snap.val();
                     if (data) {
                         Object.keys(data).forEach(key => {
-                            if (key !== 'lastVisit' && key !== 'studyDays') {  // IGNORAR studyDays al sincronizar
-                                localStorage.setItem(key, data[key]);
+                            if (key !== 'lastVisit' && key !== 'studyDays') {
+                                try {
+                                    localStorage.setItem(key, data[key]);
+                                } catch (e) {
+                                    console.warn('No se pudo cargar:', key, e);
+                                }
                             }
                         });
                         
@@ -1326,8 +1330,8 @@
                         if (lastVisit !== today) {
                             localStorage.setItem('pomodoroSessions', '0');
                             syncUp('pomodoroSessions', '0');
-                            const sessionCounter = document.getElementById('session-counter');
-                            if (sessionCounter) sessionCounter.textContent = 'Sesiones hoy: 0';
+                            const sessionCounter = document.getElementById('session-counter-num');
+                            if (sessionCounter) sessionCounter.textContent = '0';
                         }
                         localStorage.setItem('lastVisit', today);
                         syncUp('lastVisit', today);
@@ -1337,22 +1341,23 @@
                         renderDashboard();
                         loadSimulacros();
                         
-                        if (statusEl) statusEl.textContent = '✅ Todos los datos sincronizados';
-                        setTimeout(() => {
-                            if (statusEl) statusEl.textContent = '✅ Sincronizado';
-                        }, 1000);
+                        if (statusEl) statusEl.textContent = '✅ Sincronizado';
                     } else {
-                        if (statusEl) statusEl.textContent = '✅ Conectado (sin datos previos)';
+                        if (statusEl) statusEl.textContent = '✅ Conectado';
                     }
                 }).catch(err => {
                     console.error('Error al sincronizar:', err);
-                    if (statusEl) statusEl.textContent = '⚠️ Error al sincronizar';
+                    if (statusEl) statusEl.textContent = '✅ Modo local (sin conexión)';
                 });
             }
             
             function syncUp(key, value) {
                 if (!currentUser) return;
-                db.ref('users/' + currentUser.uid + '/' + key).set(value);
+                
+                db.ref('users/' + currentUser.uid + '/' + key).set(value).catch(err => {
+                    console.warn('No se pudo sincronizar:', key, err);
+                    // No mostrar error al usuario, funciona en modo local
+                });
             }
             
             const materias = {
@@ -5649,6 +5654,7 @@
 </body>
 
 </html>
+
 
 
 
