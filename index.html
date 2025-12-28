@@ -1427,7 +1427,7 @@
                             } catch (e) {
                                 console.error('Error procesando datos:', e);
                                 // Don't change status to "Modo local" if it was just a processing error
-                                if (statusEl) statusEl.textContent = '⚠️ Error al procesar datos';
+                                if (statusEl) statusEl.textContent = '⚠️ Error al procesar datos: ' + e.message;
                             }
                         }).catch(err => {
                             console.error('Error al sincronizar:', err);
