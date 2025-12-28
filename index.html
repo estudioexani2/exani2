@@ -317,6 +317,55 @@
             margin: 5px;
         }
 
+        .timer-btn-modern {
+            background: #10b981;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            min-width: 100px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .timer-btn-modern:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.3);
+        }
+
+        .timer-btn-modern:active {
+            transform: translateY(0);
+        }
+
+        .time-preset {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .time-preset:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+        }
+
+        .time-preset.active-preset {
+            background: white;
+            color: #ef4444;
+            border-color: white;
+        }
+
         .hoy-estudiar {
             background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
             color: white;
@@ -467,18 +516,64 @@
                 id="progreso-materias"></div>
         </div>
 
-        <div id="pomodoro" class="content">
-            <div class="pomodoro">
-                <h2 style="font-size: 2em; margin-bottom: 20px;">⏱️ Pomodoro</h2>
-                <div class="timer-display" id="timer-display">25:00</div>
-                <div>
-                    <button class="timer-btn" onclick="startTimer()">▶️ Iniciar</button>
-                    <button class="timer-btn" onclick="pauseTimer()">⏸️ Pausar</button>
-                    <button class="timer-btn" onclick="resetTimer()">🔄 Reiniciar</button>
+    <div id="pomodoro" class="content">
+                <div class="pomodoro">
+                    <h2 style="font-size: 2em; margin-bottom: 10px;">⏱️ Temporizador Pomodoro</h2>
+                    <p style="opacity: 0.9; margin-bottom: 30px;">Técnica de productividad: 25 min trabajo + 5 min descanso</p>
+                    
+                    <!-- Círculo de progreso -->
+                    <div style="position: relative; width: 280px; height: 280px; margin: 30px auto;">
+                        <svg width="280" height="280" style="transform: rotate(-90deg);">
+                            <circle cx="140" cy="140" r="130" fill="none" stroke="rgba(255,255,255,0.2)" stroke-width="12"/>
+                            <circle id="progress-circle" cx="140" cy="140" r="130" fill="none" stroke="white" stroke-width="12" 
+                                    stroke-dasharray="817" stroke-dashoffset="0" 
+                                    style="transition: stroke-dashoffset 1s linear;"/>
+                        </svg>
+                        <div class="timer-display" id="timer-display" style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 4em; margin: 0;">25:00</div>
+                    </div>
+                    
+                    <!-- Controles modernos -->
+                    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 30px;">
+                        <button class="timer-btn-modern" id="start-btn" onclick="startTimer()" style="background: #10b981;">
+                            <span style="font-size: 24px;">▶️</span>
+                            <span>Iniciar</span>
+                        </button>
+                        <button class="timer-btn-modern" id="pause-btn" onclick="pauseTimer()" style="background: #f59e0b; display: none;">
+                            <span style="font-size: 24px;">⏸️</span>
+                            <span>Pausar</span>
+                        </button>
+                        <button class="timer-btn-modern" onclick="resetTimer()" style="background: #6b7280;">
+                            <span style="font-size: 24px;">🔄</span>
+                            <span>Reiniciar</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Estadísticas -->
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; margin-top: 40px; max-width: 600px; margin-left: auto; margin-right: auto;">
+                        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; text-align: center;">
+                            <div style="font-size: 2.5em; font-weight: bold;" id="session-counter-num">0</div>
+                            <div style="font-size: 0.9em; opacity: 0.9;">Sesiones hoy</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; text-align: center;">
+                            <div style="font-size: 2.5em; font-weight: bold;" id="total-time">0</div>
+                            <div style="font-size: 0.9em; opacity: 0.9;">Minutos hoy</div>
+                        </div>
+                        <div style="background: rgba(255,255,255,0.2); padding: 20px; border-radius: 15px; text-align: center;">
+                            <div style="font-size: 2.5em; font-weight: bold;" id="pomodoro-streak">0</div>
+                            <div style="font-size: 0.9em; opacity: 0.9;">Racha días</div>
+                        </div>
+                    </div>
+                    
+                    <!-- Selector de tiempo -->
+                    <div style="margin-top: 30px; display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                        <button onclick="setTimer(25)" class="time-preset active-preset">25 min</button>
+                        <button onclick="setTimer(15)" class="time-preset">15 min</button>
+                        <button onclick="setTimer(30)" class="time-preset">30 min</button>
+                        <button onclick="setTimer(45)" class="time-preset">45 min</button>
+                        <button onclick="setTimer(5)" class="time-preset">5 min</button>
+                    </div>
                 </div>
-                <div style="margin-top: 20px; font-size: 1.2em;" id="session-counter">Sesiones hoy: 0</div>
             </div>
-        </div>
 
         <div id="simulacros" class="content">
             <div class="card" style="margin-bottom: 30px;">
@@ -1391,7 +1486,9 @@
             };
 
             const startDate = new Date(2025, 11, 22); // 22 de diciembre de 2024 (mes 11 = diciembre)        let timerInterval = null;
+            let timerInterval = null;
             let timeLeft = 25 * 60;
+            let totalTime = 25 * 60;
             let isRunning = false;
 
             function showTab(tabName) {
@@ -1688,17 +1785,28 @@
             function startTimer() {
                 if (isRunning) return;
                 isRunning = true;
+                document.getElementById('start-btn').style.display = 'none';
+                document.getElementById('pause-btn').style.display = 'flex';
+                
                 timerInterval = setInterval(() => {
                     if (timeLeft > 0) {
                         timeLeft--;
                         updateTimerDisplay();
+                        updateProgressCircle();
                     } else {
                         pauseTimer();
-                        alert('¡Pomodoro completado! Toma un descanso de 5 minutos.');
+                        playCompletionSound();
+                        showCompletionNotification();
+                        
                         const sessions = parseInt(localStorage.getItem('pomodoroSessions') || '0') + 1;
                         localStorage.setItem('pomodoroSessions', sessions.toString());
                         syncUp('pomodoroSessions', sessions.toString());
-                        document.getElementById('session-counter').textContent = 'Sesiones hoy: ' + sessions;
+                        
+                        const totalMinutes = parseInt(localStorage.getItem('pomodoroTotalMinutes') || '0') + Math.floor(totalTime / 60);
+                        localStorage.setItem('pomodoroTotalMinutes', totalMinutes.toString());
+                        syncUp('pomodoroTotalMinutes', totalMinutes.toString());
+                        
+                        updatePomodoroStats();
                         checkAchievements();
                     }
                 }, 1000);
@@ -1707,12 +1815,15 @@
             function pauseTimer() {
                 isRunning = false;
                 clearInterval(timerInterval);
+                document.getElementById('start-btn').style.display = 'flex';
+                document.getElementById('pause-btn').style.display = 'none';
             }
 
             function resetTimer() {
                 pauseTimer();
-                timeLeft = 25 * 60;
+                timeLeft = totalTime;
                 updateTimerDisplay();
+                updateProgressCircle();
             }
 
             function updateTimerDisplay() {
@@ -1720,6 +1831,84 @@
                 const seconds = timeLeft % 60;
                 document.getElementById('timer-display').textContent =
                     `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            }
+
+            function updateProgressCircle() {
+                const progress = (totalTime - timeLeft) / totalTime;
+                const circumference = 2 * Math.PI * 130;
+                const offset = circumference * (1 - progress);
+                const circle = document.getElementById('progress-circle');
+                if (circle) {
+                    circle.style.strokeDashoffset = offset;
+                }
+            }
+
+            function setTimer(minutes) {
+                if (isRunning) {
+                    alert('Pausa el temporizador primero');
+                    return;
+                }
+                totalTime = minutes * 60;
+                timeLeft = totalTime;
+                updateTimerDisplay();
+                updateProgressCircle();
+                
+                // Actualizar botones activos
+                document.querySelectorAll('.time-preset').forEach(btn => {
+                    btn.classList.remove('active-preset');
+                });
+                event.target.classList.add('active-preset');
+            }
+
+            function updatePomodoroStats() {
+                const sessions = parseInt(localStorage.getItem('pomodoroSessions') || '0');
+                const totalMinutes = parseInt(localStorage.getItem('pomodoroTotalMinutes') || '0');
+                const pomodoroStreak = parseInt(localStorage.getItem('pomodoroStreak') || '0');
+                
+                document.getElementById('session-counter-num').textContent = sessions;
+                document.getElementById('total-time').textContent = totalMinutes;
+                document.getElementById('pomodoro-streak').textContent = pomodoroStreak;
+            }
+
+            function playCompletionSound() {
+                // Sonido de notificación
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.value = 800;
+                oscillator.type = 'sine';
+                
+                gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.5);
+            }
+
+            function showCompletionNotification() {
+                if (Notification.permission === 'granted') {
+                    new Notification('¡Pomodoro Completado! 🎉', {
+                        body: 'Toma un descanso de 5 minutos',
+                        icon: 'data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>⏱️</text></svg>'
+                    });
+                } else if (Notification.permission !== 'denied') {
+                    Notification.requestPermission();
+                }
+                
+                // Alerta visual mejorada
+                const alert = document.createElement('div');
+                alert.style.cssText = 'position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background: linear-gradient(135deg, #10b981, #059669); color: white; padding: 20px 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.3); z-index: 10000; font-size: 1.2em; font-weight: bold; animation: slideDown 0.5s ease;';
+                alert.textContent = '🎉 ¡Pomodoro Completado! Toma un descanso de 5 minutos';
+                document.body.appendChild(alert);
+                
+                setTimeout(() => {
+                    alert.style.animation = 'slideUp 0.5s ease';
+                    setTimeout(() => alert.remove(), 500);
+                }, 3000);
             }
 
             function renderDashboard() {
@@ -5343,19 +5532,21 @@
                 `;
             }
         }  
-            window.onload = function () {
-                // Ejecutar inmediatamente al cargar
-                renderDashboard();
-
-                renderCalendario();
-                renderSimulacros();
-                renderAchievements();
-                actualizarProgreso();
-
-                const sessions = localStorage.getItem('pomodoroSessions') || '0';
-                const sessionCounter = document.getElementById('session-counter');
-                if (sessionCounter) {
-                    sessionCounter.textContent = 'Sesiones hoy: ' + sessions;
+                window.onload = function () {
+                    // Ejecutar inmediatamente al cargar
+                    renderDashboard();
+    
+                    renderCalendario();
+                    renderSimulacros();
+                    renderAchievements();
+                    actualizarProgreso();
+                    updatePomodoroStats();
+                    updateProgressCircle();
+    
+                    const sessions = localStorage.getItem('pomodoroSessions') || '0';
+                    const sessionCounter = document.getElementById('session-counter-num');
+                    if (sessionCounter) {
+                        sessionCounter.textContent = sessions;
                 }
 
                 const lastDate = localStorage.getItem('lastVisit');
@@ -5376,6 +5567,7 @@
 </body>
 
 </html>
+
 
 
 
