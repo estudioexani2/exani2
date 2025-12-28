@@ -478,6 +478,10 @@
             <div id="auth-container">
                 <button class="login-btn" onclick="loginWithGoogle()">🔐 Iniciar Sesión</button>
             </div>
+            <!-- AGREGA ESTO AQUÍ: -->
+            <button onclick="resetEstadisticas()" style="background: #dc2626; color: white; border: none; padding: 8px 16px; border-radius: 8px; cursor: pointer; margin-top: 10px;">
+                🔄 Resetear Estadísticas
+            </button>
         </div>
 
         <div class="tabs">
@@ -1311,7 +1315,7 @@
                     const data = snap.val();
                     if (data) {
                         Object.keys(data).forEach(key => {
-                            if (key !== 'lastVisit') {
+                            if (key !== 'lastVisit' && key !== 'studyDays') {  // IGNORAR studyDays al sincronizar
                                 localStorage.setItem(key, data[key]);
                             }
                         });
@@ -5564,11 +5568,31 @@
                 localStorage.setItem('studyDays', JSON.stringify(diasValidos));
                 syncUp('studyDays', JSON.stringify(diasValidos));
             }
+
+            function resetEstadisticas() {
+                if (confirm('¿Seguro que quieres resetear TODAS las estadísticas? Esto no se puede deshacer.')) {
+                    localStorage.setItem('studyDays', '[]');
+                    localStorage.setItem('pomodoroSessions', '0');
+                    localStorage.setItem('pomodoroTotalMinutes', '0');
+                    localStorage.setItem('pomodoroStreak', '0');
+                    
+                    if (currentUser) {
+                        syncUp('studyDays', '[]');
+                        syncUp('pomodoroSessions', '0');
+                        syncUp('pomodoroTotalMinutes', '0');
+                        syncUp('pomodoroStreak', '0');
+                    }
+                    
+                    alert('Estadísticas reseteadas correctamente');
+                    window.location.reload();
+                }
+            }
         </script>
     </div>
 </body>
 
 </html>
+
 
 
 
