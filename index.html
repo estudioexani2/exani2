@@ -5219,12 +5219,73 @@
                 `,
                 formula: "p = m×v | Conservación: p_antes = p_después"
             },
-
-
-
-
-
-
+                 "Choques": {
+                    texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Dos tipos: elásticos (se conserva energía) e inelásticos (se pierde energía)</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Tipos de choques:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #ede9fe;">
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Tipo</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Se conserva p</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Se conserva Ec</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Ejemplo</th>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;"><strong>ELÁSTICO</strong></td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">✅ Sí</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">✅ Sí</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Bolas de billar</td>
+                            </tr>
+                            <tr>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;"><strong>INELÁSTICO</strong></td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">✅ Sí</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">❌ No</td>
+                                <td style="border: 1px solid #ede9fe; padding: 8px;">Autos chocando</td>
+                            </tr>
+                        </table>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 SIEMPRE se conserva p:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: 'Courier New'; font-size: 18px; margin: 8px 0;">
+                                m₁v₁ + m₂v₂ = m₁v₁' + m₂v₂'
+                            </p>
+                            <p style="margin: 10px 0;">En TODO tipo de choque, momento se conserva</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>¿En qué choque se conserva la energía? <em>(R: Elástico)</em></li>
+                            <li>¿p se conserva en ambos tipos? <em>(R: Sí, siempre)</em></li>
+                            <li>Autos que quedan pegados, ¿qué tipo? <em>(R: Inelástico)</em></li>
+                            <li>¿Bolas de billar son elásticas o inelásticas? <em>(R: Elásticas)</em></li>
+                            <li>¿Dónde va la energía en choque inelástico? <em>(R: Se convierte en calor/deformación)</em></li>
+                        </ol>
+                    `,
+                    formula: "Siempre: p_antes = p_después | Elástico: Ec también se conserva"
+                }
+            };
+            
+            const exp = explicaciones[tema];
+            if (exp) {
+                return `
+                    <strong style="color: #1e40af;">📚 Explicación completa:</strong><br>
+                    ${exp.texto}
+                `;
+            } else {
+                return `
+                    <strong style="color: #1e40af;">📚 Concepto importante:</strong><br>
+                    Este tema es fundamental para el EXANI-II. Busca videos y ejercicios para practicarlo.
+                    <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                        <p style="margin: 5px 0;"><strong>💡 Recomendaciones:</strong></p>
+                        <p style="margin: 5px 0;">• Busca en YouTube: "EXANI II [nombre del tema]"</p>
+                        <p style="margin: 5px 0;">• Practica con ejercicios del CENEVAL</p>
+                        <p style="margin: 5px 0;">• Consulta Khan Academy para videos explicativos</p>
+                    </div>
+                `;
+            }
+        }   
 
 
 
@@ -5278,6 +5339,7 @@
 </body>
 
 </html>
+
 
 
 
