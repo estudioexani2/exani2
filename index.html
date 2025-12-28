@@ -1277,8 +1277,10 @@
                     
                     // Sincronizar datos
                     document.getElementById('sync-status').textContent = '🔄 Sincronizando...';
-                    syncDown();
-                    
+                    // AGREGA UN PEQUEÑO DELAY:
+                    setTimeout(() => {
+                        syncDown();
+                    }, 500);                    
                 } else {
                     // Usuario NO logueado
                     currentUser = null;
@@ -1511,19 +1513,19 @@
                 localStorage.setItem(key, (!checked).toString());
                 syncUp(key, (!checked).toString());
                 
-                // Actualizar días estudiados SOLO si marca como completado HOY
+                // ===== REEMPLAZA TODO ESTE BLOQUE =====
                 const today = new Date().toISOString().split('T')[0];
                 
-                if (!checked) {
-                    // SOLO marcar el día si completa un tema HOY
+                if (!checked) {  // SOLO si está marcando como completado
                     const studyDays = JSON.parse(localStorage.getItem('studyDays') || '[]');
+                    
+                    // SOLO AGREGAR EL DÍA SI NO EXISTE YA
                     if (!studyDays.includes(today)) {
                         studyDays.push(today);
                         localStorage.setItem('studyDays', JSON.stringify(studyDays));
                         syncUp('studyDays', JSON.stringify(studyDays));
                     }
                 }
-                // NO hacer nada al desmarcar - mantener el día registrado
                 
                 renderCalendario();
                 actualizarProgreso();
@@ -5510,7 +5512,6 @@
         }  
                 window.onload = function () {
                     // Ejecutar inmediatamente al cargar
-                    limpiarDiasViejos(); 
                     renderDashboard();
     
                     renderCalendario();
@@ -5568,6 +5569,7 @@
 </body>
 
 </html>
+
 
 
 
