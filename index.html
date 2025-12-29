@@ -1675,6 +1675,9 @@
                     const db = firebase.database();
                     let currentUser = null;
 
+                    // Admin UID for global video management
+                    const ADMIN_UID = 'zhjbk929GsVcRVRk9WslZWBf8bF3';
+
                     // Monitor connection state
                     firebase.database().ref('.info/connected').on('value', function (snap) {
                         const statusEl = document.getElementById('sync-status');
@@ -1929,12 +1932,12 @@
                         }
                     };
 
-                    function syncDown() {
+                    async function syncDown() {
                         if (!currentUser) return;
                         const statusEl = document.getElementById('sync-status');
                         if (statusEl) statusEl.textContent = '🔄 Descargando datos...';
 
-                        db.ref('users/' + currentUser.uid).once('value').then(snap => {
+                        db.ref('users/' + currentUser.uid).once('value').then(async snap => {
                             try {
                                 const data = snap.val();
                                 if (data) {
@@ -1963,7 +1966,7 @@
                                     localStorage.setItem('lastVisit', today);
                                     syncUp('lastVisit', today);
 
-                                    renderCalendario();
+                                    await renderCalendario();
                                     actualizarProgreso();
                                     renderDashboard();
                                     loadSimulacros();
@@ -2259,9 +2262,13 @@
                         }
                     }
 
-                    function renderCalendario() {
+                    async function renderCalendario() {
                         const container = document.getElementById('calendario');
                         let html = '';
+
+                        // Load global videos and check admin status
+                        const isUserAdmin = isAdmin();
+                        await cargarVideosGlobales();
 
                         Object.keys(studyPlan).forEach(semanaKey => {
                             const semana = studyPlan[semanaKey];
@@ -2285,6 +2292,8 @@
                                     const explicacion = obtenerExplicacion(dia.materia, tema);
                                     const notasKey = `notas-${semanaKey}-${diaIdx}-${temaIdx}`;
                                     const notasGuardadas = localStorage.getItem(notasKey) || '';
+                                    const videoGlobalKey = `video-global-${semanaKey}-${diaIdx}-${temaIdx}`;
+                                    const videoGlobal = localStorage.getItem(videoGlobalKey) || '';
 
                                     html += `<div>
                                 <div class="tema">
@@ -2301,11 +2310,53 @@
                                     ${explicacion}
                                     
                                     <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #e5e7eb;">
-                                        <h4 style="color: #667eea; margin-bottom: 10px;">📝 Mis Notas</h4>
+                                        <h4 style="color: #667eea; margin-bottom: 10px;">🎥 Video del tema</h4>
+                                        <div id="video-global-${semanaKey}-${diaIdx}-${temaIdx}">
+                                            ${isUserAdmin ? `
+                                                <input 
+                                                    type="text" 
+                                                    id="video-url-${semanaKey}-${diaIdx}-${temaIdx}"
+                                                    placeholder="Pega aquí la URL del video de YouTube..."
+                                                    value="${videoGlobal || ''}"
+                                                    style="
+                                                        width: 100%;
+                                                        padding: 12px;
+                                                        border: 2px solid #e5e7eb;
+                                                        border-radius: 8px;
+                                                        font-family: inherit;
+                                                        font-size: 0.95em;
+                                                        margin-bottom: 10px;
+                                                    "
+                                                    onfocus="this.style.borderColor='#667eea'"
+                                                    onblur="this.style.borderColor='#e5e7eb'"
+                                                />
+                                                <button 
+                                                    onclick="guardarVideoGlobal('${semanaKey}', ${diaIdx}, ${temaIdx})"
+                                                    style="
+                                                        background: #667eea;
+                                                        color: white;
+                                                        border: none;
+                                                        padding: 10px 20px;
+                                                        border-radius: 8px;
+                                                        cursor: pointer;
+                                                        font-weight: 600;
+                                                        transition: all 0.3s;
+                                                    "
+                                                    onmouseover="this.style.background='#4f46e5'"
+                                                    onmouseout="this.style.background='#667eea'"
+                                                >
+                                                    💾 Guardar video global
+                                                </button>
+                                            ` : ''}
+                                            <div id="preview-video-${semanaKey}-${diaIdx}-${temaIdx}" style="margin-top: 10px;">
+                                                ${generarPreviewHTML(videoGlobal, semanaKey, diaIdx, temaIdx)}
+                                            </div>
+                                        </div>
+                                        
+                                        <h4 style="color: #667eea; margin: 20px 0 10px;">📝 Mis Notas Personales</h4>
                                         <textarea 
                                             id="notas-${semanaKey}-${diaIdx}-${temaIdx}"
-                                            placeholder="Pega aquí la URL del video de YouTube que viste, o escribe tus notas personales...
-                                        Ejemplo: https://www.youtube.com/watch?v=..."
+                                            placeholder="Escribe tus notas personales del tema..."
                                             style="
                                                 width: 100%;
                                                 min-height: 80px;
@@ -2320,9 +2371,6 @@
                                             onfocus="this.style.borderColor='#667eea'"
                                             onblur="this.style.borderColor='#e5e7eb'; guardarNotas('${semanaKey}', ${diaIdx}, ${temaIdx})"
                                         >${notasGuardadas}</textarea>
-                                        <div id="preview-${semanaKey}-${diaIdx}-${temaIdx}" style="margin-top: 10px;">
-                                            ${generarPreviewHTML(notasGuardadas, semanaKey, diaIdx, temaIdx)}
-                                        </div>
                                     </div>
                                 </div>
                             </div>`;
@@ -2618,6 +2666,75 @@
                             localStorage.setItem('unlockedAchievements', JSON.stringify(unlocked));
                             syncUp('unlockedAchievements', JSON.stringify(unlocked));
                             renderAchievements();
+                        }
+                    }
+
+                    // ==================== GLOBAL VIDEO FUNCTIONS ====================
+
+                    // Check if current user is admin
+                    function isAdmin() {
+                        if (!currentUser) return false;
+                        return currentUser.uid === ADMIN_UID;
+                    }
+
+                    // Save global video (admin only)
+                    async function guardarVideoGlobal(semana, diaIdx, temaIdx) {
+                        if (!isAdmin()) {
+                            alert('⚠️ Solo el administrador puede cambiar los videos globales');
+                            return;
+                        }
+
+                        const videoKey = `video-global-${semana}-${diaIdx}-${temaIdx}`;
+                        const inputId = `video-url-${semana}-${diaIdx}-${temaIdx}`;
+                        const input = document.getElementById(inputId);
+                        const videoUrl = input.value.trim();
+
+                        try {
+                            await db.ref('videos-globales/' + videoKey).set(videoUrl);
+                            localStorage.setItem(videoKey, videoUrl);
+
+                            const previewDiv = document.getElementById(`preview-video-${semana}-${diaIdx}-${temaIdx}`);
+                            const previewHTML = generarPreviewHTML(videoUrl, semana, diaIdx, temaIdx);
+
+                            if (previewHTML) {
+                                previewDiv.innerHTML = previewHTML;
+                                alert('✅ Video global actualizado correctamente');
+                            } else if (videoUrl) {
+                                previewDiv.innerHTML = `
+                                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 8px;">
+                                        <p style="margin: 0; color: #065f46; font-size: 0.9em;">
+                                            ✅ Video guardado correctamente
+                                        </p>
+                                    </div>
+                                `;
+                                setTimeout(() => {
+                                    location.reload();
+                                }, 1500);
+                            } else {
+                                previewDiv.innerHTML = '';
+                                alert('✅ Video eliminado');
+                            }
+                        } catch (error) {
+                            console.error('Error al guardar video:', error);
+                            alert('❌ Error al guardar el video: ' + error.message);
+                        }
+                    }
+
+                    // Load global videos from Firebase
+                    async function cargarVideosGlobales() {
+                        try {
+                            const videosSnapshot = await db.ref('videos-globales').once('value');
+                            const videos = videosSnapshot.val() || {};
+
+                            // Save to localStorage for offline use
+                            Object.keys(videos).forEach(key => {
+                                localStorage.setItem(key, videos[key]);
+                            });
+
+                            return videos;
+                        } catch (error) {
+                            console.error('Error al cargar videos globales:', error);
+                            return {};
                         }
                     }
 
