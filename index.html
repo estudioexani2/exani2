@@ -2611,49 +2611,81 @@
                     }
 
                     // ==================== LOGROS / ACHIEVEMENTS (20) ====================
+                    // ==================== LOGROS / ACHIEVEMENTS (~40) ====================
                     const achievementsList = [
-                        // Racha de Estudio
-                        { id: 'streak_1', icon: '🔥', title: 'Primer Paso', desc: 'Completa 1 día de estudio', check: () => countStudyDays() >= 1 },
-                        { id: 'streak_3', icon: '🔥🔥', title: 'En Racha', desc: 'Racha de 3 días seguidos', check: () => getStreak() >= 3 },
-                        { id: 'streak_7', icon: '🔥🔥🔥', title: 'Imparable', desc: 'Racha de 7 días seguidos', check: () => getStreak() >= 7 },
-                        { id: 'total_30', icon: '📅', title: 'Hábito de Acero', desc: 'Estudia 30 días en total', check: () => countStudyDays() >= 30 },
-                        { id: 'weekend_warrior', icon: '🚀', title: 'Fin de Semana', desc: 'Estudia un Sábado o Domingo', check: () => { const d = new Date().getDay(); return (d === 0 || d === 6) && countStudyDays() > 0; } },
+                        // CUMPLIMIENTO DE DÍAS (Hitos de 72 días)
+                        { id: 'days_1', icon: '🌱', title: 'Día 1/72', desc: 'Comienza tu viaje de estudio', check: () => countStudyDays() >= 1 },
+                        { id: 'days_7', icon: '🌿', title: 'Día 7/72', desc: 'Primera semana completada', check: () => countStudyDays() >= 7 },
+                        { id: 'days_14', icon: '🌳', title: 'Día 14/72', desc: 'Dos semanas de constancia', check: () => countStudyDays() >= 14 },
+                        { id: 'days_21', icon: '☘️', title: 'Día 21/72', desc: 'Tres semanas de hábito', check: () => countStudyDays() >= 21 },
+                        { id: 'days_30', icon: '📅', title: 'Día 30/72', desc: 'Un mes de esfuerzo', check: () => countStudyDays() >= 30 },
+                        { id: 'days_36', icon: '🌓', title: 'Día 36/72', desc: '¡A mitad de camino! (50%)', check: () => countStudyDays() >= 36 },
+                        { id: 'days_45', icon: '🔥', title: 'Día 45/72', desc: 'Recta final a la vista', check: () => countStudyDays() >= 45 },
+                        { id: 'days_54', icon: '🚀', title: 'Día 54/72', desc: 'Nivel avanzado alcanzado', check: () => countStudyDays() >= 54 },
+                        { id: 'days_60', icon: '💎', title: 'Día 60/72', desc: 'Casi una leyenda', check: () => countStudyDays() >= 60 },
+                        { id: 'days_66', icon: '🌟', title: 'Día 66/72', desc: 'Último empujón', check: () => countStudyDays() >= 66 },
+                        { id: 'days_72', icon: '👑', title: 'Día 72/72', desc: '¡LEYENDA! Completaste el plan', check: () => countStudyDays() >= 72 },
 
-                        // Progreso General
-                        { id: 'prog_10', icon: '👶', title: 'Principiante', desc: 'Alcanza 10% de progreso total', check: () => calculateTotalProgress() >= 10 },
-                        { id: 'prog_25', icon: '🎓', title: 'Aprendiz', desc: 'Alcanza 25% de progreso total', check: () => calculateTotalProgress() >= 25 },
-                        { id: 'prog_50', icon: '🧠', title: 'Experto', desc: 'Alcanza 50% de progreso total', check: () => calculateTotalProgress() >= 50 },
-                        { id: 'prog_75', icon: '🏆', title: 'Maestro', desc: 'Alcanza 75% de progreso total', check: () => calculateTotalProgress() >= 75 },
-                        { id: 'prog_100', icon: '👑', title: 'Leyenda', desc: 'Completa el 100% del plan', check: () => calculateTotalProgress() >= 100 },
+                        // PROGRESO GENERAL %
+                        { id: 'prog_10', icon: '👶', title: 'Principiante', desc: '10% del temario total', check: () => calculateTotalProgress() >= 10 },
+                        { id: 'prog_25', icon: '🎓', title: 'Aprendiz', desc: '25% del temario total', check: () => calculateTotalProgress() >= 25 },
+                        { id: 'prog_50', icon: '🧠', title: 'Experto', desc: '50% del temario total', check: () => calculateTotalProgress() >= 50 },
+                        { id: 'prog_75', icon: '🏆', title: 'Maestro', desc: '75% del temario total', check: () => calculateTotalProgress() >= 75 },
+                        { id: 'prog_90', icon: '🌌', title: 'Visionario', desc: '90% del temario total', check: () => calculateTotalProgress() >= 90 },
 
-                        // Pomodoro
-                        { id: 'pomo_1', icon: '🍅', title: 'Primer Tomate', desc: 'Completa 1 sesión pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || 0) >= 1 },
-                        { id: 'pomo_10', icon: '🍅🍅', title: 'Tomate Dorado', desc: 'Completa 10 sesiones pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || 0) >= 10 },
-                        { id: 'pomo_focus', icon: '⏱️', title: 'Maratón', desc: 'Acumula 240 minutos de foco', check: () => parseInt(localStorage.getItem('pomodoroTotalMinutes') || 0) >= 240 },
-                        { id: 'night_owl', icon: '🌙', title: 'Búho Nocturno', desc: 'Estudia después de las 10 PM', check: () => new Date().getHours() >= 22 && isStudyingNow() },
-                        { id: 'early_bird', icon: '☀️', title: 'Madrugador', desc: 'Estudia antes de las 7 AM', check: () => new Date().getHours() < 7 && isStudyingNow() },
+                        // POMODORO (Sesiones)
+                        { id: 'pomo_1', icon: '🍅', title: 'Foco Inicial', desc: '1 sesión Pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || 0) >= 1 },
+                        { id: 'pomo_5', icon: '🍅🍅', title: 'Concentrado', desc: '5 sesiones Pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || 0) >= 5 },
+                        { id: 'pomo_10', icon: '🍅🥉', title: 'Bronce Pomodoro', desc: '10 sesiones Pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || 0) >= 10 },
+                        { id: 'pomo_25', icon: '🍅🥈', title: 'Plata Pomodoro', desc: '25 sesiones Pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || 0) >= 25 },
+                        { id: 'pomo_50', icon: '🍅🥇', title: 'Oro Pomodoro', desc: '50 sesiones Pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || 0) >= 50 },
+                        { id: 'pomo_100', icon: '🍅💎', title: 'Diamante Pomodoro', desc: '100 sesiones Pomodoro', check: () => parseInt(localStorage.getItem('pomodoroSessions') || 0) >= 100 },
 
-                        // Materias (Simulación simplificada)
-                        { id: 'math_master', icon: '📐', title: 'Matemático', desc: 'Completa 5 temas de Matemáticas', check: () => countTopicsBySubject('Pensamiento Matemático') >= 5 },
-                        { id: 'read_master', icon: '📖', title: 'Lector Voraz', desc: 'Completa 5 temas de Lectura', check: () => countTopicsBySubject('Comprensión Lectora') >= 5 },
-                        { id: 'phys_master', icon: '⚡', title: 'Físico', desc: 'Completa 5 temas de Física', check: () => countTopicsBySubject('Física') >= 5 },
-                        { id: 'write_master', icon: '📝', title: 'Escritor', desc: 'Completa 5 temas de Redacción', check: () => countTopicsBySubject('Redacción Indirecta') >= 5 },
-                        { id: 'eng_master', icon: '🇬🇧', title: 'Políglota', desc: 'Completa 5 temas de Inglés', check: () => countTopicsBySubject('Inglés') >= 5 }
+                        // TIEMPO TOTAL (Minutos)
+                        { id: 'time_60', icon: '⌚', title: 'Hora Dorada', desc: '60 min de estudio neto', check: () => parseInt(localStorage.getItem('pomodoroTotalMinutes') || 0) >= 60 },
+                        { id: 'time_300', icon: '⌛', title: 'Inversión', desc: '5 horas de estudio neto', check: () => parseInt(localStorage.getItem('pomodoroTotalMinutes') || 0) >= 300 },
+                        { id: 'time_600', icon: '🕰️', title: 'Dedicación', desc: '10 horas de estudio neto', check: () => parseInt(localStorage.getItem('pomodoroTotalMinutes') || 0) >= 600 },
+                        { id: 'time_1200', icon: '🏰', title: 'Fortaleza', desc: '20 horas de estudio neto', check: () => parseInt(localStorage.getItem('pomodoroTotalMinutes') || 0) >= 1200 },
+
+                        // MASTERY (Solo las 4 materias solicitadas)
+                        { id: 'math_5', icon: '📐', title: 'Aritmético', desc: '5 temas de Matemáticas', check: () => countTopicsBySubject('Pensamiento Matemático') >= 5 },
+                        { id: 'math_10', icon: '🔢', title: 'Calculador', desc: '10 temas de Matemáticas', check: () => countTopicsBySubject('Pensamiento Matemático') >= 10 },
+                        { id: 'math_all', icon: '🌌', title: 'Pitágoras', desc: 'Todos los temas de Matemáticas', check: () => countTopicsBySubject('Pensamiento Matemático') >= 12 },
+
+                        { id: 'read_3', icon: '📖', title: 'Lector', desc: '3 temas de Lectura', check: () => countTopicsBySubject('Comprensión Lectora') >= 3 },
+                        { id: 'read_6', icon: '📚', title: 'Bibliófilo', desc: '6 temas de Lectura', check: () => countTopicsBySubject('Comprensión Lectora') >= 6 },
+                        { id: 'read_all', icon: '🖋️', title: 'Cervantes', desc: 'Todos los temas de Lectura', check: () => countTopicsBySubject('Comprensión Lectora') >= 8 },
+
+                        { id: 'write_4', icon: '📝', title: 'Escritor', desc: '4 temas de Redacción', check: () => countTopicsBySubject('Redacción Indirecta') >= 4 },
+                        { id: 'write_8', icon: '📜', title: 'Editor', desc: '8 temas de Redacción', check: () => countTopicsBySubject('Redacción Indirecta') >= 8 },
+                        { id: 'write_all', icon: '✒️', title: 'Gramático', desc: 'Todos los temas de Redacción', check: () => countTopicsBySubject('Redacción Indirecta') >= 9 },
+
+                        { id: 'eng_3', icon: '🇬🇧', title: 'Beginner', desc: '3 temas de Inglés', check: () => countTopicsBySubject('Inglés') >= 3 },
+                        { id: 'eng_all', icon: '🗽', title: 'Bilingual', desc: 'Todos los temas de Inglés', check: () => countTopicsBySubject('Inglés') >= 6 },
+
+                        // SIMULACROS
+                        { id: 'sim_1', icon: '🏁', title: 'Primer Test', desc: 'Completa tu primer simulacro', check: () => { const s = localStorage.getItem('simulacro1'); return s && JSON.parse(s).total; } },
+                        { id: 'sim_all', icon: '🎪', title: 'Invencible', desc: 'Completa los 6 simulacros', check: () => { for (let i = 1; i <= 6; i++) { if (!localStorage.getItem('simulacro' + i)) return false; } return true; } },
+
+                        // ESPECIALES
+                        { id: 'official', icon: '🆔', title: 'Estudiante Oficial', desc: 'Sé aprobado por el Admin', check: () => currentUser && document.getElementById('app-content') && document.getElementById('app-content').style.display !== 'none' },
+                        { id: 'weekend', icon: '🛸', title: 'Sin Descanso', desc: 'Estudia un Sábado o Domingo', check: () => { const d = new Date().getDay(); return (d === 0 || d === 6); } },
+                        { id: 'night', icon: '🦉', title: 'Estudio Nocturno', desc: 'Estudia después de las 11 PM', check: () => new Date().getHours() >= 23 }
                     ];
 
                     // Helpers para Logros
                     function countStudyDays() {
-                        const days = JSON.parse(localStorage.getItem('studyDays') || '[]');
-                        return days.length;
-                    }
-
-                    function getStreak() {
-                        // Cálculo simplificado de racha (días consecutivos)
-                        const days = JSON.parse(localStorage.getItem('studyDays') || '[]').sort();
-                        if (days.length === 0) return 0;
-                        // Implementación real requeriría revisar fechas consecutivas.
-                        // Por simplicidad, retornamos longitud, pero idealmente se refinaría.
-                        return days.length;
+                        const uniqueDays = new Set();
+                        Object.keys(studyPlan).forEach(semanaKey => {
+                            studyPlan[semanaKey].dias.forEach((dia, diaIdx) => {
+                                let diaCompletado = false;
+                                dia.temas.forEach((tema, temaIdx) => {
+                                    if (localStorage.getItem(`${semanaKey}-${diaIdx}-${temaIdx}`) === 'true') diaCompletado = true;
+                                });
+                                if (diaCompletado) uniqueDays.add(`${semanaKey}-${diaIdx}`);
+                            });
+                        });
+                        return uniqueDays.size;
                     }
 
                     function calculateTotalProgress() {
@@ -2820,31 +2852,9 @@
                     function renderDashboard() {
                         const progresoGeneral = calcularProgresoGeneral();
 
-                        // CALCULAR días estudiados dinámicamente
-                        const diasConTemasCompletados = new Set();
+                        const totalDiasEstudiados = countStudyDays();
                         let totalDiasCurso = 0;
-
-                        Object.keys(studyPlan).forEach(semanaKey => {
-                            totalDiasCurso += studyPlan[semanaKey].dias.length;
-
-                            studyPlan[semanaKey].dias.forEach((diaObj, diaIdx) => {
-                                let diaCompletado = false;
-
-                                diaObj.temas.forEach((tema, temaIdx) => {
-                                    const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
-                                    if (localStorage.getItem(key) === 'true') {
-                                        diaCompletado = true;
-                                    }
-                                });
-
-                                if (diaCompletado) {
-                                    // Usar semana-dia como identificador único
-                                    diasConTemasCompletados.add(`${semanaKey}-${diaIdx}`);
-                                }
-                            });
-                        });
-
-                        const totalDiasEstudiados = diasConTemasCompletados.size;
+                        Object.keys(studyPlan).forEach(sk => totalDiasCurso += studyPlan[sk].dias.length);
 
                         const sessions = localStorage.getItem('pomodoroSessions') || '0';
 
