@@ -150,8 +150,7 @@
             flex-wrap: wrap;
             gap: 10px;
             justify-content: center;
-            position: sticky;
-            top: 20px;
+            position: relative;
             z-index: 100;
             transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
         }
@@ -875,7 +874,9 @@
 
                 <div id="inicio" class="content active">
                     <div class="hoy-estudiar">
-                        <h3 style="font-size: 2em; margin-bottom: 15px;">📚 Hoy debes estudiar:</h3>
+                        <h3 style="font-size: 2em; margin-bottom: 15px;"><span
+                                style="background: none; -webkit-text-fill-color: initial;">📚</span> Hoy debes
+                            estudiar:</h3>
                         <div id="temas-hoy" style="font-size: 1.2em;"></div>
                     </div>
                     <div class="dashboard" id="dashboard-stats"></div>
@@ -1997,6 +1998,7 @@
                                     await renderCalendario();
                                     actualizarProgreso();
                                     renderDashboard();
+                                    renderAchievements();
                                     loadSimulacros();
 
                                     if (statusEl) statusEl.textContent = '✅ Sincronizado';
