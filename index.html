@@ -2173,8 +2173,8 @@
                     };
 
                     const moduloTemarios = {
-                        "Aritmética": ["Operaciones con números enteros", "Fracciones y decimales", "Jerarquía de operaciones", "Potencias y raíces", "Notación científica", "Factores primos", "Mínimo común múltiplo", "Máximo común divisor", "Porcentajes", "Progresión aritmética", "Regla de tres", "Repaso general"],
-                        "Física": ["Magnitudes y unidades", "Sistema Internacional", "Cinemática", "Velocidad, distancia y tiempo", "Leyes de Newton", "Diagramas de fuerzas", "Trabajo y energía", "Conservación de la energía", "Cantidad de movimiento", "Choques", "Movimiento ondulatorio", "Óptica: lentes y fenómenos"],
+                        "Aritmética": ["Suma y resta de enteros", "Multiplicación y división de enteros", "Fracciones: Conceptos y operaciones", "Decimales: Conversión y operaciones", "Signos de agrupación y jerarquía", "Operaciones complejas (Jerarquía)", "Leyes de los exponentes (Potencias)", "Raíces cuadradas y cúbicas", "Notación científica: Conversión", "Operaciones en notación científica", "Números primos y compuestos", "Descomposición en factores primos", "Cálculo del Mínimo Común Múltiplo", "Problemas de aplicación (mcm)", "Cálculo del Máximo Común Divisor", "Simplificación de fracciones (MCD)", "Porcentajes: Concepto y cálculo", "Aumentos y descuentos porcentuales", "Sucesiones y progresiones aritméticas", "Suma de términos de una progresión", "Regla de tres simple directa", "Regla de tres inversa y compuesta", "Repaso: Módulo de Aritmética I", "Repaso: Módulo de Aritmética II"],
+                        "Física": ["Magnitudes escalares y vectoriales", "Sistema Internacional de Unidades", "Conversión de unidades químicas/físicas", "Notación científica en física", "Conceptos de cinematica (MRU)", "Movimiento Rectilíneo Uniforme Progresivo", "Movimiento con aceleración constante (MRUA)", "Gráficas de posición, velocidad y tiempo", "Primera y segunda ley de Newton", "Tercera ley de Newton (Acción-Reacción)", "Diagramas de cuerpo libre (DCL)", "Equilibrio de fuerzas y fricción", "Concepto de Trabajo mecánico", "Potencia y Energía mecánica", "Energía cinética y potencial", "Teorema del trabajo y la energía", "Ley de conservación de la energía", "Energía en sistemas mecánicos", "Cantidad de movimiento lineal (Momentum)", "Impulso y cambio en el momentum", "Choques elásticos e inelásticos", "Conservación del momentum en colisiones", "Movimiento ondulatorio y sonido", "Óptica: Reflexión, refracción y lentes"],
                         "Administración": ["Introducción a la administración", "Escuelas de administración", "Proceso administrativo: Planeación", "Proceso administrativo: Organización", "Dirección y Liderazgo", "Control institucional", "Recursos Humanos", "Finanzas básicas", "Mercadotecnia", "Producción y operaciones", "Ética empresarial", "Entorno económico"],
                         "Biología": ["La célula", "Metabolismo celular", "Reproducción celular", "Genética mendeliana", "Evolución", "Taxonomía", "Ecosistemas", "Biodiversidad", "Microbiología", "Fisiología vegetal", "Fisiología animal", "Biotecnología"],
                         "Cálculo diferencial e integral": ["Relaciones y Funciones", "Límites", "La Derivada", "Reglas de derivación", "Aplicaciones de la derivada", "Máximos y mínimos", "La Integral", "Integrales inmediatas", "Métodos de integración", "Integral definida", "Teorema fundamental del cálculo", "Aplicaciones de la integral"],
@@ -2200,129 +2200,83 @@
                         const t1 = moduloTemarios[m1] || [];
                         const t2 = moduloTemarios[m2] || [];
 
-                        // Base template
-                        const basePlan = {
-                            semana1: {
-                                titulo: "Semana 1 - Fundamentos", dias: [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Razones y proporciones", "Proporcionalidad directa e inversa"] },
-                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Identificación de información", "Textos argumentativos y periodísticos"] },
-                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[0] : t1[0]) || "Tema 1"] },
-                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[1] : t2[0]) || "Tema 1"] },
-                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Registro lingüístico", "Género textual"] },
-                                    { dia: "Sábado", materia: "Repaso", temas: ["Ejercicios mixtos de la semana", "Mini-simulacro (20-25 preguntas)"] }
-                                ]
-                            },
-                            semana2: {
-                                titulo: "Semana 2 - Fundamentos", dias: [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Interpretación gráfica de ecuaciones", "Ejes de simetría"] },
-                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Interpretación del texto", "Intención del autor"] },
-                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[2] : t1[1]) || "Tema 2"] },
-                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[3] : t2[1]) || "Tema 2"] },
-                                    { dia: "Viernes", materia: "Inglés", temas: ["Idea general de textos", "Vocabulario común"] },
-                                    { dia: "Sábado", materia: "Repaso", temas: ["Corrección de errores", "Ejercicios cronometrados"] }
-                                ]
-                            },
-                            semana3: {
-                                titulo: "Semana 3 - Fundamentos", dias: [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Probabilidad clásica", "Frecuencias"] },
-                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Concordancia nominal", "Concordancia verbal"] },
-                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[4] : t1[2]) || "Tema 3"] },
-                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[5] : t2[2]) || "Tema 3"] },
-                                    { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Evaluación de forma y contenido"] },
-                                    { dia: "Sábado", materia: "Mini simulacro", temas: ["Matemáticas + Módulos Específicos"] }
-                                ]
-                            },
-                            semana4: {
-                                titulo: "Semana 4 - Fundamentos", dias: [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Medidas de tendencia central", "Media, mediana y moda"] },
-                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Uso correcto de comas y puntos", "Conectores lógicos"] },
-                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[6] : t1[3]) || "Tema 4"] },
-                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[7] : t2[3]) || "Tema 4"] },
-                                    { dia: "Viernes", materia: "Inglés", temas: ["Falsos cognados", "Comprensión de lectura"] },
-                                    { dia: "Sábado", materia: "Simulacro parcial", temas: ["Módulo general completo"] }
-                                ]
-                            },
-                            semana5: {
-                                titulo: "Semana 5 - Profundización", dias: [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de funciones"] },
-                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos literarios"] },
-                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[8] : t1[4]) || "Tema 5"] },
-                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[9] : t2[4]) || "Tema 5"] },
-                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Cohesión gramatical y semántica"] },
-                                    { dia: "Sábado", materia: "Simulacro", temas: [`Simulacro de ${m1}`] }
-                                ]
-                            },
-                            semana6: {
-                                titulo: "Semana 6 - Profundización", dias: [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Desviación estándar (conceptual)"] },
-                                    { dia: "Martes", materia: "Inglés", temas: ["Lectura cronometrada"] },
-                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[10] : t1[5]) || "Tema 6"] },
-                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[11] : t2[5]) || "Tema 6"] },
-                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Corrección de textos completos"] },
-                                    { dia: "Sábado", materia: "Simulacro", temas: [`Simulacro de ${m2}`] }
-                                ]
-                            },
-                            semana7: {
-                                titulo: "Semana 7 - Profundización", dias: [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de información"] },
-                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos administrativos y sociales"] },
-                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[12] : t1[6]) || "Tema 7"] },
-                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[13] : t2[6]) || "Tema 7"] },
-                                    { dia: "Viernes", materia: "Inglés", temas: ["Práctica tipo EXANI"] },
-                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro general"] }
-                                ]
-                            },
-                            semana8: {
-                                titulo: "Semana 8 - Profundización", dias: [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Sistemas de ecuaciones (interpretación)"] },
-                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Ortografía y acentuación"] },
-                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[14] : t1[7]) || "Tema 8"] },
-                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[15] : t2[7]) || "Tema 8"] },
-                                    { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Lectura larga cronometrada"] },
-                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro completo"] }
-                                ]
-                            },
-                            semana9: {
-                                titulo: "Semana 9 - Simulación Real", dias: [
-                                    { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 1"] },
-                                    { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 1"] },
-                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
-                                    { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 2"] },
-                                    { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 2"] },
-                                    { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
-                                ]
-                            },
-                            semana10: {
-                                titulo: "Semana 10 - Simulación Real", dias: [
-                                    { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 3"] },
-                                    { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 3"] },
-                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
-                                    { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 4"] },
-                                    { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 4"] },
-                                    { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
-                                ]
-                            },
-                            semana11: {
-                                titulo: "Semana 11 - Simulación Real", dias: [
-                                    { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 5"] },
-                                    { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 5"] },
-                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
-                                    { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 6"] },
-                                    { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 6"] },
-                                    { dia: "Sábado", materia: "Repaso", temas: ["Repaso general de conceptos clave"] }
-                                ]
-                            },
-                            semana12: {
-                                titulo: "Semana 12 - Ajuste Final", dias: [
-                                    { dia: "Lunes", materia: "Repaso", temas: ["Fórmulas clave"] },
-                                    { dia: "Martes", materia: "Repaso", temas: ["Errores frecuentes"] },
-                                    { dia: "Miércoles", materia: "Repaso", temas: ["Repaso ligero general"] },
-                                    { dia: "Jueves", materia: "Descanso", temas: ["Descanso mental"] },
-                                    { dia: "Viernes", materia: "Repaso", temas: ["Último repaso de conceptos"] },
-                                    { dia: "Sábado", materia: "Preparación", temas: ["Preparación mental para el examen"] }
-                                ]
+                        const isPremed = (m1 === 'Premedicina');
+
+                        const basePlan = {};
+
+                        // Helper for module topics
+                        const getModuleTopics = (weekNum, isDay1) => {
+                            if (isPremed) {
+                                const startIndex = (weekNum - 1) * 4 + (isDay1 ? 0 : 2);
+                                if (startIndex >= t1.length) return ["Repaso de Premedicina"];
+                                return [t1[startIndex] || "Repaso", t1[startIndex + 1] || "Repaso"];
+                            } else {
+                                const topics = isDay1 ? t1 : t2;
+                                const startIndex = (weekNum - 1) * 2;
+                                if (startIndex >= topics.length) return ["Repaso general"];
+                                return [topics[startIndex] || "Repaso", topics[startIndex + 1] || "Repaso"];
                             }
                         };
+
+                        // Common days template part
+                        const getCommonDays = (weekNum) => [
+                            { dia: "Lunes", materia: "Pensamiento Matemático", temas: weekNum <= 8 ? getMathTopic(weekNum) : ["Simulacro completo"] },
+                            { dia: "Martes", materia: "Comprensión Lectora", temas: weekNum <= 8 ? getReadingTopic(weekNum) : ["Análisis de errores"] },
+                            { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: getModuleTopics(weekNum, true) },
+                            { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: getModuleTopics(weekNum, false) },
+                            { dia: "Viernes", materia: weekNum <= 8 ? "Redacción Indirecta" : "Inglés", temas: weekNum <= 8 ? getWritingTopic(weekNum) : ["Práctica cronometrada"] },
+                            { dia: "Sábado", materia: weekNum <= 8 ? "Repaso" : "Simulacro", temas: weekNum <= 8 ? ["Mini-simulacro"] : ["Simulacro general"] }
+                        ];
+
+                        function getMathTopic(w) {
+                            const topics = [
+                                ["Razones y proporciones", "Proporcionalidad"],
+                                ["Ecuaciones", "Ejes de simetría"],
+                                ["Probabilidad clásica", "Frecuencias"],
+                                ["Medidas de tendencia central", "Media, mediana y moda"],
+                                ["Representación gráfica de funciones"],
+                                ["Desviación estándar (conceptual)"],
+                                ["Representación gráfica de información"],
+                                ["Sistemas de ecuaciones (interpretación)"]
+                            ];
+                            return topics[w - 1] || ["Repaso Matemático"];
+                        }
+
+                        function getReadingTopic(w) {
+                            const topics = [
+                                ["Identificación de información", "Textos argumentativos"],
+                                ["Interpretación del texto", "Intención del autor"],
+                                ["Evaluación de forma y contenido"],
+                                ["Inferencia y vocabulario"],
+                                ["Textos literarios"],
+                                ["Textos científicos"],
+                                ["Textos administrativos", "Sociales"],
+                                ["Lectura larga cronometrada"]
+                            ];
+                            return topics[w - 1] || ["Repaso Lectura"];
+                        }
+
+                        function getWritingTopic(w) {
+                            const topics = [
+                                ["Registro lingüístico", "Género textual"],
+                                ["Prólogo y reseña", "Ensayo"],
+                                ["Concordancia nominal", "Concordancia verbal"],
+                                ["Uso de comas y puntos", "Conectores"],
+                                ["Cohesión gramatical y semántica"],
+                                ["Corrección de textos"],
+                                ["Ortografía y acentuación"],
+                                ["Práctica tipo EXANI"]
+                            ];
+                            return topics[w - 1] || ["Repaso Redacción"];
+                        }
+
+                        for (let i = 1; i <= 12; i++) {
+                            basePlan[`semana${i}`] = {
+                                titulo: `Semana ${i} - ${i <= 4 ? "Fundamentos" : i <= 8 ? "Profundización" : "Ajuste Final"}`,
+                                dias: getCommonDays(i)
+                            };
+                        }
+
                         studyPlan = basePlan;
                     }
 
@@ -3296,6 +3250,61 @@
                         });
                     }
                     function obtenerExplicacion(materia, tema) {
+                        const topicMap = {
+                            // Aritmética
+                            "Suma y resta de enteros": "Operaciones con números enteros",
+                            "Multiplicación y división de enteros": "Operaciones con números enteros",
+                            "Fracciones: Conceptos y operaciones": "Fracciones y decimales",
+                            "Decimales: Conversión y operaciones": "Fracciones y decimales",
+                            "Signos de agrupación y jerarquía": "Jerarquía de operaciones",
+                            "Operaciones complejas (Jerarquía)": "Jerarquía de operaciones",
+                            "Leyes de los exponentes (Potencias)": "Potencias y raíces",
+                            "Raíces cuadradas y cúbicas": "Potencias y raíces",
+                            "Notación científica: Conversión": "Notación científica",
+                            "Operaciones en notación científica": "Notación científica",
+                            "Números primos y compuestos": "Factores primos",
+                            "Descomposición en factores primos": "Factores primos",
+                            "Cálculo del Mínimo Común Múltiplo": "Mínimo común múltiplo",
+                            "Problemas de aplicación (mcm)": "Mínimo común múltiplo",
+                            "Cálculo del Máximo Común Divisor": "Máximo común divisor",
+                            "Simplificación de fracciones (MCD)": "Máximo común divisor",
+                            "Porcentajes: Concepto y cálculo": "Porcentajes",
+                            "Aumentos y descuentos porcentuales": "Porcentajes",
+                            "Sucesiones y progresiones aritméticas": "Progresión aritmética",
+                            "Suma de términos de una progresión": "Progresión aritmética",
+                            "Regla de tres simple directa": "Regla de tres",
+                            "Regla de tres inversa y compuesta": "Regla de tres",
+                            "Repaso: Módulo de Aritmética I": "Simulacro de Aritmética",
+                            "Repaso: Módulo de Aritmética II": "Simulacro de Aritmética",
+                            // Física
+                            "Magnitudes escalares y vectoriales": "Magnitudes y unidades",
+                            "Sistema Internacional de Unidades": "Sistema Internacional",
+                            "Conversión de unidades químicas/físicas": "Sistema Internacional",
+                            "Notación científica en física": "Notación científica",
+                            "Conceptos de cinematica (MRU)": "Cinemática",
+                            "Movimiento Rectilíneo Uniforme Progresivo": "Velocidad, distancia y tiempo",
+                            "Movimiento con aceleración constante (MRUA)": "Cinemática",
+                            "Gráficas de posición, velocidad y tiempo": "Cinemática",
+                            "Primera y segunda ley de Newton": "Leyes de Newton",
+                            "Tercera ley de Newton (Acción-Reacción)": "Leyes de Newton",
+                            "Diagramas de cuerpo libre (DCL)": "Diagramas de fuerzas",
+                            "Equilibrio de fuerzas y fricción": "Diagramas de fuerzas",
+                            "Concepto de Trabajo mecánico": "Trabajo y energía",
+                            "Potencia y Energía mecánica": "Trabajo y energía",
+                            "Energía cinética y potencial": "Trabajo y energía",
+                            "Teorema del trabajo y la energía": "Trabajo y energía",
+                            "Ley de conservación de la energía": "Conservación de la energía",
+                            "Energía en sistemas mecánicos": "Conservación de la energía",
+                            "Cantidad de movimiento lineal (Momentum)": "Cantidad de movimiento",
+                            "Impulso y cambio en el momentum": "Cantidad de movimiento",
+                            "Choques elásticos e inelásticos": "Choques",
+                            "Consolidación del momentum en colisiones": "Choques",
+                            "Movimiento ondulatorio y sonido": "Movimiento ondulatorio",
+                            "Óptica: Reflexión, refracción y lentes": "Óptica: Reflexión, refracción y lentes"
+                        };
+
+                        const targetTopic = topicMap[tema] || tema;
+
                         const explicaciones = {
                             // ==================== SEMANA 1 ====================
                             "Razones y proporciones": {
@@ -6490,10 +6499,118 @@
                         </ol>
                     `,
                                 formula: "Siempre: p_antes = p_después | Elástico: Ec también se conserva"
+                            },
+
+                            "Regla de tres": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Método para resolver problemas de proporcionalidad entre tres valores conocidos y una incógnita</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Regla de tres simple directa:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p>Cuando una magnitud aumenta, la otra también.</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 8px 0;">a ---> b</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 8px 0;">c ---> x</p>
+                            <p style="font-weight: bold; font-size: 18px;">x = (b × c) / a</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Regla de tres simple inversa:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p>Cuando una magnitud aumenta, la otra disminuye.</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 8px 0;">a ---> b</p>
+                            <p style="font-family: 'Courier New'; font-size: 16px; margin: 8px 0;">c ---> x</p>
+                            <p style="font-weight: bold; font-size: 18px;">x = (a × b) / c</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si 3 kg cuestan $60, ¿cuánto cuestan 5 kg? <em>(R: $100)</em></li>
+                            <li>4 obreros tardan 10 días, ¿cuánto tardan 8 obreros? <em>(R: 5 días)</em></li>
+                        </ol>
+                    `,
+                                formula: "Directa: x = (b·c)/a | Inversa: x = (a·b)/c"
+                            },
+
+                            "Movimiento ondulatorio": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Propagación de una perturbación transportando energía pero no materia</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Elementos de una onda:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Cresta:</strong> Punto más alto</li>
+                            <li><strong>Valle:</strong> Punto más bajo</li>
+                            <li><strong>Amplitud (A):</strong> Altura máxima</li>
+                            <li><strong>Longitud de onda (λ):</strong> Distancia entre dos crestas</li>
+                            <li><strong>Frecuencia (f):</strong> Ondas por segundo (Hz)</li>
+                            <li><strong>Periodo (T):</strong> Tiempo por onda (T = 1/f)</li>
+                        </ul>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Velocidad de la onda:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                            <p style="font-size: 20px; font-weight: bold;">v = λ × f</p>
+                        </div>
+                    `,
+                                formula: "v = λ·f | T = 1/f"
+                            },
+
+                            "Óptica: Reflexión, refracción y lentes": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Comportamiento de la luz al interactuar con diferentes medios y superficies</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Fenómenos principales:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Reflexión:</strong> La luz rebota (espejos)</li>
+                            <li><strong>Refracción:</strong> La luz cambia de dirección al cambiar de medio (lentes, agua)</li>
+                            <li><strong>Difracción:</strong> La luz se curva al pasar por rendijas</li>
+                        </ul>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🔍 Lentes:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Convergentes:</strong> Juntan los rayos (corrigen hipermetropía)</p>
+                            <p><strong>Divergentes:</strong> Separan los rayos (corrigen miopía)</p>
+                        </div>
+                    `,
+                                formula: "n = c/v (Índice de refracción) | Espejos y Lentes"
+                            },
+
+                            "Magnitudes y unidades": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Propiedades físicas que pueden ser medidas. Escalares (solo valor) y Vectoriales (valor y dirección)</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Clasificación:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Escalares:</strong> Masa, tiempo, temperatura, energía</li>
+                            <li><strong>Vectoriales:</strong> Velocidad, fuerza, desplazamiento, aceleración</li>
+                        </ul>
+                    `,
+                                formula: "Escalar = Número + Unidad | Vector = Magnitud + Dirección"
+                            },
+
+                            "Sistema Internacional": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Sistema estándar de unidades utilizado en ciencia a nivel mundial</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Unidades fundamentales:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #ede9fe;">
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Magnitud</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Unidad</th>
+                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Símbolo</th>
+                            </tr>
+                            <tr><td style="border: 1px solid #ede9fe; padding: 8px;">Longitud</td><td style="border: 1px solid #ede9fe; padding: 8px;">metro</td><td style="border: 1px solid #ede9fe; padding: 8px;">m</td></tr>
+                            <tr><td style="border: 1px solid #ede9fe; padding: 8px;">Masa</td><td style="border: 1px solid #ede9fe; padding: 8px;">kilogramo</td><td style="border: 1px solid #ede9fe; padding: 8px;">kg</td></tr>
+                            <tr><td style="border: 1px solid #ede9fe; padding: 8px;">Tiempo</td><td style="border: 1px solid #ede9fe; padding: 8px;">segundo</td><td style="border: 1px solid #ede9fe; padding: 8px;">s</td></tr>
+                        </table>
+                    `,
+                                formula: "m, kg, s, A, K, mol, cd"
                             }
                         };
 
-                        const exp = explicaciones[tema];
+                        const exp = explicaciones[targetTopic];
                         if (exp) {
                             return `
                     <strong style="color: #1e40af;">📚 Explicación completa:</strong><br>
