@@ -812,6 +812,59 @@
                     <input type="text" id="reg-career" placeholder="Ej. Ingeniería Mecatrónica">
                 </div>
 
+                <div
+                    style="background: #f0fdf4; border: 1px solid #bbf7d0; padding: 15px; border-radius: 12px; margin-bottom: 20px;">
+                    <h4 style="color: #166534; font-size: 0.9em; margin-bottom: 10px;">📚 Módulos Específicos</h4>
+                    <p style="font-size: 0.8em; color: #15803d; margin-bottom: 15px;">Selecciona los dos módulos que te
+                        corresponden según tu carrera.</p>
+
+                    <div class="form-group">
+                        <label style="font-size: 0.85em;">Módulo 1</label>
+                        <select id="reg-module1"
+                            style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d1d5db;"
+                            onchange="handleModuleSelection()">
+                            <option value="Aritmética">Aritmética</option>
+                            <option value="Administración">Administración</option>
+                            <option value="Biología">Biología</option>
+                            <option value="Cálculo diferencial e integral">Cálculo diferencial e integral</option>
+                            <option value="Ciencias de la salud">Ciencias de la salud</option>
+                            <option value="Derecho">Derecho</option>
+                            <option value="Economía">Economía</option>
+                            <option value="Filosofía">Filosofía</option>
+                            <option value="Física" selected>Física</option>
+                            <option value="Historia">Historia</option>
+                            <option value="Literatura">Literatura</option>
+                            <option value="Matemáticas financieras">Matemáticas financieras</option>
+                            <option value="Premedicina">Premedicina (Módulo Doble)</option>
+                            <option value="Probabilidad y estadística">Probabilidad y estadística</option>
+                            <option value="Química">Química</option>
+                            <option value="Psicología">Psicología</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group" id="container-module2">
+                        <label style="font-size: 0.85em;">Módulo 2</label>
+                        <select id="reg-module2"
+                            style="width: 100%; padding: 10px; border-radius: 8px; border: 1px solid #d1d5db;">
+                            <option value="Aritmética" selected>Aritmética</option>
+                            <option value="Administración">Administración</option>
+                            <option value="Biología">Biología</option>
+                            <option value="Cálculo diferencial e integral">Cálculo diferencial e integral</option>
+                            <option value="Ciencias de la salud">Ciencias de la salud</option>
+                            <option value="Derecho">Derecho</option>
+                            <option value="Economía">Economía</option>
+                            <option value="Filosofía">Filosofía</option>
+                            <option value="Física">Física</option>
+                            <option value="Historia">Historia</option>
+                            <option value="Literatura">Literatura</option>
+                            <option value="Matemáticas financieras">Matemáticas financieras</option>
+                            <option value="Probabilidad y estadística">Probabilidad y estadística</option>
+                            <option value="Química">Química</option>
+                            <option value="Psicología">Psicología</option>
+                        </select>
+                    </div>
+                </div>
+
                 <button onclick="registerUser()"
                     style="background: #10b981; color: white; border: none; padding: 15px; border-radius: 12px; font-size: 18px; font-weight: 600; cursor: pointer; width: 100%; margin-top: 10px; box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3); transition: all 0.3s;"
                     onmouseover="this.style.transform='translateY(-2px)'"
@@ -1833,9 +1886,13 @@
 
                         const nameInput = document.getElementById('reg-name');
                         const careerInput = document.getElementById('reg-career');
+                        const module1Input = document.getElementById('reg-module1');
+                        const module2Input = document.getElementById('reg-module2');
 
                         const name = nameInput.value.trim();
                         const career = careerInput.value.trim();
+                        const module1 = module1Input.value;
+                        const module2 = module1 === 'Premedicina' ? 'Premedicina' : module2Input.value;
 
                         if (!name || !career) {
                             alert("Por favor, completa todos los campos.");
@@ -1848,6 +1905,8 @@
                             email: currentUser.email,
                             displayName: name,
                             career: career,
+                            module1: module1,
+                            module2: module2,
                             photoURL: currentUser.photoURL,
                             status: 'pending', // pending, approved, rejected
                             role: 'user', // user, admin
@@ -1860,6 +1919,16 @@
                             if (registrationScreen) registrationScreen.style.display = 'none';
                             if (pendingScreen) pendingScreen.style.display = 'flex';
                         });
+                    }
+
+                    function handleModuleSelection() {
+                        const m1 = document.getElementById('reg-module1').value;
+                        const containerM2 = document.getElementById('container-module2');
+                        if (m1 === 'Premedicina') {
+                            containerM2.style.display = 'none';
+                        } else {
+                            containerM2.style.display = 'block';
+                        }
                     }
 
                     function checkUserStatusForce() {
@@ -1996,9 +2065,11 @@
                                     localStorage.setItem('lastVisit', today);
                                     syncUp('lastVisit', today);
 
+                                    // Reconstruir plan basado en módulos del usuario
+                                    rebuildStudyPlan();
+
                                     await renderCalendario();
                                     actualizarProgreso();
-                                    renderDashboard();
                                     renderAchievements();
                                     loadSimulacros();
 
@@ -2040,143 +2111,191 @@
                     }
 
                     const materias = {
-                        "Pensamiento Matemático": "#3b82f6",
-                        "Comprensión Lectora": "#10b981",
+                        "Pensamiento Matemático": "#6366f1",
+                        "Comprensión Lectora": "#ec4899",
+                        "Redacción Indirecta": "#8b5cf6",
+                        "Inglés": "#10b981",
                         "Aritmética": "#f59e0b",
-                        "Física": "#8b5cf6",
-                        "Redacción Indirecta": "#ec4899",
-                        "Inglés": "#06b6d4",
-                        "Repaso": "#6366f1",
-                        "Simulacro": "#ef4444",
-                        "Mini simulacro": "#ef4444",
+                        "Física": "#ef4444",
+                        "Administración": "#0ea5e9",
+                        "Biología": "#16a34a",
+                        "Cálculo diferencial e integral": "#7c3aed",
+                        "Ciencias de la salud": "#be185d",
+                        "Derecho": "#4338ca",
+                        "Economía": "#ca8a04",
+                        "Filosofía": "#57534e",
+                        "Historia": "#9a3412",
+                        "Literatura": "#db2777",
+                        "Matemáticas financieras": "#059669",
+                        "Premedicina": "#dc2626",
+                        "Probabilidad y estadística": "#d97706",
+                        "Química": "#2563eb",
+                        "Psicología": "#9333ea",
+                        "Repaso": "#6b7280",
+                        "Mini-simulacro": "#6b7280",
+                        "Simulacro": "#000000",
                         "Análisis": "#14b8a6",
                         "Refuerzo": "#f97316",
                         "Descanso": "#64748b",
                         "Preparación": "#8b5cf6"
                     };
 
-                    const studyPlan = {
-                        semana1: {
-                            titulo: "Semana 1 - Fundamentos", dias: [
-                                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Razones y proporciones", "Proporcionalidad directa e inversa"] },
-                                { dia: "Martes", materia: "Comprensión Lectora", temas: ["Identificación de información", "Textos argumentativos y periodísticos"] },
-                                { dia: "Miércoles", materia: "Aritmética", temas: ["Operaciones con números enteros", "Fracciones y decimales"] },
-                                { dia: "Jueves", materia: "Física", temas: ["Magnitudes y unidades", "Sistema Internacional"] },
-                                { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Registro lingüístico", "Género textual"] },
-                                { dia: "Sábado", materia: "Repaso", temas: ["Ejercicios mixtos de la semana", "Mini-simulacro (20-25 preguntas)"] }
-                            ]
-                        },
-                        semana2: {
-                            titulo: "Semana 2 - Fundamentos", dias: [
-                                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Interpretación gráfica de ecuaciones", "Ejes de simetría"] },
-                                { dia: "Martes", materia: "Comprensión Lectora", temas: ["Interpretación del texto", "Intención del autor"] },
-                                { dia: "Miércoles", materia: "Aritmética", temas: ["Jerarquía de operaciones", "Potencias y raíces"] },
-                                { dia: "Jueves", materia: "Física", temas: ["Cinemática", "Velocidad, distancia y tiempo"] },
-                                { dia: "Viernes", materia: "Inglés", temas: ["Idea general de textos", "Vocabulario común"] },
-                                { dia: "Sábado", materia: "Repaso", temas: ["Corrección de errores", "Ejercicios cronometrados"] }
-                            ]
-                        },
-                        semana3: {
-                            titulo: "Semana 3 - Fundamentos", dias: [
-                                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Probabilidad clásica", "Frecuencias"] },
-                                { dia: "Martes", materia: "Redacción Indirecta", temas: ["Concordancia nominal", "Concordancia verbal"] },
-                                { dia: "Miércoles", materia: "Aritmética", temas: ["Notación científica", "Factores primos"] },
-                                { dia: "Jueves", materia: "Física", temas: ["Leyes de Newton", "Diagramas de fuerzas"] },
-                                { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Evaluación de forma y contenido"] },
-                                { dia: "Sábado", materia: "Mini simulacro", temas: ["Matemáticas + Aritmética + Física"] }
-                            ]
-                        },
-                        semana4: {
-                            titulo: "Semana 4 - Fundamentos", dias: [
-                                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Medidas de tendencia central", "Media, mediana y moda"] },
-                                { dia: "Martes", materia: "Redacción Indirecta", temas: ["Uso correcto de comas y puntos", "Conectores lógicos"] },
-                                { dia: "Miércoles", materia: "Aritmética", temas: ["Mínimo común múltiplo", "Máximo común divisor"] },
-                                { dia: "Jueves", materia: "Física", temas: ["Trabajo y energía"] },
-                                { dia: "Viernes", materia: "Inglés", temas: ["Falsos cognados", "Comprensión de lectura"] },
-                                { dia: "Sábado", materia: "Simulacro parcial", temas: ["Módulo general completo"] }
-                            ]
-                        },
-                        semana5: {
-                            titulo: "Semana 5 - Profundización", dias: [
-                                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de funciones"] },
-                                { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos literarios"] },
-                                { dia: "Miércoles", materia: "Aritmética", temas: ["Porcentajes"] },
-                                { dia: "Jueves", materia: "Física", temas: ["Conservación de la energía"] },
-                                { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Cohesión gramatical y semántica"] },
-                                { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro de Aritmética"] }
-                            ]
-                        },
-                        semana6: {
-                            titulo: "Semana 6 - Profundización", dias: [
-                                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Desviación estándar (conceptual)"] },
-                                { dia: "Martes", materia: "Inglés", temas: ["Lectura cronometrada"] },
-                                { dia: "Miércoles", materia: "Aritmética", temas: ["Progresión aritmética"] },
-                                { dia: "Jueves", materia: "Física", temas: ["Cantidad de movimiento", "Choques"] },
-                                { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Corrección de textos completos"] },
-                                { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro de Física"] }
-                            ]
-                        },
-                        semana7: {
-                            titulo: "Semana 7 - Profundización", dias: [
-                                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de información"] },
-                                { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos administrativos y sociales"] },
-                                { dia: "Miércoles", materia: "Aritmética", temas: ["Regla de tres"] },
-                                { dia: "Jueves", materia: "Física", temas: ["Movimiento ondulatorio"] },
-                                { dia: "Viernes", materia: "Inglés", temas: ["Práctica tipo EXANI"] },
-                                { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro general"] }
-                            ]
-                        },
-                        semana8: {
-                            titulo: "Semana 8 - Profundización", dias: [
-                                { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Sistemas de ecuaciones (interpretación)"] },
-                                { dia: "Martes", materia: "Redacción Indirecta", temas: ["Ortografía y acentuación"] },
-                                { dia: "Miércoles", materia: "Aritmética", temas: ["Repaso general"] },
-                                { dia: "Jueves", materia: "Física", temas: ["Óptica: lentes y fenómenos"] },
-                                { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Lectura larga cronometrada"] },
-                                { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro completo"] }
-                            ]
-                        },
-                        semana9: {
-                            titulo: "Semana 9 - Simulación Real", dias: [
-                                { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 1"] },
-                                { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 1"] },
-                                { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
-                                { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 2"] },
-                                { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 2"] },
-                                { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
-                            ]
-                        },
-                        semana10: {
-                            titulo: "Semana 10 - Simulación Real", dias: [
-                                { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 3"] },
-                                { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 3"] },
-                                { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
-                                { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 4"] },
-                                { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 4"] },
-                                { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
-                            ]
-                        },
-                        semana11: {
-                            titulo: "Semana 11 - Simulación Real", dias: [
-                                { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 5"] },
-                                { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 5"] },
-                                { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
-                                { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 6"] },
-                                { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 6"] },
-                                { dia: "Sábado", materia: "Repaso", temas: ["Repaso general de conceptos clave"] }
-                            ]
-                        },
-                        semana12: {
-                            titulo: "Semana 12 - Ajuste Final", dias: [
-                                { dia: "Lunes", materia: "Repaso", temas: ["Fórmulas clave"] },
-                                { dia: "Martes", materia: "Repaso", temas: ["Errores frecuentes"] },
-                                { dia: "Miércoles", materia: "Repaso", temas: ["Repaso ligero general"] },
-                                { dia: "Jueves", materia: "Descanso", temas: ["Descanso mental"] },
-                                { dia: "Viernes", materia: "Repaso", temas: ["Último repaso de conceptos"] },
-                                { dia: "Sábado", materia: "Preparación", temas: ["Preparación mental para el examen"] }
-                            ]
-                        }
+                    const moduloTemarios = {
+                        "Aritmética": ["Operaciones con números enteros", "Fracciones y decimales", "Jerarquía de operaciones", "Potencias y raíces", "Notación científica", "Factores primos", "Mínimo común múltiplo", "Máximo común divisor", "Porcentajes", "Progresión aritmética", "Regla de tres", "Repaso general"],
+                        "Física": ["Magnitudes y unidades", "Sistema Internacional", "Cinemática", "Velocidad, distancia y tiempo", "Leyes de Newton", "Diagramas de fuerzas", "Trabajo y energía", "Conservación de la energía", "Cantidad de movimiento", "Choques", "Movimiento ondulatorio", "Óptica: lentes y fenómenos"],
+                        "Administración": ["Introducción a la administración", "Escuelas de administración", "Proceso administrativo: Planeación", "Proceso administrativo: Organización", "Dirección y Liderazgo", "Control institucional", "Recursos Humanos", "Finanzas básicas", "Mercadotecnia", "Producción y operaciones", "Ética empresarial", "Entorno económico"],
+                        "Biología": ["La célula", "Metabolismo celular", "Reproducción celular", "Genética mendeliana", "Evolución", "Taxonomía", "Ecosistemas", "Biodiversidad", "Microbiología", "Fisiología vegetal", "Fisiología animal", "Biotecnología"],
+                        "Cálculo diferencial e integral": ["Relaciones y Funciones", "Límites", "La Derivada", "Reglas de derivación", "Aplicaciones de la derivada", "Máximos y mínimos", "La Integral", "Integrales inmediatas", "Métodos de integración", "Integral definida", "Teorema fundamental del cálculo", "Aplicaciones de la integral"],
+                        "Ciencias de la salud": ["Introducción al estudio de la salud", "Tríada ecológica", "Historia natural de la enfermedad", "Niveles de prevención", "Anatomía y Fisiología", "Sistemas corporales I", "Sistemas corporales II", "Primeros auxilios", "Salud pública", "Epidemiología", "Nutrición", "Prevención de adicciones"],
+                        "Derecho": ["Conceptos fundamentales del derecho", "Fuentes del derecho", "Ramas del derecho", "Derecho Constitucional", "Derecho Civil", "Derecho Penal", "Derecho Laboral", "Derecho Administrativo", "Garantías individuales", "Derechos Humanos", "Organización del Estado Mexicano", "Juicio de Amparo"],
+                        "Economía": ["Conceptos básicos de economía", "Microeconomía: Oferta y Demanda", "Teoría del consumidor", "Teoría del productor", "Macroeconomía", "Cuentas nacionales", "Inflación y Desempleo", "Política Monetaria", "Política Fiscal", "Economía Internacional", "Comercio Exterior", "Crecimiento y Desarrollo"],
+                        "Filosofía": ["Introducción a la filosofía", "Presocráticos", "Sócrates, Platón y Aristóteles", "Filosofía Medieval", "El Renacimiento", "El Racionalismo", "El Empirismo", "La Ilustración", "Filosofía Contemporánea", "Ontología", "Epistemología", "Ética y Estética"],
+                        "Historia": ["La Historia como ciencia", "Culturas prehispánicas", "La Conquista", "La Colonia", "La Independencia", "El siglo XIX en México", "El Porfiriato", "La Revolución Mexicana", "México Contemporáneo", "Revoluciones Mundiales", "Primera Guerra Mundial", "Segunda Guerra Mundial"],
+                        "Literatura": ["Géneros literarios", "Corrientes literarias", "Época Clásica", "Literatura Medieval", "Renacimiento y Barroco", "Neoclasicismo y Romanticismo", "Realismo y Naturalismo", "Modernismo", "Vanguardias", "Literatura Contemporánea", "Análisis de textos poéticos", "Análisis dramático"],
+                        "Matemáticas financieras": ["Conceptos financieros", "Interés Simple", "Interés Compuesto", "Tasas de interés", "Anualidades vencidas", "Anualidades anticipadas", "Amortización", "Depreciación", "Valor Presente Neto", "Tasa Interna de Retorno", "Evaluación de proyectos", "Mercados financieros"],
+                        "Premedicina": ["Salud pública y comunitaria", "Bioquímica", "Biología celular", "Genética clínica", "Anatomía humana I", "Anatomía humana II", "Fisiología humana I", "Fisiología humana II", "Microbiología", "Inmunología", "Patología básica", "Farmacología", "Semiología", "Ética médica", "Epidemiología clínica", "Investigación médica"],
+                        "Probabilidad y estadística": ["Estadística descriptiva", "Medidas de tendencia central", "Medidas de dispersión", "Técnicas de conteo", "Teoría de conjuntos", "Probabilidad clásica", "Probabilidad condicional", "Distribuciones de probabilidad", "Muestreo", "Correlación y Regresión", "Pruebas de hipótesis", "Interpretación de datos"],
+                        "Química": ["Estructura atómica", "Tabla periódica", "Enlaces químicos", "Nomenclatura", "Reacciones químicas", "Estequiometría", "Soluciones y mezclas", "Ácidos y bases", "Termoquímica", "Cinética química", "Química orgánica", "Bioquímica básica"],
+                        "Psicología": ["Introducción a la psicología", "Bases biológicas del comportamiento", "Sensación y Percepción", "Aprendizaje y Memoria", "Pensamiento y Lenguaje", "Inteligencia", "Motivación y Emoción", "Personalidad", "Desarrollo humano", "Psicología social", "Psicopatología", "Psicoterapia"]
                     };
+
+                    let studyPlan = {};
+
+                    function rebuildStudyPlan() {
+                        const m1 = localStorage.getItem('module1') || 'Física';
+                        const m2 = localStorage.getItem('module2') || 'Aritmética';
+
+                        const t1 = moduloTemarios[m1] || [];
+                        const t2 = moduloTemarios[m2] || [];
+
+                        // Base template
+                        const basePlan = {
+                            semana1: {
+                                titulo: "Semana 1 - Fundamentos", dias: [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Razones y proporciones", "Proporcionalidad directa e inversa"] },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Identificación de información", "Textos argumentativos y periodísticos"] },
+                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[0] : t1[0]) || "Tema 1"] },
+                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[1] : t2[0]) || "Tema 1"] },
+                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Registro lingüístico", "Género textual"] },
+                                    { dia: "Sábado", materia: "Repaso", temas: ["Ejercicios mixtos de la semana", "Mini-simulacro (20-25 preguntas)"] }
+                                ]
+                            },
+                            semana2: {
+                                titulo: "Semana 2 - Fundamentos", dias: [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Interpretación gráfica de ecuaciones", "Ejes de simetría"] },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Interpretación del texto", "Intención del autor"] },
+                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[2] : t1[1]) || "Tema 2"] },
+                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[3] : t2[1]) || "Tema 2"] },
+                                    { dia: "Viernes", materia: "Inglés", temas: ["Idea general de textos", "Vocabulario común"] },
+                                    { dia: "Sábado", materia: "Repaso", temas: ["Corrección de errores", "Ejercicios cronometrados"] }
+                                ]
+                            },
+                            semana3: {
+                                titulo: "Semana 3 - Fundamentos", dias: [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Probabilidad clásica", "Frecuencias"] },
+                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Concordancia nominal", "Concordancia verbal"] },
+                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[4] : t1[2]) || "Tema 3"] },
+                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[5] : t2[2]) || "Tema 3"] },
+                                    { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Evaluación de forma y contenido"] },
+                                    { dia: "Sábado", materia: "Mini simulacro", temas: ["Matemáticas + Módulos Específicos"] }
+                                ]
+                            },
+                            semana4: {
+                                titulo: "Semana 4 - Fundamentos", dias: [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Medidas de tendencia central", "Media, mediana y moda"] },
+                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Uso correcto de comas y puntos", "Conectores lógicos"] },
+                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[6] : t1[3]) || "Tema 4"] },
+                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[7] : t2[3]) || "Tema 4"] },
+                                    { dia: "Viernes", materia: "Inglés", temas: ["Falsos cognados", "Comprensión de lectura"] },
+                                    { dia: "Sábado", materia: "Simulacro parcial", temas: ["Módulo general completo"] }
+                                ]
+                            },
+                            semana5: {
+                                titulo: "Semana 5 - Profundización", dias: [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de funciones"] },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos literarios"] },
+                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[8] : t1[4]) || "Tema 5"] },
+                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[9] : t2[4]) || "Tema 5"] },
+                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Cohesión gramatical y semántica"] },
+                                    { dia: "Sábado", materia: "Simulacro", temas: [`Simulacro de ${m1}`] }
+                                ]
+                            },
+                            semana6: {
+                                titulo: "Semana 6 - Profundización", dias: [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Desviación estándar (conceptual)"] },
+                                    { dia: "Martes", materia: "Inglés", temas: ["Lectura cronometrada"] },
+                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[10] : t1[5]) || "Tema 6"] },
+                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[11] : t2[5]) || "Tema 6"] },
+                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Corrección de textos completos"] },
+                                    { dia: "Sábado", materia: "Simulacro", temas: [`Simulacro de ${m2}`] }
+                                ]
+                            },
+                            semana7: {
+                                titulo: "Semana 7 - Profundización", dias: [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de información"] },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos administrativos y sociales"] },
+                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[12] : t1[6]) || "Tema 7"] },
+                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[13] : t2[6]) || "Tema 7"] },
+                                    { dia: "Viernes", materia: "Inglés", temas: ["Práctica tipo EXANI"] },
+                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro general"] }
+                                ]
+                            },
+                            semana8: {
+                                titulo: "Semana 8 - Profundización", dias: [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Sistemas de ecuaciones (interpretación)"] },
+                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Ortografía y acentuación"] },
+                                    { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: [(m1 === 'Premedicina' ? t1[14] : t1[7]) || "Tema 8"] },
+                                    { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: [(m1 === 'Premedicina' ? t1[15] : t2[7]) || "Tema 8"] },
+                                    { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Lectura larga cronometrada"] },
+                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro completo"] }
+                                ]
+                            },
+                            semana9: {
+                                titulo: "Semana 9 - Simulación Real", dias: [
+                                    { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 1"] },
+                                    { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 1"] },
+                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
+                                    { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 2"] },
+                                    { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 2"] },
+                                    { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
+                                ]
+                            },
+                            semana10: {
+                                titulo: "Semana 10 - Simulación Real", dias: [
+                                    { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 3"] },
+                                    { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 3"] },
+                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
+                                    { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 4"] },
+                                    { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 4"] },
+                                    { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
+                                ]
+                            },
+                            semana11: {
+                                titulo: "Semana 11 - Simulación Real", dias: [
+                                    { dia: "Lunes", materia: "Simulacro", temas: ["Simulacro completo 5"] },
+                                    { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores simulacro 5"] },
+                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
+                                    { dia: "Jueves", materia: "Simulacro", temas: ["Simulacro completo 6"] },
+                                    { dia: "Viernes", materia: "Análisis", temas: ["Análisis de errores simulacro 6"] },
+                                    { dia: "Sábado", materia: "Repaso", temas: ["Repaso general de conceptos clave"] }
+                                ]
+                            },
+                            semana12: {
+                                titulo: "Semana 12 - Ajuste Final", dias: [
+                                    { dia: "Lunes", materia: "Repaso", temas: ["Fórmulas clave"] },
+                                    { dia: "Martes", materia: "Repaso", temas: ["Errores frecuentes"] },
+                                    { dia: "Miércoles", materia: "Repaso", temas: ["Repaso ligero general"] },
+                                    { dia: "Jueves", materia: "Descanso", temas: ["Descanso mental"] },
+                                    { dia: "Viernes", materia: "Repaso", temas: ["Último repaso de conceptos"] },
+                                    { dia: "Sábado", materia: "Preparación", temas: ["Preparación mental para el examen"] }
+                                ]
+                            }
+                        };
+                        studyPlan = basePlan;
+                    }
+
+                    // Inicializar por primera vez
+                    rebuildStudyPlan();
 
                     const startDate = new Date(2025, 11, 22); // 22 de diciembre de 2024 (mes 11 = diciembre)
                     let timerInterval = null;
