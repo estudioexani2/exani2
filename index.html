@@ -2173,8 +2173,8 @@
                     };
 
                     const moduloTemarios = {
-                        "Aritmética": ["Suma y resta de enteros", "Multiplicación y división de enteros", "Fracciones: Conceptos y operaciones", "Decimales: Conversión y operaciones", "Signos de agrupación y jerarquía", "Operaciones complejas (Jerarquía)", "Leyes de los exponentes (Potencias)", "Raíces cuadradas y cúbicas", "Notación científica: Conversión", "Operaciones en notación científica", "Números primos y compuestos", "Descomposición en factores primos", "Cálculo del Mínimo Común Múltiplo", "Problemas de aplicación (mcm)", "Cálculo del Máximo Común Divisor", "Simplificación de fracciones (MCD)", "Porcentajes: Concepto y cálculo", "Aumentos y descuentos porcentuales", "Sucesiones y progresiones aritméticas", "Suma de términos de una progresión", "Regla de tres simple directa", "Regla de tres inversa y compuesta", "Repaso: Módulo de Aritmética I", "Repaso: Módulo de Aritmética II"],
-                        "Física": ["Magnitudes escalares y vectoriales", "Sistema Internacional de Unidades", "Conversión de unidades químicas/físicas", "Notación científica en física", "Conceptos de cinematica (MRU)", "Movimiento Rectilíneo Uniforme Progresivo", "Movimiento con aceleración constante (MRUA)", "Gráficas de posición, velocidad y tiempo", "Primera y segunda ley de Newton", "Tercera ley de Newton (Acción-Reacción)", "Diagramas de cuerpo libre (DCL)", "Equilibrio de fuerzas y fricción", "Concepto de Trabajo mecánico", "Potencia y Energía mecánica", "Energía cinética y potencial", "Teorema del trabajo y la energía", "Ley de conservación de la energía", "Energía en sistemas mecánicos", "Cantidad de movimiento lineal (Momentum)", "Impulso y cambio en el momentum", "Choques elásticos e inelásticos", "Conservación del momentum en colisiones", "Movimiento ondulatorio y sonido", "Óptica: Reflexión, refracción y lentes"],
+                        "Aritmética": ["Operaciones con números enteros", "Fracciones y decimales", "Jerarquía de operaciones", "Potencias y raíces", "Notación científica", "Factores primos", "Mínimo común múltiplo", "Máximo común divisor", "Porcentajes", "Progresión aritmética", "Regla de tres", "Repaso general"],
+                        "Física": ["Magnitudes y unidades", "Sistema Internacional", "Cinemática", "Velocidad, distancia y tiempo", "Leyes de Newton", "Diagramas de fuerzas", "Trabajo y energía", "Conservación de la energía", "Cantidad de movimiento", "Choques", "Movimiento ondulatorio", "Óptica: lentes y fenómenos"],
                         "Administración": ["Introducción a la administración", "Escuelas de administración", "Proceso administrativo: Planeación", "Proceso administrativo: Organización", "Dirección y Liderazgo", "Control institucional", "Recursos Humanos", "Finanzas básicas", "Mercadotecnia", "Producción y operaciones", "Ética empresarial", "Entorno económico"],
                         "Biología": ["La célula", "Metabolismo celular", "Reproducción celular", "Genética mendeliana", "Evolución", "Taxonomía", "Ecosistemas", "Biodiversidad", "Microbiología", "Fisiología vegetal", "Fisiología animal", "Biotecnología"],
                         "Cálculo diferencial e integral": ["Relaciones y Funciones", "Límites", "La Derivada", "Reglas de derivación", "Aplicaciones de la derivada", "Máximos y mínimos", "La Integral", "Integrales inmediatas", "Métodos de integración", "Integral definida", "Teorema fundamental del cálculo", "Aplicaciones de la integral"],
@@ -2199,82 +2199,197 @@
 
                         const t1 = moduloTemarios[m1] || [];
                         const t2 = moduloTemarios[m2] || [];
-
                         const isPremed = (m1 === 'Premedicina');
 
                         const basePlan = {};
 
-                        // Helper for module topics
-                        const getModuleTopics = (weekNum, isDay1) => {
+                        // Helper for module topics with specific distribution
+                        const getModuleTopics = (weekNum, isSlot1) => {
                             if (isPremed) {
-                                const startIndex = (weekNum - 1) * 4 + (isDay1 ? 0 : 2);
+                                // Premedicina logic: 16 topics in 8 weeks (2 topics on each module day)
+                                const startIndex = (weekNum - 1) * 4 + (isSlot1 ? 0 : 2);
                                 if (startIndex >= t1.length) return ["Repaso de Premedicina"];
                                 return [t1[startIndex] || "Repaso", t1[startIndex + 1] || "Repaso"];
-                            } else {
-                                const topics = isDay1 ? t1 : t2;
-                                const startIndex = (weekNum - 1) * 2;
-                                if (startIndex >= topics.length) return ["Repaso general"];
-                                return [topics[startIndex] || "Repaso", topics[startIndex + 1] || "Repaso"];
                             }
+
+                            const topics = isSlot1 ? t1 : t2;
+                            // Distribution logic from snippet:
+                            // W1, W2, W3: 2 topics
+                            // W4: Slot1 (2 topics), Slot2 (1 topic)
+                            // W5: 1 topic each
+                            // W6: Slot1 (1 topic), Slot2 (2 topics)
+                            // W7, W8: 1 topic each
+                            const map = {
+                                1: { s1: [0, 1], s2: [0, 1] },
+                                2: { s1: [2, 3], s2: [2, 3] },
+                                3: { s1: [4, 5], s2: [4, 5] },
+                                4: { s1: [6, 7], s2: [6] },
+                                5: { s1: [8], s2: [7] },
+                                6: { s1: [9], s2: [8, 9] },
+                                7: { s1: [10], s2: [10] },
+                                8: { s1: [11], s2: [11] }
+                            };
+
+                            const indices = map[weekNum] ? (isSlot1 ? map[weekNum].s1 : map[weekNum].s2) : null;
+                            if (!indices) return ["Repaso o Simulacro"];
+                            return indices.map(idx => topics[idx] || "Repaso");
                         };
 
-                        // Common days template part
-                        const getCommonDays = (weekNum) => [
-                            { dia: "Lunes", materia: "Pensamiento Matemático", temas: weekNum <= 8 ? getMathTopic(weekNum) : ["Simulacro completo"] },
-                            { dia: "Martes", materia: "Comprensión Lectora", temas: weekNum <= 8 ? getReadingTopic(weekNum) : ["Análisis de errores"] },
-                            { dia: "Miércoles", materia: (m1 === 'Premedicina' ? 'Premedicina' : m1), temas: getModuleTopics(weekNum, true) },
-                            { dia: "Jueves", materia: (m1 === 'Premedicina' ? 'Premedicina' : m2), temas: getModuleTopics(weekNum, false) },
-                            { dia: "Viernes", materia: weekNum <= 8 ? "Redacción Indirecta" : "Inglés", temas: weekNum <= 8 ? getWritingTopic(weekNum) : ["Práctica cronometrada"] },
-                            { dia: "Sábado", materia: weekNum <= 8 ? "Repaso" : "Simulacro", temas: weekNum <= 8 ? ["Mini-simulacro"] : ["Simulacro general"] }
+                        const getCommonDays = (w) => [
+                            { dia: "Lunes", materia: "Pensamiento Matemático", temas: getMathTopic(w) },
+                            { dia: "Martes", materia: "Comprensión Lectora", temas: getReadingTopic(w) },
+                            { dia: "Miércoles", materia: (isPremed ? 'Premedicina' : m1), temas: getModuleTopics(w, true) },
+                            { dia: "Jueves", materia: (isPremed ? 'Premedicina' : m2), temas: getModuleTopics(w, false) },
+                            { dia: "Viernes", materia: w <= 8 ? "Redacción Indirecta" : "Inglés", temas: getWritingOrEnglish(w) },
+                            { dia: "Sábado", materia: w <= 4 ? "Repaso" : w <= 8 ? "Simulacro" : "Refuerzo", temas: getSaturdaySlot(w, m1, m2) }
                         ];
 
                         function getMathTopic(w) {
-                            const topics = [
-                                ["Razones y proporciones", "Proporcionalidad"],
-                                ["Ecuaciones", "Ejes de simetría"],
-                                ["Probabilidad clásica", "Frecuencias"],
-                                ["Medidas de tendencia central", "Media, mediana y moda"],
-                                ["Representación gráfica de funciones"],
-                                ["Desviación estándar (conceptual)"],
-                                ["Representación gráfica de información"],
-                                ["Sistemas de ecuaciones (interpretación)"]
-                            ];
-                            return topics[w - 1] || ["Repaso Matemático"];
+                            const matrix = {
+                                1: ["Razones y proporciones", "Proporcionalidad directa e inversa"],
+                                2: ["Interpretación gráfica de ecuaciones", "Ejes de simetría"],
+                                3: ["Probabilidad clásica", "Frecuencias"],
+                                4: ["Medidas de tendencia central", "Media, mediana y moda"],
+                                5: ["Representación gráfica de funciones"],
+                                6: ["Desviación estándar (conceptual)"],
+                                7: ["Representación gráfica de información"],
+                                8: ["Sistemas de ecuaciones (interpretación)"]
+                            };
+                            return matrix[w] || ["Simulacro completo"];
                         }
 
                         function getReadingTopic(w) {
-                            const topics = [
-                                ["Identificación de información", "Textos argumentativos"],
-                                ["Interpretación del texto", "Intención del autor"],
-                                ["Evaluación de forma y contenido"],
-                                ["Inferencia y vocabulario"],
-                                ["Textos literarios"],
-                                ["Textos científicos"],
-                                ["Textos administrativos", "Sociales"],
-                                ["Lectura larga cronometrada"]
-                            ];
-                            return topics[w - 1] || ["Repaso Lectura"];
-                        }
-
-                        function getWritingTopic(w) {
-                            const topics = [
-                                ["Registro lingüístico", "Género textual"],
-                                ["Prólogo y reseña", "Ensayo"],
-                                ["Concordancia nominal", "Concordancia verbal"],
-                                ["Uso de comas y puntos", "Conectores"],
-                                ["Cohesión gramatical y semántica"],
-                                ["Corrección de textos"],
-                                ["Ortografía y acentuación"],
-                                ["Práctica tipo EXANI"]
-                            ];
-                            return topics[w - 1] || ["Repaso Redacción"];
-                        }
-
-                        for (let i = 1; i <= 12; i++) {
-                            basePlan[`semana${i}`] = {
-                                titulo: `Semana ${i} - ${i <= 4 ? "Fundamentos" : i <= 8 ? "Profundización" : "Ajuste Final"}`,
-                                dias: getCommonDays(i)
+                            const matrix = {
+                                1: ["Identificación de información", "Textos argumentativos y periodísticos"],
+                                2: ["Interpretación del texto", "Intención del autor"],
+                                3: ["Evaluación de forma y contenido"], // Week 3 snippet shows Reading on Friday though? Let's follow the 12-week matrix logic
+                                4: ["Repaso de lectura"], // Snippet has Reading on Tue for w1, w2, then shifts
+                                5: ["Textos literarios"],
+                                7: ["Textos administrativos y sociales"],
+                                8: ["Lectura larga cronometrada"]
                             };
+                            // Adjustment to match snippet precisely where Reading is on Tuesday
+                            if (w === 3) return ["Evaluación de forma y contenido"]; // User snippet W3 has Reading on Tue? No, snippet W3 has Redaccion on Tue.
+                            // Let's re-read snippet W3: Martes: Redacción Indirecta. Viernes: Comprensión Lectora.
+                            // W4: Martes: Redacción Indirecta. Viernes: Inglés.
+                            // This is complex. I'll use a more direct matrix for L-V.
+                        }
+
+                        // Actually, I'll just hardcode the 12 weeks exactly as per snippet but with dynamic naming
+                        for (let i = 1; i <= 12; i++) {
+                            let weekData = { titulo: "", dias: [] };
+                            if (i === 1) {
+                                weekData.titulo = "Semana 1 - Fundamentos";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Razones y proporciones", "Proporcionalidad directa e inversa"] },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Identificación de información", "Textos argumentativos y periodísticos"] },
+                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(1, true) },
+                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(1, false) },
+                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Registro lingüístico", "Género textual"] },
+                                    { dia: "Sábado", materia: "Repaso", temas: ["Ejercicios mixtos de la semana", "Mini-simulacro (20-25 preguntas)"] }
+                                ];
+                            } else if (i === 2) {
+                                weekData.titulo = "Semana 2 - Fundamentos";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Interpretación gráfica de ecuaciones", "Ejes de simetría"] },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Interpretación del texto", "Intención del autor"] },
+                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(2, true) },
+                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(2, false) },
+                                    { dia: "Viernes", materia: "Inglés", temas: ["Idea general de textos", "Vocabulario común"] },
+                                    { dia: "Sábado", materia: "Repaso", temas: ["Corrección de errores", "Ejercicios cronometrados"] }
+                                ];
+                            } else if (i === 3) {
+                                weekData.titulo = "Semana 3 - Fundamentos";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Probabilidad clásica", "Frecuencias"] },
+                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Concordancia nominal", "Concordancia verbal"] },
+                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(3, true) },
+                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(3, false) },
+                                    { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Evaluación de forma y contenido"] },
+                                    { dia: "Sábado", materia: "Mini simulacro", temas: [`Matemáticas + ${m1} + ${m2}`] }
+                                ];
+                            } else if (i === 4) {
+                                weekData.titulo = "Semana 4 - Fundamentos";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Medidas de tendencia central", "Media, mediana y moda"] },
+                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Uso correcto de comas y puntos", "Conectores lógicos"] },
+                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(4, true) },
+                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(4, false) },
+                                    { dia: "Viernes", materia: "Inglés", temas: ["Falsos cognados", "Comprensión de lectura"] },
+                                    { dia: "Sábado", materia: "Simulacro parcial", temas: ["Módulo general completo"] }
+                                ];
+                            } else if (i === 5) {
+                                weekData.titulo = "Semana 5 - Profundización";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de funciones"] },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos literarios"] },
+                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(5, true) },
+                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(5, false) },
+                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Cohesión gramatical y semántica"] },
+                                    { dia: "Sábado", materia: "Simulacro", temas: [`Simulacro de ${m1}`] }
+                                ];
+                            } else if (i === 6) {
+                                weekData.titulo = "Semana 6 - Profundización";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Desviación estándar (conceptual)"] },
+                                    { dia: "Martes", materia: "Inglés", temas: ["Lectura cronometrada"] },
+                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(6, true) },
+                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(6, false) },
+                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Corrección de textos completos"] },
+                                    { dia: "Sábado", materia: "Simulacro", temas: [`Simulacro de ${m2}`] }
+                                ];
+                            } else if (i === 7) {
+                                weekData.titulo = "Semana 7 - Profundización";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de información"] },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos administrativos y sociales"] },
+                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(7, true) },
+                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(7, false) },
+                                    { dia: "Viernes", materia: "Inglés", temas: ["Práctica tipo EXANI"] },
+                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro general"] }
+                                ];
+                            } else if (i === 8) {
+                                weekData.titulo = "Semana 8 - Profundización";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Sistemas de ecuaciones (interpretación)"] },
+                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Ortografía y acentuación"] },
+                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(8, true) },
+                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(8, false) },
+                                    { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Lectura larga cronometrada"] },
+                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro completo"] }
+                                ];
+                            } else if (i >= 9 && i <= 11) {
+                                const simNum = i - 8;
+                                weekData.titulo = `Semana ${i} - Simulación Real`;
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Simulacro", temas: [`Simulacro completo ${simNum * 2 - 1}`] },
+                                    { dia: "Martes", materia: "Análisis", temas: [`Análisis de errores simulacro ${simNum * 2 - 1}`] },
+                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
+                                    { dia: "Jueves", materia: "Simulacro", temas: [`Simulacro completo ${simNum * 2}`] },
+                                    { dia: "Viernes", materia: "Análisis", temas: [`Análisis de errores simulacro ${simNum * 2}`] },
+                                    { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
+                                ];
+                                if (i === 11) weekData.dias[5] = { dia: "Sábado", materia: "Repaso", temas: ["Repaso general de conceptos clave"] };
+                            } else if (i === 12) {
+                                weekData.titulo = "Semana 12 - Ajuste Final";
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Repaso", temas: ["Fórmulas clave"] },
+                                    { dia: "Martes", materia: "Repaso", temas: ["Errores frecuentes"] },
+                                    { dia: "Miércoles", materia: "Repaso", temas: ["Repaso ligero general"] },
+                                    { dia: "Jueves", materia: "Descanso", temas: ["Descanso mental"] },
+                                    { dia: "Viernes", materia: "Repaso", temas: ["Último repaso de conceptos"] },
+                                    { dia: "Sábado", materia: "Preparación", temas: ["Preparación mental para el examen"] }
+                                ];
+                            }
+
+                            // Specific fix for Premedicina naming
+                            if (isPremed) {
+                                weekData.dias.forEach(d => {
+                                    if (d.materia === m1 || d.materia === m2) d.materia = 'Premedicina';
+                                });
+                            }
+
+                            basePlan[`semana${i}`] = weekData;
                         }
 
                         studyPlan = basePlan;
@@ -6554,7 +6669,7 @@
                                 formula: "v = λ·f | T = 1/f"
                             },
 
-                            "Óptica: Reflexión, refracción y lentes": {
+                            "Óptica: lentes y fenómenos": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
                         <p>Comportamiento de la luz al interactuar con diferentes medios y superficies</p>
