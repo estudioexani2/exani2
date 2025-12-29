@@ -2184,6 +2184,7 @@
                     let isRunning = false;
 
                     function showTab(tabName) {
+                        console.log('showTab called with:', tabName);
                         document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
                         document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
                         document.getElementById(tabName).classList.add('active');
@@ -2191,7 +2192,11 @@
 
                         if (tabName === 'progreso') actualizarProgreso();
                         if (tabName === 'inicio') renderDashboard();
-                        if (tabName === 'logros') renderAchievements();
+                        if (tabName === 'logros') {
+                            console.log('About to call renderAchievements');
+                            renderAchievements();
+                            console.log('renderAchievements called');
+                        }
                     }
 
                     function toggleTema(semana, diaIdx, temaIdx) {
