@@ -2177,7 +2177,7 @@
                         }
                     };
 
-                    const startDate = new Date(2025, 11, 22); // 22 de diciembre de 2024 (mes 11 = diciembre)        let timerInterval = null;
+                    const startDate = new Date(2025, 11, 22); // 22 de diciembre de 2024 (mes 11 = diciembre)
                     let timerInterval = null;
                     let timeLeft = 25 * 60;
                     let totalTime = 25 * 60;
@@ -2193,9 +2193,7 @@
                         if (tabName === 'progreso') actualizarProgreso();
                         if (tabName === 'inicio') renderDashboard();
                         if (tabName === 'logros') {
-                            console.log('About to call renderAchievements');
                             renderAchievements();
-                            console.log('renderAchievements called');
                         }
                     }
 
@@ -2774,13 +2772,9 @@
                     }
 
                     function renderAchievements() {
-                        console.log('renderAchievements called');
                         const container = document.getElementById('achievements-container');
-                        console.log('Container found:', container);
                         if (!container) return;
 
-                        console.log('achievementsList:', achievementsList);
-                        console.log('achievementsList length:', achievementsList.length);
                         const unlocked = JSON.parse(localStorage.getItem('unlockedAchievements') || '[]');
 
                         let html = `
@@ -2820,10 +2814,7 @@
                             `;
                         });
 
-                        console.log('Generated HTML length:', html.length);
-                        console.log('First 500 chars of HTML:', html.substring(0, 500));
                         container.innerHTML = html;
-                        console.log('HTML set to container');
                     }
 
                     function renderDashboard() {
@@ -2869,7 +2860,6 @@
                         }
 
                         const dashboardElement = document.getElementById('dashboard-stats');
-                        const achievementsList = renderAchievements();
                         const unlockedCount = achievementsList.filter(a => a.check()).length;
                         const totalAchievements = achievementsList.length;
 
@@ -3063,93 +3053,7 @@
                         dibujarGraficaSimulacros();
                     }
 
-                    function renderAchievements() {
-                        const achievements = [
-                            {
-                                id: 'first-day',
-                                icon: '🎯',
-                                title: 'Primer Día',
-                                desc: 'Completaste tu primer día',
-                                check: () => calcularProgresoGeneral() > 0
-                            },
-                            {
-                                id: 'week-1',
-                                icon: '📅',
-                                title: 'Primera Semana',
-                                desc: 'Completaste la semana 1',
-                                check: () => calcularProgresoSemana('semana1') === 100
-                            },
-                            {
-                                id: 'pomodoro-10',
-                                icon: '⏱️',
-                                title: 'Pomodoro Master',
-                                desc: '10 sesiones completadas',
-                                check: () => {
-                                    let total = 0;
-                                    for (let i = 0; i < 100; i++) {
-                                        const date = new Date();
-                                        date.setDate(date.getDate() - i);
-                                        const key = `pomodoro-${date.toISOString().split('T')[0]}`;
-                                        total += parseInt(localStorage.getItem(key) || '0');
-                                    }
-                                    return total >= 10;
-                                }
-                            },
-                            {
-                                id: 'half-way',
-                                icon: '🎊',
-                                title: 'Mitad del Camino',
-                                desc: 'Completaste el 50%',
-                                check: () => calcularProgresoGeneral() >= 50
-                            },
-                            {
-                                id: 'all-done',
-                                icon: '🏆',
-                                title: '¡Campeón!',
-                                desc: 'Completaste el 100%',
-                                check: () => calcularProgresoGeneral() === 100
-                            },
-                            {
-                                id: 'first-sim',
-                                icon: '📝',
-                                title: 'Primer Simulacro',
-                                desc: 'Completaste un simulacro',
-                                check: () => {
-                                    const sim = localStorage.getItem('simulacro1');
-                                    return sim && JSON.parse(sim).total;
-                                }
-                            }
-                        ];
 
-                        return achievements;
-                    }
-
-                    function renderAchievementsUI() {
-                        const achievements = renderAchievements();
-                        const container = document.getElementById('achievements-container');
-                        if (!container) return;
-
-                        let html = '';
-
-                        achievements.forEach(ach => {
-                            const unlocked = ach.check();
-                            const unlockedClass = unlocked ? 'unlocked' : '';
-                            const opacity = unlocked ? '1' : '0.5';
-                            html += `
-                    <div class="achievement ${unlockedClass}" style="opacity: ${opacity};">
-                        <div class="achievement-icon">${ach.icon}</div>
-                        <div style="font-weight: bold; margin-bottom: 5px;">${ach.title}</div>
-                        <div style="font-size: 0.9em; color: #6b7280;">${ach.desc}</div>
-                        ${unlocked ? '<div style="margin-top: 10px; color: #fbbf24; font-weight: bold;">✓ DESBLOQUEADO</div>' : '<div style="margin-top: 10px; color: #9ca3af;">🔒 Bloqueado</div>'}
-                    </div>
-                `;
-                        });
-
-                        container.innerHTML = html;
-                    }
-                    function checkAchievements() {
-                        renderAchievementsUI();
-                    }
 
                     function dibujarGraficaSimulacros() {
                         const fechas = [];
