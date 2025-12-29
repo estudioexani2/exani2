@@ -2769,9 +2769,13 @@
                     }
 
                     function renderAchievements() {
+                        console.log('renderAchievements called');
                         const container = document.getElementById('achievements-container');
+                        console.log('Container found:', container);
                         if (!container) return;
 
+                        console.log('achievementsList:', achievementsList);
+                        console.log('achievementsList length:', achievementsList.length);
                         const unlocked = JSON.parse(localStorage.getItem('unlockedAchievements') || '[]');
 
                         let html = `
@@ -2811,7 +2815,10 @@
                             `;
                         });
 
+                        console.log('Generated HTML length:', html.length);
+                        console.log('First 500 chars of HTML:', html.substring(0, 500));
                         container.innerHTML = html;
+                        console.log('HTML set to container');
                     }
 
                     function renderDashboard() {
