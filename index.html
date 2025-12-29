@@ -1975,10 +1975,11 @@
                                                 <div style="font-size: 0.8em; color: #9ca3af;">Rol: ${role} | Estado: ${status}</div>
                                             </div>
                                         </div>
-                                        <div style="display: flex; gap: 5px;">
-                                            ${!isMe && status !== 'approved' ? `<button onclick="updateUserStatus('${uid}', 'approved')" class="btn-sm btn-success">✅ Permitir Acceso</button>` : ''}
-                                            ${!isMe && status === 'approved' ? `<button onclick="updateUserStatus('${uid}', 'pending')" class="btn-sm btn-danger">🚫 Quitar Acceso</button>` : ''}
+                                        <div style="display: flex; gap: 5px; flex-wrap: wrap;">
+                                            ${!isMe && status !== 'approved' ? `<button onclick="updateUserStatus('${uid}', 'approved')" class="btn-sm btn-success">✅ Permitir</button>` : ''}
+                                            ${!isMe && status === 'approved' ? `<button onclick="updateUserStatus('${uid}', 'pending')" class="btn-sm btn-danger">🚫 Quitar</button>` : ''}
                                             ${!isMe ? `<button onclick="toggleAdminRole('${uid}', '${role === 'admin' ? 'user' : 'admin'}')" class="btn-sm btn-primary">${role === 'admin' ? '🔽 Quitar Admin' : '⭐ Hacer Admin'}</button>` : ''}
+                                            ${!isMe ? `<button onclick="hardResetUser('${uid}')" class="btn-sm" style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.75em; cursor: pointer;">🗑️ Reset Total</button>` : ''}
                                         </div>
                                     </div>
                                 `;
@@ -2028,6 +2029,37 @@
                             });
                         } else {
                             alert('Debes iniciar sesión primero (aunque te salga la pantalla de pendiente).');
+                        }
+                    };
+
+                    function hardResetUser(uid) {
+                        if (!isAdmin()) {
+                            alert('Solo el administrador puede realizar reinicios totales.');
+                            return;
+                        }
+
+                        if (confirm('⚠️ ATENCIÓN: Se eliminarán TODOS los datos de este usuario en Firebase. Esto lo obligará a registrarse de nuevo. ¿Proceder?')) {
+                            db.ref('users/' + uid).remove().then(() => {
+                                alert('Cuenta reiniciada exitosamente.');
+                                renderAdminPanel();
+                            }).catch(err => {
+                                alert('Error al reiniciar: ' + err.message);
+                            });
+                        }
+                    }
+
+                    // Herramienta de desarrollador para la consola
+                    window.resetMyAccount = function () {
+                        if (!currentUser) {
+                            alert('Inicia sesión primero.');
+                            return;
+                        }
+                        if (confirm('¿Quieres borrar todos tus datos y volver a registrarte?')) {
+                            db.ref('users/' + currentUser.uid).remove().then(() => {
+                                localStorage.clear();
+                                alert('Datos borrados. Recargando...');
+                                location.reload();
+                            });
                         }
                     };
 
