@@ -804,9 +804,13 @@
             align-items: center;
             justify-content: center;
             padding: 20px;
-            background-image: radial-gradient(at 0% 0%, hsla(253, 16%, 15%, 1) 0, transparent 50%),
-                radial-gradient(at 50% 0%, hsla(225, 39%, 20%, 1) 0, transparent 50%),
-                radial-gradient(at 100% 0%, hsla(339, 49%, 20%, 1) 0, transparent 50%);
+            background-color: #0f172a;
+            /* Color base oscuro para evitar el blanco al final */
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 15%, 1) 0px, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 20%, 1) 0px, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 20%, 1) 0px, transparent 50%),
+                radial-gradient(at 50% 100%, hsla(225, 39%, 15%, 1) 0px, transparent 50%);
             background-size: cover;
         }
     </style>
