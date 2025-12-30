@@ -2157,6 +2157,7 @@
                         "Economía": "#ca8a04",
                         "Filosofía": "#57534e",
                         "Historia": "#9a3412",
+                        "Pensamiento Matemático": "#3b82f6",
                         "Literatura": "#db2777",
                         "Matemáticas financieras": "#059669",
                         "Premedicina": "#dc2626",
@@ -2173,8 +2174,38 @@
                     };
 
                     const moduloTemarios = {
-                        "Aritmética": ["Operaciones con números enteros", "Fracciones y decimales", "Jerarquía de operaciones", "Potencias y raíces", "Notación científica", "Factores primos", "Mínimo común múltiplo", "Máximo común divisor", "Porcentajes", "Progresión aritmética", "Regla de tres", "Repaso general"],
-                        "Física": ["Magnitudes y unidades", "Sistema Internacional", "Cinemática", "Velocidad, distancia y tiempo", "Leyes de Newton", "Diagramas de fuerzas", "Trabajo y energía", "Conservación de la energía", "Cantidad de movimiento", "Choques", "Movimiento ondulatorio", "Óptica: lentes y fenómenos"],
+                        "Aritmética": [
+                            "Ley de los signos", "Signos de agrupación y jerarquía",
+                            "Simplificación de expresiones algebraicas", "Expresiones con radicales",
+                            "Reglas de divisibilidad", "Leyes de los exponentes",
+                            "Reparto proporcional", "Progresión geométrica",
+                            "Inecuaciones lineales", "Variación lineal tabular",
+                            "Área (figuras básicas)", "Interés simple",
+                            "Desviación estándar (operativa)", "Media, mediana y moda (aplicadas)",
+                            "Notación científica", "Factores primos", "Mínimo común múltiplo", "Máximo común divisor",
+                            "Porcentajes", "Regla de tres", "Progresión aritmética", "Repaso general"
+                        ],
+                        "Física": [
+                            "Magnitudes y unidades", "Sistema Internacional",
+                            "Cinemática", "Velocidad, distancia y tiempo",
+                            "Leyes de Newton", "Diagramas de fuerzas",
+                            "Sistemas de fuerzas coplanares", "Movimiento circular uniforme",
+                            "Trabajo y energía", "Conservación de la energía",
+                            "Mecánica rotacional", "Momento angular",
+                            "Clasificación de ondas", "Movimiento armónico simple (MAS)",
+                            "Óptica: lentes y fenómenos", "Electromagnetismo",
+                            "Cantidad de movimiento", "Choques"
+                        ],
+                        "Pensamiento Matemático": [
+                            "Razones y proporciones", "Proporcionalidad directa e inversa",
+                            "Interpretación gráfica de ecuaciones", "Ejes de simetría",
+                            "Probabilidad clásica", "Frecuencias",
+                            "Ecuaciones de segundo grado (gráfica)", "Funciones cuadráticas",
+                            "Polinomios", "Sistemas de ecuaciones de 3 incógnitas",
+                            "Deciles, cuartiles y percentiles", "Medidas de posición",
+                            "Estimación numérica", "Unidades de medida como patrón",
+                            "Sistemas de ecuaciones (interpretación)", "Representación gráfica de información"
+                        ],
                         "Administración": ["Introducción a la administración", "Escuelas de administración", "Proceso administrativo: Planeación", "Proceso administrativo: Organización", "Dirección y Liderazgo", "Control institucional", "Recursos Humanos", "Finanzas básicas", "Mercadotecnia", "Producción y operaciones", "Ética empresarial", "Entorno económico"],
                         "Biología": ["La célula", "Metabolismo celular", "Reproducción celular", "Genética mendeliana", "Evolución", "Taxonomía", "Ecosistemas", "Biodiversidad", "Microbiología", "Fisiología vegetal", "Fisiología animal", "Biotecnología"],
                         "Cálculo diferencial e integral": ["Relaciones y Funciones", "Límites", "La Derivada", "Reglas de derivación", "Aplicaciones de la derivada", "Máximos y mínimos", "La Integral", "Integrales inmediatas", "Métodos de integración", "Integral definida", "Teorema fundamental del cálculo", "Aplicaciones de la integral"],
@@ -2199,194 +2230,67 @@
 
                         const t1 = moduloTemarios[m1] || [];
                         const t2 = moduloTemarios[m2] || [];
+                        const tm = moduloTemarios["Pensamiento Matemático"] || [];
                         const isPremed = (m1 === 'Premedicina');
 
                         const basePlan = {};
 
-                        // Helper for module topics with specific distribution
-                        const getModuleTopics = (weekNum, isSlot1) => {
-                            if (isPremed) {
-                                // Premedicina logic: 16 topics in 8 weeks (2 topics on each module day)
-                                const startIndex = (weekNum - 1) * 4 + (isSlot1 ? 0 : 2);
-                                if (startIndex >= t1.length) return ["Repaso de Premedicina"];
-                                return [t1[startIndex] || "Repaso", t1[startIndex + 1] || "Repaso"];
-                            }
-
-                            const topics = isSlot1 ? t1 : t2;
-                            // Distribution logic from snippet:
-                            // W1, W2, W3: 2 topics
-                            // W4: Slot1 (2 topics), Slot2 (1 topic)
-                            // W5: 1 topic each
-                            // W6: Slot1 (1 topic), Slot2 (2 topics)
-                            // W7, W8: 1 topic each
-                            const map = {
-                                1: { s1: [0, 1], s2: [0, 1] },
-                                2: { s1: [2, 3], s2: [2, 3] },
-                                3: { s1: [4, 5], s2: [4, 5] },
-                                4: { s1: [6, 7], s2: [6] },
-                                5: { s1: [8], s2: [7] },
-                                6: { s1: [9], s2: [8, 9] },
-                                7: { s1: [10], s2: [10] },
-                                8: { s1: [11], s2: [11] }
-                            };
-
-                            const indices = map[weekNum] ? (isSlot1 ? map[weekNum].s1 : map[weekNum].s2) : null;
-                            if (!indices) return ["Repaso o Simulacro"];
-                            return indices.map(idx => topics[idx] || "Repaso");
+                        // Helper to get 2 topics from a list based on week
+                        const getTopicsFromList = (list, weekNum, countPerWeek = 2) => {
+                            const startIndex = (weekNum - 1) * countPerWeek;
+                            if (startIndex >= list.length) return ["Repaso general"];
+                            return [list[startIndex] || "Repaso", list[startIndex + 1] || "Repaso"];
                         };
 
-                        const getCommonDays = (w) => [
-                            { dia: "Lunes", materia: "Pensamiento Matemático", temas: getMathTopic(w) },
-                            { dia: "Martes", materia: "Comprensión Lectora", temas: getReadingTopic(w) },
-                            { dia: "Miércoles", materia: (isPremed ? 'Premedicina' : m1), temas: getModuleTopics(w, true) },
-                            { dia: "Jueves", materia: (isPremed ? 'Premedicina' : m2), temas: getModuleTopics(w, false) },
-                            { dia: "Viernes", materia: w <= 8 ? "Redacción Indirecta" : "Inglés", temas: getWritingOrEnglish(w) },
-                            { dia: "Sábado", materia: w <= 4 ? "Repaso" : w <= 8 ? "Simulacro" : "Refuerzo", temas: getSaturdaySlot(w, m1, m2) }
-                        ];
+                        const getReadingTopic = (w) => {
+                            const list = [
+                                "Identificación de información", "Textos argumentativos y periodísticos",
+                                "Interpretación del texto", "Intención del autor",
+                                "Evaluación de forma y contenido", "Inferencia y vocabulario",
+                                "Textos literarios", "Textos científicos",
+                                "Textos administrativos", "Textos sociales",
+                                "Lectura larga cronometrada", "Análisis de errores"
+                            ];
+                            return getTopicsFromList(list, w, 2);
+                        };
 
-                        function getMathTopic(w) {
-                            const matrix = {
-                                1: ["Razones y proporciones", "Proporcionalidad directa e inversa"],
-                                2: ["Interpretación gráfica de ecuaciones", "Ejes de simetría"],
-                                3: ["Probabilidad clásica", "Frecuencias"],
-                                4: ["Medidas de tendencia central", "Media, mediana y moda"],
-                                5: ["Representación gráfica de funciones"],
-                                6: ["Desviación estándar (conceptual)"],
-                                7: ["Representación gráfica de información"],
-                                8: ["Sistemas de ecuaciones (interpretación)"]
-                            };
-                            return matrix[w] || ["Simulacro completo"];
-                        }
+                        const getWritingTopic = (w) => {
+                            const list = [
+                                "Registro lingüístico", "Género textual",
+                                "Prólogo y reseña", "Ensayo",
+                                "Concordancia nominal", "Concordancia verbal",
+                                "Uso de comas y puntos", "Conectores lógicos",
+                                "Cohesión gramatical y semántica", "Corrección de textos",
+                                "Ortografía y acentuación", "Práctica tipo EXANI"
+                            ];
+                            return getTopicsFromList(list, w, 2);
+                        };
 
-                        function getReadingTopic(w) {
-                            const matrix = {
-                                1: ["Identificación de información", "Textos argumentativos y periodísticos"],
-                                2: ["Interpretación del texto", "Intención del autor"],
-                                3: ["Evaluación de forma y contenido"], // Week 3 snippet shows Reading on Friday though? Let's follow the 12-week matrix logic
-                                4: ["Repaso de lectura"], // Snippet has Reading on Tue for w1, w2, then shifts
-                                5: ["Textos literarios"],
-                                7: ["Textos administrativos y sociales"],
-                                8: ["Lectura larga cronometrada"]
-                            };
-                            // Adjustment to match snippet precisely where Reading is on Tuesday
-                            if (w === 3) return ["Evaluación de forma y contenido"]; // User snippet W3 has Reading on Tue? No, snippet W3 has Redaccion on Tue.
-                            // Let's re-read snippet W3: Martes: Redacción Indirecta. Viernes: Comprensión Lectora.
-                            // W4: Martes: Redacción Indirecta. Viernes: Inglés.
-                            // This is complex. I'll use a more direct matrix for L-V.
-                        }
-
-                        // Actually, I'll just hardcode the 12 weeks exactly as per snippet but with dynamic naming
                         for (let i = 1; i <= 12; i++) {
-                            let weekData = { titulo: "", dias: [] };
-                            if (i === 1) {
-                                weekData.titulo = "Semana 1 - Fundamentos";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Razones y proporciones", "Proporcionalidad directa e inversa"] },
-                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Identificación de información", "Textos argumentativos y periodísticos"] },
-                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(1, true) },
-                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(1, false) },
-                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Registro lingüístico", "Género textual"] },
-                                    { dia: "Sábado", materia: "Repaso", temas: ["Ejercicios mixtos de la semana", "Mini-simulacro (20-25 preguntas)"] }
-                                ];
-                            } else if (i === 2) {
-                                weekData.titulo = "Semana 2 - Fundamentos";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Interpretación gráfica de ecuaciones", "Ejes de simetría"] },
-                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Interpretación del texto", "Intención del autor"] },
-                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(2, true) },
-                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(2, false) },
-                                    { dia: "Viernes", materia: "Inglés", temas: ["Idea general de textos", "Vocabulario común"] },
-                                    { dia: "Sábado", materia: "Repaso", temas: ["Corrección de errores", "Ejercicios cronometrados"] }
-                                ];
-                            } else if (i === 3) {
-                                weekData.titulo = "Semana 3 - Fundamentos";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Probabilidad clásica", "Frecuencias"] },
-                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Concordancia nominal", "Concordancia verbal"] },
-                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(3, true) },
-                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(3, false) },
-                                    { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Evaluación de forma y contenido"] },
-                                    { dia: "Sábado", materia: "Mini simulacro", temas: [`Matemáticas + ${m1} + ${m2}`] }
-                                ];
-                            } else if (i === 4) {
-                                weekData.titulo = "Semana 4 - Fundamentos";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Medidas de tendencia central", "Media, mediana y moda"] },
-                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Uso correcto de comas y puntos", "Conectores lógicos"] },
-                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(4, true) },
-                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(4, false) },
-                                    { dia: "Viernes", materia: "Inglés", temas: ["Falsos cognados", "Comprensión de lectura"] },
-                                    { dia: "Sábado", materia: "Simulacro parcial", temas: ["Módulo general completo"] }
-                                ];
-                            } else if (i === 5) {
-                                weekData.titulo = "Semana 5 - Profundización";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de funciones"] },
-                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos literarios"] },
-                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(5, true) },
-                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(5, false) },
-                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Cohesión gramatical y semántica"] },
-                                    { dia: "Sábado", materia: "Simulacro", temas: [`Simulacro de ${m1}`] }
-                                ];
-                            } else if (i === 6) {
-                                weekData.titulo = "Semana 6 - Profundización";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Desviación estándar (conceptual)"] },
-                                    { dia: "Martes", materia: "Inglés", temas: ["Lectura cronometrada"] },
-                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(6, true) },
-                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(6, false) },
-                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: ["Corrección de textos completos"] },
-                                    { dia: "Sábado", materia: "Simulacro", temas: [`Simulacro de ${m2}`] }
-                                ];
-                            } else if (i === 7) {
-                                weekData.titulo = "Semana 7 - Profundización";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Representación gráfica de información"] },
-                                    { dia: "Martes", materia: "Comprensión Lectora", temas: ["Textos administrativos y sociales"] },
-                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(7, true) },
-                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(7, false) },
-                                    { dia: "Viernes", materia: "Inglés", temas: ["Práctica tipo EXANI"] },
-                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro general"] }
-                                ];
-                            } else if (i === 8) {
-                                weekData.titulo = "Semana 8 - Profundización";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: ["Sistemas de ecuaciones (interpretación)"] },
-                                    { dia: "Martes", materia: "Redacción Indirecta", temas: ["Ortografía y acentuación"] },
-                                    { dia: "Miércoles", materia: m1, temas: getModuleTopics(8, true) },
-                                    { dia: "Jueves", materia: m2, temas: getModuleTopics(8, false) },
-                                    { dia: "Viernes", materia: "Comprensión Lectora", temas: ["Lectura larga cronometrada"] },
-                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro completo"] }
-                                ];
-                            } else if (i >= 9 && i <= 11) {
-                                const simNum = i - 8;
-                                weekData.titulo = `Semana ${i} - Simulación Real`;
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Simulacro", temas: [`Simulacro completo ${simNum * 2 - 1}`] },
-                                    { dia: "Martes", materia: "Análisis", temas: [`Análisis de errores simulacro ${simNum * 2 - 1}`] },
-                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Refuerzo de temas débiles"] },
-                                    { dia: "Jueves", materia: "Simulacro", temas: [`Simulacro completo ${simNum * 2}`] },
-                                    { dia: "Viernes", materia: "Análisis", temas: [`Análisis de errores simulacro ${simNum * 2}`] },
-                                    { dia: "Sábado", materia: "Refuerzo", temas: ["Refuerzo intensivo"] }
-                                ];
-                                if (i === 11) weekData.dias[5] = { dia: "Sábado", materia: "Repaso", temas: ["Repaso general de conceptos clave"] };
-                            } else if (i === 12) {
-                                weekData.titulo = "Semana 12 - Ajuste Final";
-                                weekData.dias = [
-                                    { dia: "Lunes", materia: "Repaso", temas: ["Fórmulas clave"] },
-                                    { dia: "Martes", materia: "Repaso", temas: ["Errores frecuentes"] },
-                                    { dia: "Miércoles", materia: "Repaso", temas: ["Repaso ligero general"] },
-                                    { dia: "Jueves", materia: "Descanso", temas: ["Descanso mental"] },
-                                    { dia: "Viernes", materia: "Repaso", temas: ["Último repaso de conceptos"] },
-                                    { dia: "Sábado", materia: "Preparación", temas: ["Preparación mental para el examen"] }
-                                ];
-                            }
+                            let weekData = {
+                                titulo: `Semana ${i} - ${i <= 4 ? "Fundamentos" : i <= 8 ? "Profundización" : "Ajuste Final"}`,
+                                dias: []
+                            };
 
-                            // Specific fix for Premedicina naming
-                            if (isPremed) {
-                                weekData.dias.forEach(d => {
-                                    if (d.materia === m1 || d.materia === m2) d.materia = 'Premedicina';
-                                });
+                            if (i <= 8) {
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Pensamiento Matemático", temas: getTopicsFromList(tm, i) },
+                                    { dia: "Martes", materia: "Comprensión Lectora", temas: getReadingTopic(i) },
+                                    { dia: "Miércoles", materia: isPremed ? 'Premedicina' : m1, temas: isPremed ? getTopicsFromList(t1, i, 4).slice(0, 2) : getTopicsFromList(t1, i) },
+                                    { dia: "Jueves", materia: isPremed ? 'Premedicina' : m2, temas: isPremed ? getTopicsFromList(t1, i, 4).slice(2, 4) : getTopicsFromList(t2, i) },
+                                    { dia: "Viernes", materia: "Redacción Indirecta", temas: getWritingTopic(i) },
+                                    { dia: "Sábado", materia: "Simulacro", temas: ["Simulacro completo", "Análisis de resultados"] }
+                                ];
+                            } else {
+                                // Simulation Weeks 9-12
+                                weekData.dias = [
+                                    { dia: "Lunes", materia: "Simulacro", temas: [`Simulacro Real ${i - 8}A`] },
+                                    { dia: "Martes", materia: "Análisis", temas: ["Análisis de errores y refuerzo"] },
+                                    { dia: "Miércoles", materia: "Refuerzo", temas: ["Temas complejos (Aritmética/Física)"] },
+                                    { dia: "Jueves", materia: "Simulacro", temas: [`Simulacro Real ${i - 8}B`] },
+                                    { dia: "Viernes", materia: "Inglés", temas: ["Práctica tipo EXANI", "Vocabulario clave"] },
+                                    { dia: "Sábado", materia: "Preparación", temas: ["Estrategia de examen", "Manejo de tiempo"] }
+                                ];
                             }
 
                             basePlan[`semana${i}`] = weekData;
@@ -6722,10 +6626,293 @@
                         </table>
                     `,
                                 formula: "m, kg, s, A, K, mol, cd"
+                            },
+                            "Ley de los signos": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Reglas fundamentales para realizar operaciones con números positivos y negativos.</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Multiplicación y División:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                            <p>(+) × (+) = (+) | (–) × (–) = (+)</p>
+                            <p>(+) × (–) = (–) | (–) × (+) = (–)</p>
+                            <p style="margin-top: 10px; font-weight: bold;">"Signos iguales dan POSITIVO, signos diferentes NEUTRALIZAN (NEGATIVO)"</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Suma y Resta:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Signos iguales:</strong> Se suman los valores y se mantiene el signo.</li>
+                            <li><strong>Signos diferentes:</strong> Se restan los valores y se deja el signo del mayor en valor absoluto.</li>
+                        </ul>
+                    `,
+                                formula: "Signos iguales = + | Signos diferentes = -"
+                            },
+                            "Signos de agrupación y jerarquía": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Orden obligatorio para resolver operaciones combinadas, incluyendo paréntesis, corchetes y llaves.</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Orden PEMDAS / GEMA:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Agrupación:</strong> ( ), [ ], { }</li>
+                            <li><strong>Exponentes:</strong> Raíces y potencias</li>
+                            <li><strong>Multiplicación y División:</strong> (de izquierda a derecha)</li>
+                            <li><strong>Suma y Resta:</strong> (de izquierda a derecha)</li>
+                        </ol>
+                        
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Ejemplo:</strong> 5 + 3 × (2² - 1)</p>
+                            <p>1. Paréntesis: (4 - 1) = 3</p>
+                            <p>2. Multiplicación: 3 × 3 = 9</p>
+                            <p>3. Suma: 5 + 9 = 14</p>
+                        </div>
+                    `,
+                                formula: "( ) -> [ ] -> { } | Potencias -> Mult/Div -> Suma/Resta"
+                            },
+                            "Simplificación de expresiones algebraicas": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Reducir expresiones combinando términos semejantes para hacerlas más manejables.</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Términos Semejantes:</h4>
+                        <p>Son aquellos que tienen la misma variable elevada al mismo exponente.</p>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Ejemplo:</strong> 3x + 5y - x + 2y</p>
+                            <p>Agrupamos x: (3x - x) = 2x</p>
+                            <p>Agrupamos y: (5y + 2y) = 7y</p>
+                            <p>Resultado: <strong>2x + 7y</strong></p>
+                        </div>
+                    `,
+                                formula: "Solo suma/resta variables con mismo exponente"
+                            },
+                            "Expresiones con radicales": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Operaciones y simplificación de raíces cuadradas, cúbicas y de orden superior.</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Propiedades Clave:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Producto: √(a × b) = √a × √b</li>
+                            <li>Cociente: √(a / b) = √a / √b</li>
+                            <li>Potencia: (ⁿ√a)ᵐ = ⁿ√(aᵐ)</li>
+                        </ul>
+                        <p><strong>Tip EXANI:</strong> Aprende los cuadrados perfectos (1-15) y cubos (1-5) de memoria.</p>
+                    `,
+                                formula: "√(a·b) = √a·√b | ⁿ√a = a^(1/n)"
+                            },
+                            "Reglas de divisibilidad": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Criterios rápidos para saber si un número es divisible por otro sin hacer la división larga.</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Reglas más comunes:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fef3c7;">
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Número</th>
+                                <th style="border: 1px solid #f59e0b; padding: 8px;">Criterio</th>
+                            </tr>
+                            <tr><td style="border: 1px solid #fef3c7; padding: 8px;">2</td><td style="border: 1px solid #fef3c7; padding: 8px;">Termina en par (0, 2, 4, 6, 8)</td></tr>
+                            <tr><td style="border: 1px solid #fef3c7; padding: 8px;">3</td><td style="border: 1px solid #fef3c7; padding: 8px;">Suma de sus cifras es múltiplo de 3</td></tr>
+                            <tr><td style="border: 1px solid #fef3c7; padding: 8px;">5</td><td style="border: 1px solid #fef3c7; padding: 8px;">Termina en 0 o 5</td></tr>
+                            <tr><td style="border: 1px solid #fef3c7; padding: 8px;">9</td><td style="border: 1px solid #fef3c7; padding: 8px;">Suma de sus cifras es múltiplo de 9</td></tr>
+                        </table>
+                    `,
+                                formula: "Divide rápido usando el final o la suma de dígitos"
+                            },
+                            "Reparto proporcional": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Distribuir una cantidad en partes proporcionales a ciertos números (índices).</p>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Pasos para Reparto Directo:</strong></p>
+                            <ol>
+                                <li>Sumar los índices (proporciones).</li>
+                                <li>Dividir la cantidad total entre la suma de índices (Constante K).</li>
+                                <li>Multiplicar K por cada índice individual.</li>
+                            </ol>
+                        </div>
+                    `,
+                                formula: "K = Total / (a+b+c) | Parte = K × índice"
+                            },
+                            "Progresión geométrica": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Sucesión de números donde cada término se obtiene multiplicando el anterior por una razón fija (r).</p>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Ejemplo:</strong> 2, 6, 18, 54... (r = 3)</p>
+                        </div>
+                    `,
+                                formula: "aₙ = a₁ · rⁿ⁻¹"
+                            },
+                            "Inecuaciones lineales": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Desigualdades algebraicas (<, >, ≤, ≥). La solución es un intervalo de números.</p>
+                        <p><strong>IMPORTANTE:</strong> Si multiplicas o divides por un número NEGATIVO, el signo de la desigualdad se invierte.</p>
+                    `,
+                                formula: "ax + b < c | Invertir signo si tratas con negativos"
+                            },
+                            "Variación lineal tabular": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Relación entre dos variables donde el incremento es constante. Se reconoce en tablas por sumas o restas fijas.</p>
+                    `,
+                                formula: "y = mx + b | m = pendiente"
+                            },
+                            "Área (figuras básicas)": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Triángulo: (b·h)/2 | Círculo: π·r² | Trapecio: [(B+b)·h]/2</p>
+                    `,
+                                formula: "Formulas geométricas de superficie"
+                            },
+                            "Interés simple": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Interés que no se capitaliza. Se calcula siempre sobre el capital inicial.</p>
+                    `,
+                                formula: "I = C · i · t"
+                            },
+                            "Desviación estándar (operativa)": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>1. Media. 2. Restar media a cada dato y elevar al cuadrado. 3. Promediar cuadrados (Varianza). 4. Raíz cuadrada.</p>
+                    `,
+                                formula: "σ = √(Σ(x - x̄)² / N)"
+                            },
+                            "Media, mediana y moda (aplicadas)": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Cálculo de medidas de tendencia central en tablas de frecuencia y gráficos.</p>
+                    `,
+                                formula: "Media = Suma/N | Mediana = Centro"
+                            },
+                            "Sistemas de fuerzas coplanares": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Conjunto de fuerzas que actúan en un mismo plano. Se resuelven mediante la suma de sus componentes en X e Y.</p>
+                    `,
+                                formula: "ΣFx = 0 | ΣFy = 0 (Equilibrio)"
+                            },
+                            "Movimiento circular uniforme": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Movimiento de un objeto que viaja en una trayectoria circular con rapidez constante.</p>
+                    `,
+                                formula: "v = ω · r | Fcentrípeta = (m·v²) / r"
+                            },
+                            "Mecánica rotacional": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Estudio del movimiento de rotación. Incluye Trabajo rotacional y Energía cinética rotacional.</p>
+                    `,
+                                formula: "Ec_rot = ½ I ω² | Trabajo = τ · θ"
+                            },
+                            "Momento angular": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Magnitud física que describe la rotación de un objeto. Se conserva si el torque neto es cero.</p>
+                    `,
+                                formula: "L = I · ω"
+                            },
+                            "Clasificación de ondas": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Las ondas se clasifican según su medio (Mecánicas vs Electromagnéticas) y su vibración (Transversales vs Longitudinales).</p>
+                    `,
+                                formula: "Mecánicas (necesitan medio) | EM (vacio)"
+                            },
+                            "Movimiento armónico simple (MAS)": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Movimiento periódico vibratorio. Ejemplos: péndulo, resorte. La fuerza restauradora es proporcional al desplazamiento.</p>
+                    `,
+                                formula: "F = -k · x | T = 2π√(m/k)"
+                            },
+                            "Electromagnetismo": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Estudio de las cargas eléctricas y los campos magnéticos. Incluye Fuerza magnética y conductores.</p>
+                    `,
+                                formula: "F = q(v × B) | Campo: B"
+                            },
+                            "Ecuaciones de segundo grado (gráfica)": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>La gráfica de ax² + bx + c = 0 es una parábola. Las raíces son los puntos donde corta al eje X.</p>
+                    `,
+                                formula: "ax² + bx + c = 0 | Discriminante: b² - 4ac"
+                            },
+                            "Funciones cuadráticas": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Comportamiento gráfico: si 'a' es positivo (+) la parábola abre hacia arriba, si es negativo (-) abre hacia abajo.</p>
+                    `,
+                                formula: "Vértice: x = -b / (2a)"
+                            },
+                            "Polinomios": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Expresiones de varios términos. Incluye suma, resta, multiplicación y división de polinomios.</p>
+                    `,
+                                formula: "Suma términos semejantes | Multiplica c/u por c/u"
+                            },
+                            "Deciles, cuartiles y percentiles": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Medidas de posición que dividen los datos en 10, 4 y 100 partes iguales respectivamente.</p>
+                    `,
+                                formula: "Q2 = D5 = P50 = Mediana"
+                            },
+                            "Sistemas de ecuaciones de 3 incógnitas": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Resolución de sistemas con 3 variables (x, y, z). Se suele usar el método de eliminación o determinantes (Regla de Cramer).</p>
+                    `,
+                                formula: "Regla de Cramer | Eliminación Gaussiana"
+                            },
+                            "Estimación numérica": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Capacidad de aproximar resultados rápidamente. Muy útil para descartar opciones en el examen sin hacer todo el cálculo.</p>
+                    `,
+                                formula: "Redondeo | Aproximación"
+                            },
+                            "Unidades de medida como patrón": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Entender las unidades fundamentales y cómo se usan para comparar magnitudes físicas.</p>
+                    `,
+                                formula: "m, kg, s, A, K"
+                            },
+                            "Fuerza centrípeta": {
+                                texto: `
+                        <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Fuerza neta que actúa sobre un objeto para mantenerlo moviéndose a lo largo de una trayectoria circular. Siempre apunta al centro.</p>
+                    `,
+                                formula: "Fc = m · v² / r"
+                            },
+                            "Leyes de los exponentes": {
+                                texto: `
+                        <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <ul style="line-height: 1.8;">
+                            <li>Producto: aⁿ · aᵐ = aⁿ⁺ᵐ</li>
+                            <li>Cociente: aⁿ / aᵐ = aⁿ⁻ᵐ</li>
+                            <li>Potencia de potencia: (aⁿ)ᵐ = aⁿᵒᵐ</li>
+                            <li>Exponente cero: a⁰ = 1</li>
+                            <li>Exponente negativo: a⁻ⁿ = 1/aⁿ</li>
+                        </ul>
+                    `,
+                                formula: "xⁿ · xᵐ = xⁿ⁺ᵐ | (xⁿ)ᵐ = xⁿ*ᵐ"
+                            },
+                            "Razones y proporciones": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Razón: COMPARACIÓN entre dos cantidades (a/b). Proporción: IGUALDAD entre dos razones (a/b = c/d).</p>
+                    `,
+                                formula: "a/b = c/d -> a·d = b·c"
                             }
                         };
-
-                        const exp = explicaciones[targetTopic];
                         if (exp) {
                             return `
                     <strong style="color: #1e40af;">📚 Explicación completa:</strong><br>
