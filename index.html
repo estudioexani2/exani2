@@ -996,6 +996,27 @@
                 </div>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px;"
                     id="progreso-materias"></div>
+
+                <!-- Detalle de Materia -->
+                <div id="detalle-materia-container"
+                    style="display: none; margin-top: 30px; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-lg); border: 2px solid #e5e7eb; animation: slideDown 0.3s ease;">
+                    <div
+                        style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
+                        <div>
+                            <h3 id="detalle-materia-titulo" style="font-size: 2em; color: var(--primary); margin: 0;">
+                                Temario</h3>
+                            <p id="detalle-materia-progreso" style="color: #6b7280; font-size: 1.1em; margin-top: 5px;">
+                            </p>
+                        </div>
+                        <button onclick="cerrarDetalleMateria()"
+                            style="background: #f3f4f6; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; font-weight: bold; color: #4b5563; transition: all 0.2s;">
+                            Cerrar Vista ×
+                        </button>
+                    </div>
+                    <div id="detalle-materia-lista"
+                        style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 15px;">
+                    </div>
+                </div>
             </div>
 
             <div id="pomodoro" class="content">
@@ -2403,6 +2424,51 @@
                     return new Date(2025, 11, 22); // Default fallback
                 }
 
+                function resetEstadisticas() {
+                    if (!confirm("⚠️ ¿Estás seguro de que quieres reiniciar TODO tu progreso? Se borrarán checks, notas, simulacros y logros. Esta acción no se puede deshacer.")) return;
+
+                    const keysToRemove = [];
+                    for (let i = 0; i < localStorage.length; i++) {
+                        const key = localStorage.key(i);
+                        if (key.startsWith('semana') ||
+                            key.startsWith('notas-') ||
+                            key.startsWith('simulacro') ||
+                            key === 'unlockedAchievements' ||
+                            key === 'pomodoroSessions' ||
+                            key === 'pomodoroTotalMinutes' ||
+                            key === 'lastVisit') {
+                            keysToRemove.push(key);
+                        }
+                    }
+
+                    keysToRemove.forEach(k => localStorage.removeItem(k));
+
+                    // Sincronizar con Firebase (borrar todo excepto perfil)
+                    if (currentUser) {
+                        const userRef = db.ref('users/' + currentUser.uid);
+                        userRef.once('value').then(snapshot => {
+                            const data = snapshot.val();
+                            const cleanData = {
+                                email: data.email,
+                                displayName: data.displayName,
+                                career: data.career,
+                                module1: data.module1,
+                                module2: data.module2,
+                                startDate: data.startDate,
+                                photoURL: data.photoURL,
+                                status: data.status,
+                                role: data.role,
+                                lastLogin: data.lastLogin
+                            };
+                            userRef.set(cleanData).then(() => {
+                                location.reload();
+                            });
+                        });
+                    } else {
+                        location.reload();
+                    }
+                }
+
                 let timerInterval = null;
                 let timeLeft = 25 * 60;
                 let totalTime = 25 * 60;
@@ -2693,20 +2759,67 @@
                     let html = '';
 
                     materiasUnicas.forEach(materia => {
+                        // Omitir bloques de simulacros/análisis de la vista de materias
+                        if (['Simulacro', 'Análisis', 'Refuerzo', 'Preparación', 'Inglés (Práctica)'].includes(materia)) return;
+
                         const progreso = calcularProgreso(materia);
-                        const color = materias[materia];
-                        html += `<div class="card" style="border-top: 4px solid ${color};">
-                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-                        <div style="font-weight: bold; font-size: 1.1em;">${materia}</div>
-                        <div style="font-size: 2em; font-weight: bold; color: ${color};">${progreso}%</div>
-                    </div>
-                    <div style="background: #e5e7eb; height: 15px; border-radius: 10px; overflow: hidden;">
-                        <div style="height: 100%; width: ${progreso}%; background-color: ${color}; transition: width 0.5s;"></div>
-                    </div>
-                </div>`;
+                        const color = materias[materia] || '#6366f1';
+                        html += `
+                        <div class="card" style="border-top: 4px solid ${color}; cursor: pointer; transition: all 0.3s;" onclick="verDetalleMateria('${materia}')" onmouseover="this.style.transform='translateY(-5px)'; this.style.boxShadow='var(--shadow-lg)'" onmouseout="this.style.transform='translateY(0)'; this.style.boxShadow='var(--shadow-sm)'">
+                            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                                <div style="font-weight: bold; font-size: 1.1em;">${materia}</div>
+                                <div style="font-size: 1.8em; font-weight: bold; color: ${color};">${progreso}%</div>
+                            </div>
+                            <div style="background: #e5e7eb; height: 12px; border-radius: 10px; overflow: hidden; margin-bottom: 10px;">
+                                <div style="height: 100%; width: ${progreso}%; background-color: ${color}; transition: width 0.5s;"></div>
+                            </div>
+                            <div style="font-size: 0.85em; color: #6b7280; text-align: right;">Ver temario completo →</div>
+                        </div>`;
                     });
 
                     container.innerHTML = html;
+                }
+
+                function verDetalleMateria(materia) {
+                    const container = document.getElementById('detalle-materia-container');
+                    const titulo = document.getElementById('detalle-materia-titulo');
+                    const progresoText = document.getElementById('detalle-materia-progreso');
+                    const lista = document.getElementById('detalle-materia-lista');
+
+                    const color = materias[materia] || '#6366f1';
+                    const progreso = calcularProgreso(materia);
+
+                    titulo.textContent = `📚 Temario: ${materia}`;
+                    titulo.style.color = color;
+                    progresoText.textContent = `Has completado el ${progreso}% de esta materia.`;
+
+                    let html = '';
+                    Object.keys(studyPlan).forEach(semanaKey => {
+                        studyPlan[semanaKey].dias.forEach((dia, diaIdx) => {
+                            if (dia.materia === materia) {
+                                dia.temas.forEach((tema, temaIdx) => {
+                                    const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
+                                    const checked = localStorage.getItem(key) === 'true';
+                                    html += `
+                                    <div style="background: #f9fafb; padding: 15px; border-radius: 12px; border: 1px solid ${checked ? color : '#e5e7eb'}; display: flex; align-items: center; gap: 12px; transition: all 0.2s;">
+                                        <div style="font-size: 1.2em;">${checked ? '✅' : '⚪'}</div>
+                                        <div style="flex: 1;">
+                                            <div style="font-weight: 600; color: ${checked ? '#1f2937' : '#6b7280'}; ${checked ? 'text-decoration: none' : ''}">${tema}</div>
+                                            <div style="font-size: 0.75em; color: #9ca3af;">${semanaKey.replace('semana', 'Semana ')} - ${dia.dia}</div>
+                                        </div>
+                                    </div>`;
+                                });
+                            }
+                        });
+                    });
+
+                    lista.innerHTML = html;
+                    container.style.display = 'block';
+                    container.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+
+                function cerrarDetalleMateria() {
+                    document.getElementById('detalle-materia-container').style.display = 'none';
                 }
                 function startTimer() {
                     if (isRunning) return;
@@ -3083,6 +3196,7 @@
 
                     const sessions = localStorage.getItem('pomodoroSessions') || '0';
 
+                    const today = new Date();
                     const sDate = getStartDate();
                     const daysSinceStart = Math.floor((today - sDate) / (24 * 60 * 60 * 1000));
                     const semanaActual = Math.floor(daysSinceStart / 7) + 1;
@@ -7799,6 +7913,61 @@
                     `,
                             formula: "Tiempo ahorrado en Redacción = Tiempo ganado para Mate"
                         },
+                        "Identificación de ideas principales": {
+                            texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>La <strong>idea principal</strong> es la información más importante que el autor quiere comunicar sobre el tema. Sin ella, el párrafo perdería su sentido esencial.</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Cómo encontrarla:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Pregunta clave:</strong> "¿De qué trata principalmente este texto?"</li>
+                            <li><strong>Localización:</strong> Suele estar al inicio (deductivo), al final (inductivo) o diluida en todo el texto.</li>
+                            <li><strong>Eliminación:</strong> Las ideas secundarias son ejemplos, detalles o explicaciones que apoyan a la principal.</li>
+                        </ul>
+                    `,
+                            formula: "Idea Principal = Sujeto + Lo más importante que se dice de él"
+                        },
+                        "Propósito del autor": {
+                            texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Es la intención o el objetivo que tiene el autor al escribir el texto.</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Tipos de Propósitos:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Informar:</strong> Dar datos y hechos (noticias, textos científicos).</li>
+                            <li><strong>Persuadir:</strong> Convencer al lector de algo (publicidad, ensayos).</li>
+                            <li><strong>Narrar:</strong> Contar una historia (cuentos, novelas).</li>
+                            <li><strong>Prescribir:</strong> Dar instrucciones o normas (recetas, leyes).</li>
+                        </ul>
+                    `,
+                            formula: "¿Para qué escribió esto el autor?"
+                        },
+                        "Ambüigüedad y contradicción": {
+                            texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p><strong>Ambigüedad:</strong> Cuando una frase puede tener dos o más significados (ej: "Vimos a Juan preocupado").</p>
+                        <p><strong>Contradicción:</strong> Cuando el texto afirma algo y poco después dice lo opuesto (falta de coherencia).</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Tip EXANI:</h4>
+                        <p>En Redacción Indirecta, una opción con ambigüedad es casi siempre una opción incorrecta que debes corregir.</p>
+                    `,
+                            formula: "Ambigüedad = Doble sentido | Contradicción = A vs No A"
+                        },
+                        "Conectores gramaticales": {
+                            texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Palabras o frases que unen oraciones y párrafos, dándole lógica al discurso.</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Tipos más comunes:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Adición:</strong> Además, también, asimismo.</li>
+                            <li><strong>Oposición:</strong> Pero, sin embargo, no obstante.</li>
+                            <li><strong>Causa-Efecto:</strong> Porque, por lo tanto, en consecuencia.</li>
+                            <li><strong>Secuencia:</strong> Primero, luego, finalmente.</li>
+                        </ul>
+                    `,
+                            formula: "Conector = Puente lógico entre ideas"
+                        },
                     };
                     const exp = explicaciones[targetTopic];
                     if (exp) {
@@ -7903,22 +8072,6 @@
                     syncUp('studyDays', JSON.stringify(diasValidos));
                 }
 
-                function resetEstadisticas() {
-                    if (confirm('¿Seguro que quieres resetear TODAS las estadísticas? Esto no se puede deshacer.')) {
-                        localStorage.setItem('pomodoroSessions', '0');
-                        localStorage.setItem('pomodoroTotalMinutes', '0');
-                        localStorage.setItem('pomodoroStreak', '0');
-
-                        if (currentUser) {
-                            syncUp('pomodoroSessions', '0');
-                            syncUp('pomodoroTotalMinutes', '0');
-                            syncUp('pomodoroStreak', '0');
-                        }
-
-                        alert('Estadísticas reseteadas correctamente');
-                        window.location.reload();
-                    }
-                }
 
                 // Scroll to top functionality
                 function scrollToTop() {
