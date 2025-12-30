@@ -1979,6 +1979,7 @@
                                             ${!isMe && status !== 'approved' ? `<button onclick="updateUserStatus('${uid}', 'approved')" class="btn-sm btn-success">✅ Permitir</button>` : ''}
                                             ${!isMe && status === 'approved' ? `<button onclick="updateUserStatus('${uid}', 'pending')" class="btn-sm btn-danger">🚫 Quitar</button>` : ''}
                                             ${!isMe ? `<button onclick="toggleAdminRole('${uid}', '${role === 'admin' ? 'user' : 'admin'}')" class="btn-sm btn-primary">${role === 'admin' ? '🔽 Quitar Admin' : '⭐ Hacer Admin'}</button>` : ''}
+                                            ${isMe ? `<button onclick="resetMyAccount()" class="btn-sm" style="background: #f59e0b; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.75em; cursor: pointer;">🔄 Reiniciar Mi Cuenta</button>` : ''}
                                             ${!isMe ? `<button onclick="hardResetUser('${uid}')" class="btn-sm" style="background: #ef4444; color: white; border: none; padding: 5px 10px; border-radius: 6px; font-size: 0.75em; cursor: pointer;">🗑️ Reset Total</button>` : ''}
                                         </div>
                                     </div>
@@ -6905,14 +6906,8 @@
                     `,
                                 formula: "xⁿ · xᵐ = xⁿ⁺ᵐ | (xⁿ)ᵐ = xⁿ*ᵐ"
                             },
-                            "Razones y proporciones": {
-                                texto: `
-                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Razón: COMPARACIÓN entre dos cantidades (a/b). Proporción: IGUALDAD entre dos razones (a/b = c/d).</p>
-                    `,
-                                formula: "a/b = c/d -> a·d = b·c"
-                            }
                         };
+                        const exp = explicaciones[targetTopic];
                         if (exp) {
                             return `
                     <strong style="color: #1e40af;">📚 Explicación completa:</strong><br>
