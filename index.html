@@ -6748,38 +6748,169 @@
                             "Inecuaciones lineales": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Desigualdades algebraicas (<, >, ≤, ≥). La solución es un intervalo de números.</p>
-                        <p><strong>IMPORTANTE:</strong> Si multiplicas o divides por un número NEGATIVO, el signo de la desigualdad se invierte.</p>
+                        <p>Una inecuación es una desigualdad entre dos expresiones algebraicas (usando <, >, ≤, ≥). La solución no es un solo número, sino un <strong>conjunto de números</strong> (intervalo).</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Regla de Oro (NEGATIVOS):</h4>
+                        <div style="background: #fee2e2; padding: 15px; border-radius: 8px; margin: 10px 0; border-left: 4px solid #ef4444;">
+                            <p style="margin: 0;"><strong>¡CUIDADO!</strong> Si multiplicas o divides ambos lados por un número <strong>NEGATIVO</strong>, el sentido de la desigualdad <strong>DEBE INVERTIRSE</strong>.</p>
+                            <p style="margin: 5px 0; font-family: monospace;">Ej: -2x < 10  ==>  x > -5 (Invertimos porque dividimos entre -2)</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Pasos para resolver:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Agrupa las "x" de un lado y los números del otro (igual que en ecuaciones).</li>
+                            <li>Simplifica cada lado.</li>
+                            <li>Despeja la "x" (aplicando la regla de oro si es necesario).</li>
+                        </ol>
+                        
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Ejemplo:</strong> 3x + 5 > 17</p>
+                            <p>3x > 17 - 5</p>
+                            <p>3x > 12</p>
+                            <p>x > 12/3  ==>  <strong>x > 4</strong></p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>5x - 8 ≤ 12  <em>(R: x ≤ 4)</em></li>
+                            <li>-2x + 10 < 2  <em>(R: x > 4)</em></li>
+                            <li>3(x + 1) ≥ 12  <em>(R: x ≥ 3)</em></li>
+                        </ol>
                     `,
-                                formula: "ax + b < c | Invertir signo si tratas con negativos"
+                                formula: "ax + b < c  |  ¡Invierte signo si divides/mult por negativos!"
                             },
                             "Variación lineal tabular": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Relación entre dos variables donde el incremento es constante. Se reconoce en tablas por sumas o restas fijas.</p>
+                        <p>Es una relación donde el incremento de la variable 'y' es constante respecto a 'x'. En una tabla, notarás que al sumar una cantidad a x, siempre se suma la misma cantidad a y.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Identificación en Tablas:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p>Busca la <strong>razón de cambio (m)</strong>:</p>
+                            <p style="font-family: monospace; font-weight: bold;">m = (y₂ - y₁) / (x₂ - x₁)</p>
+                            <p>Y la <strong>ordenada al origen (b)</strong>: el valor de 'y' cuando 'x = 0'.</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Ejemplo:</h4>
+                        <table style="width: 100%; text-align: center; border-collapse: collapse; margin-bottom: 10px;">
+                            <tr style="background: #bae6fd;"><th>x</th><th>0</th><th>1</th><th>2</th><th>3</th></tr>
+                            <tr style="background: white;"><td>y</td><td>5</td><td>8</td><td>11</td><td>14</td></tr>
+                        </table>
+                        <p>1. Cuando x=0, y=5. Entonces <strong>b = 5</strong>.</p>
+                        <p>2. Al aumentar x en 1, y aumenta en 3. Entonces <strong>m = 3</strong>.</p>
+                        <p>3. Ecuación: <strong>y = 3x + 5</strong></p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si en x=0, y=10 y en x=1, y=14. ¿Cuál es la ecuación?  <em>(R: y = 4x + 10)</em></li>
+                            <li>En una tabla, si x sube de 2 a 4 e y sube de 10 a 20. ¿Cuál es m? <em>(R: m=5)</em></li>
+                        </ol>
                     `,
-                                formula: "y = mx + b | m = pendiente"
+                                formula: "y = mx + b  |  m = ∆y / ∆x  |  b = y(0)"
                             },
                             "Área (figuras básicas)": {
                                 texto: `
                         <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Triángulo: (b·h)/2 | Círculo: π·r² | Trapecio: [(B+b)·h]/2</p>
+                        <p>El área mide la superficie interior de una figura plana. Aquí tienes el "acordeón" definitivo para el EXANI-II:</p>
+                        
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 10px;">
+                            <div style="background: #fef3c7; padding: 10px; border-radius: 8px;">
+                                <p style="font-weight: bold; margin: 0; color: #b45309;">Triángulo:</p>
+                                <p style="font-family: monospace; margin: 5px 0;">A = (b × h) / 2</p>
+                            </div>
+                            <div style="background: #fef3c7; padding: 10px; border-radius: 8px;">
+                                <p style="font-weight: bold; margin: 0; color: #b45309;">Círculo:</p>
+                                <p style="font-family: monospace; margin: 5px 0;">A = π × r²</p>
+                            </div>
+                            <div style="background: #fef3c7; padding: 10px; border-radius: 8px;">
+                                <p style="font-weight: bold; margin: 0; color: #b45309;">Trapecio:</p>
+                                <p style="font-family: monospace; margin: 5px 0;">A = [(B + b) × h] / 2</p>
+                            </div>
+                            <div style="background: #fef3c7; padding: 10px; border-radius: 8px;">
+                                <p style="font-weight: bold; margin: 0; color: #b45309;">Rombo:</p>
+                                <p style="font-family: monospace; margin: 5px 0;">A = (D × d) / 2</p>
+                            </div>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Ejemplo de examen:</h4>
+                        <div style="background: #fffbeb; padding: 15px; border-radius: 8px; border: 1px solid #fde68a;">
+                            <p>Calcula el área de un trapecio con Base mayor = 10cm, base menor = 6cm y altura = 5cm.</p>
+                            <p style="margin-left: 20px;">1. Suma bases: 10 + 6 = 16</p>
+                            <p style="margin-left: 20px;">2. Multiplica por h: 16 × 5 = 80</p>
+                            <p style="margin-left: 20px;">3. Divide entre 2: 80 / 2 = <strong>40 cm²</strong></p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Círculo de radio 4cm (usa π=3.14). <em>(R: 50.24 cm²)</em></li>
+                            <li>Triángulo de base 12 y altura 8. <em>(R: 48)</em></li>
+                            <li>Rombo con diagonales de 10 y 6. <em>(R: 30)</em></li>
+                        </ol>
                     `,
-                                formula: "Formulas geométricas de superficie"
+                                formula: "Formulas: (b·h)/2 | π·r² | (B+b)h/2 | (D·d)/2"
                             },
                             "Interés simple": {
                                 texto: `
                         <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Interés que no se capitaliza. Se calcula siempre sobre el capital inicial.</p>
+                        <p>Es el dinero ganado al invertir un capital. Se llama "simple" porque el interés NO se suma al capital para generar nuevos intereses (no se capitaliza).</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 La Fórmula Mágica:</h4>
+                        <div style="background: #fef3c7; padding: 20px; border-radius: 8px; text-align: center; margin: 10px 0;">
+                            <p style="font-size: 24px; font-weight: bold; margin: 0;">I = C × i × t</p>
+                            <p style="font-size: 0.9em; margin-top: 10px;"><strong>I</strong>: Interés | <strong>C</strong>: Capital inicial | <strong>i</strong>: tasa (decimal) | <strong>t</strong>: tiempo</p>
+                        </div>
+                        
+                        <div style="background: #fffbeb; padding: 15px; border-radius: 8px; border: 1px solid #fde68a;">
+                            <p><strong>REGLA DE ORO:</strong> La tasa (i) y el tiempo (t) deben estar en la <strong>MIZMA unidad</strong> (si i es anual, t debe ser en años).</p>
+                        </div>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Ejemplo:</h4>
+                        <p>Inviertes $2,000 al 5% anual durante 3 años.</p>
+                        <ul style="margin-left: 20px;">
+                            <li>C = 2000</li>
+                            <li>i = 0.05 (porque 5/100 = 0.05)</li>
+                            <li>t = 3</li>
+                            <li>I = 2000 × 0.05 × 3 = <strong>$300</strong></li>
+                            <li>Monto final (M) = 2000 + 300 = <strong>$2,300</strong></li>
+                        </ul>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Interés de $1,000 al 10% anual en 2 años. <em>(R: $200)</em></li>
+                            <li>Monto final de $500 al 4% anual en 5 años. <em>(R: $600)</em></li>
+                        </ol>
                     `,
-                                formula: "I = C · i · t"
+                                formula: "I = C · i · t  |  Final: Monto = C + I"
                             },
                             "Desviación estándar (operativa)": {
                                 texto: `
                         <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>1. Media. 2. Restar media a cada dato y elevar al cuadrado. 3. Promediar cuadrados (Varianza). 4. Raíz cuadrada.</p>
+                        <p>Indica qué tan dispersos están los datos respecto al promedio. Una desviación baja significa que los datos están cerca del promedio; una alta significa que están muy esparcidos.</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Pasos para calcularla (Sin calculadora):</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Calcula el <strong>Promedio (Media)</strong> de los datos.</li>
+                            <li>A cada dato réstale el promedio y eleva el resultado al <strong>cuadrado</strong>.</li>
+                            <li>Suma todos esos cuadrados y divídelos entre el total de datos (esto es la <strong>Varianza</strong>).</li>
+                            <li>Saca la <strong>Raíz Cuadrada</strong> del resultado anterior.</li>
+                        </ol>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Ejemplo:</h4>
+                        <p>Datos: 2, 4. (Solo dos datos para simplificar)</p>
+                        <ul style="margin-left: 20px;">
+                            <li>1. Media = (2 + 4) / 2 = 3</li>
+                            <li>2. Cuadrados: (2-3)² = 1; (4-3)² = 1</li>
+                            <li>3. Varianza = (1 + 1) / 2 = 1</li>
+                            <li>4. Desviación = √1 = <strong>1</strong></li>
+                        </ul>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si todos los datos son iguales (ej: 5, 5, 5), ¿cuál es la desviación? <em>(R: 0)</em></li>
+                            <li>Calcula la desviación de 10, 12, 14. <em>(R: Media=12. Cuadrados: 4, 0, 4. Varianza=8/3 ≈ 2.6. Desv ≈ 1.63)</em></li>
+                        </ol>
                     `,
-                                formula: "σ = √(Σ(x - x̄)² / N)"
+                                formula: "σ = √(Σ(x - x̄)² / N)  |  Pasos: Media -> Cuadrados -> Promedio -> Raíz"
                             },
                             "Media, mediana y moda (aplicadas)": {
                                 texto: `
@@ -6791,9 +6922,28 @@
                             "Sistemas de fuerzas coplanares": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Conjunto de fuerzas que actúan en un mismo plano. Se resuelven mediante la suma de sus componentes en X e Y.</p>
+                        <p>Son fuerzas que actúan en un mismo plano bidimensional (X, Y). Para resolverlas, debemos "desarmar" cada fuerza inclinada en sus componentes horizontal y vertical.</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Componentes de una Fuerza (F):</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: monospace; font-weight: bold; margin: 5px 0;">Fx = F × cos(θ)</p>
+                            <p style="font-family: monospace; font-weight: bold; margin: 5px 0;">Fy = F × sin(θ)</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Condiciones de Equilibrio:</h4>
+                        <p>Para que un objeto no se mueva, la suma de todas las fuerzas en cada eje debe ser CERO:</p>
+                        <ul style="margin-left: 20px;">
+                            <li><strong>ΣFx = 0</strong> (No se mueve a los lados)</li>
+                            <li><strong>ΣFy = 0</strong> (No se mueve arriba/abajo)</li>
+                        </ul>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Una fuerza de 10N a 60°. ¿Cuánto vale Fx? (cos 60° = 0.5) <em>(R: 5N)</em></li>
+                            <li>Si hay una fuerza de 20N a la derecha y otra a la izquierda, ¿cuánto debe valer la segunda para haber equilibrio? <em>(R: 20N)</em></li>
+                        </ol>
                     `,
-                                formula: "ΣFx = 0 | ΣFy = 0 (Equilibrio)"
+                                formula: "Fx = F·cosθ | Fy = F·senθ | ΣF = 0"
                             },
                             "Movimiento circular uniforme": {
                                 texto: `
@@ -6833,9 +6983,28 @@
                             "Electromagnetismo": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Estudio de las cargas eléctricas y los campos magnéticos. Incluye Fuerza magnética y conductores.</p>
+                        <p>Es la rama de la física que estudia la relación entre electricidad y magnetismo. Un flujo de electrones (corriente) genera un campo magnético, y un campo magnético en movimiento puede generar corriente.</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Conceptos Fundamentales:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Fuerza Magnética (F):</strong> La fuerza que siente una carga 'q' moviéndose en un campo 'B'.</li>
+                            <li><strong>Ley de Faraday:</strong> El cambio en el flujo magnético induce un voltaje (fem).</li>
+                            <li><strong>Ley de Lenz:</strong> La corriente inducida se opone al cambio que la generó (es la razón del signo negativo).</li>
+                        </ul>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Fórmulas Clave:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p style="font-family: monospace; font-weight: bold; margin: 5px 0;">F = q · v · B · sin(θ)</p>
+                            <p style="font-size: 0.85em;">(Carga moviéndose en campo magnético)</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>¿Qué genera una corriente eléctrica según Oersted? <em>(R: Un campo magnético)</em></li>
+                            <li>¿Qué sucede si una carga está en reposo (v=0) dentro de un campo magnético? <em>(R: No siente fuerza magnética)</em></li>
+                        </ol>
                     `,
-                                formula: "F = q(v × B) | Campo: B"
+                                formula: "F = qvB senθ | Inducción: ∆Φ/∆t"
                             },
                             "Ecuaciones de segundo grado (gráfica)": {
                                 texto: `
@@ -6868,23 +7037,76 @@
                             "Sistemas de ecuaciones de 3 incógnitas": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Resolución de sistemas con 3 variables (x, y, z). Se suele usar el método de eliminación o determinantes (Regla de Cramer).</p>
+                        <p>Son sistemas con tres variables (x, y, z). El objetivo es reducirlo a un sistema de 2 variables que ya sabemos resolver.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Método Recomendado (Reducción):</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Elige una variable para eliminar (ej: la 'z').</li>
+                            <li>Toma dos ecuaciones y elimina 'z' entre ellas. Obtienes la <strong>Ecuación A</strong>.</li>
+                            <li>Toma otra combinación de dos ecuaciones y vuelve a eliminar 'z'. Obtienes la <strong>Ecuación B</strong>.</li>
+                            <li>Resuelve el sistema 2x2 formado por las ecuaciones A y B.</li>
+                            <li>Sustituye los valores hallados en una ecuación original para encontrar la tercera variable.</li>
+                        </ol>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Tip EXANI:</h4>
+                        <p>A veces es más rápido <strong>probar las opciones</strong> de respuesta sustituyéndolas en las ecuaciones originales.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si x=1, y=2, z=3, ¿cumplen con x+y+z=6? <em>(R: Sí)</em></li>
+                            <li>En un sistema, si eliminas 'z' y te queda 2x+y=5 y x-y=1. ¿Cuánto vale x? <em>(R: x=2)</em></li>
+                        </ol>
                     `,
-                                formula: "Regla de Cramer | Eliminación Gaussiana"
+                                formula: "Reduce a 2x2 | Prueba opciones si es posible"
                             },
                             "Estimación numérica": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Capacidad de aproximar resultados rápidamente. Muy útil para descartar opciones en el examen sin hacer todo el cálculo.</p>
+                        <p>Es la habilidad de encontrar un resultado aproximado sin realizar cálculos exactos lentos. Es vital para ahorrar tiempo en el examen.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Técnicas de Estimación:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Redondeo:</strong> Convierte números difíciles en "amigables". Ej: 49.5 × 11 ≈ 50 × 10 = 500.</li>
+                            <li><strong>Cifras Significativas:</strong> Enfócate en los números de la izquierda.</li>
+                            <li><strong>Descarte:</strong> Elimina opciones que sean lógicamente imposibles por ser demasiado grandes o pequeñas.</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Ejemplo:</h4>
+                        <p>¿Cuál es el 19% de 402?</p>
+                        <p>Estimación: 19% es casi 20% (1/5). 402 es casi 400. El 20% de 400 es <strong>80</strong>. La respuesta real debe estar muy cerca de 80.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Estima 12.1 × 8.9. <em>(R: ≈ 12 × 9 = 108)</em></li>
+                            <li>¿Cuál es una mejor estimación para √98? (9, 10 u 11) <em>(R: 10, porque 10²=100)</em></li>
+                        </ol>
                     `,
-                                formula: "Redondeo | Aproximación"
+                                formula: "Prueba: 5.1 × 2.9 ≈ 5 × 3 = 15"
                             },
                             "Unidades de medida como patrón": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Entender las unidades fundamentales y cómo se usan para comparar magnitudes físicas.</p>
+                        <p>Un patrón de medida es una cantidad estandarizada de una magnitud física. El Sistema Internacional (SI) define los patrones que usamos hoy.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Patrones Fundamentales:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Longitud:</strong> Metro (m)</li>
+                            <li><strong>Masa:</strong> Kilogramo (kg)</li>
+                            <li><strong>Tiempo:</strong> Segundo (s)</li>
+                            <li><strong>Corriente:</strong> Ampere (A)</li>
+                            <li><strong>Temperatura:</strong> Kelvin (K)</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Prefijos Comunes:</h4>
+                        <p>Kilo (k) = 10³ | Centi (c) = 10⁻² | Mili (m) = 10⁻³ | Micro (µ) = 10⁻⁶</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>¿Cuántos milímetros hay en un metro? <em>(R: 1000)</em></li>
+                            <li>¿Cuál es la unidad patrón de la masa en el SI? <em>(R: Kilogramo)</em></li>
+                        </ol>
                     `,
-                                formula: "m, kg, s, A, K"
+                                formula: "Unidades SI: m, kg, s, A, K"
                             },
                             "Fuerza centrípeta": {
                                 texto: `
@@ -6892,6 +7114,53 @@
                         <p>Fuerza neta que actúa sobre un objeto para mantenerlo moviéndose a lo largo de una trayectoria circular. Siempre apunta al centro.</p>
                     `,
                                 formula: "Fc = m · v² / r"
+                            },
+                            "Proporcionalidad directa e inversa": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Directa:</strong> Si una aumenta, la otra TAMBIÉN aumenta. (Ej: Más kilos -> Más precio).</li>
+                            <li><strong>Inversa:</strong> Si una aumenta, la otra DISMINUYE. (Ej: Más obreros -> Menos tiempo).</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Cómo resolver:</h4>
+                        <p><strong>Directa:</strong> Multiplicación cruzada.</p>
+                        <p><strong>Inversa:</strong> Multiplicación horizontal.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si 1 refresco cuesta $15, ¿cuánto cuestan 4? <em>(R: $60 - Directa)</em></li>
+                            <li>2 personas pintan en 4 horas. ¿En cuánto tiempo lo hacen 4 personas? <em>(R: 2 horas - Inversa)</em></li>
+                        </ol>
+                    `,
+                                formula: "Directa: x/y = k | Inversa: x·y = k"
+                            },
+                            "Interpretación gráfica de ecuaciones": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Consiste en identificar qué tipo de gráfica corresponde a una ecuación sin tener que tabular todos los puntos.</p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>y = mx + b</strong> -> Es una línea recta.</li>
+                            <li><strong>y = ax² + bx + c</strong> -> Es una parábola.</li>
+                            <li><strong>x² + y² = r²</strong> -> Es un círculo.</li>
+                        </ul>
+                    `,
+                                formula: "Grado 1 = Recta | Grado 2 = Parábola"
+                            },
+                            "Ejes de simetría": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Un eje de simetría es una línea imaginaria que divide una figura en dos partes iguales que son espejo una de la otra.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Ejemplos en Figuras:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Círculo:</strong> Infinitos ejes.</li>
+                            <li><strong>Cuadrado:</strong> 4 ejes.</li>
+                            <li><strong>Rectángulo:</strong> 2 ejes.</li>
+                            <li><strong>Triángulo Equilátero:</strong> 3 ejes.</li>
+                        </ul>
+                    `,
+                                formula: "Simetría = Espejo perfecto"
                             },
                             "Leyes de los exponentes": {
                                 texto: `
@@ -6905,6 +7174,87 @@
                         </ul>
                     `,
                                 formula: "xⁿ · xᵐ = xⁿ⁺ᵐ | (xⁿ)ᵐ = xⁿ*ᵐ"
+                            },
+                            "Probabilidad clásica": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Es la posibilidad de que ocurra un evento. Se calcula dividiendo los casos favorables entre el total de casos posibles.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 La Fórmula:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                            <p style="font-size: 20px; font-weight: bold;">P(A) = Casos Favorables / Total de Casos</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Ejemplo:</h4>
+                        <p>Lanzas un dado. ¿Cuál es la probabilidad de que salga un número par (2, 4, 6)?</p>
+                        <ul style="margin-left: 20px;">
+                            <li>Favorables: 3 (el 2, 4 y 6)</li>
+                            <li>Total: 6 (lados del dado)</li>
+                            <li>Probabilidad: 3/6 = 0.5 = <strong>50%</strong></li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Probabilidad de sacar un AS de una baraja de 52 cartas. <em>(R: 4/52 = 1/13)</em></li>
+                            <li>En una bolsa hay 3 bolas rojas y 2 azules. Probabilidad de sacar una roja. <em>(R: 3/5)</em></li>
+                        </ol>
+                    `,
+                                formula: "P = Favorables / Totales"
+                            },
+                            "Frecuencias": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Indican cuántas veces se repite un dato:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Frecuencia Absoluta (f):</strong> El conteo real.</li>
+                            <li><strong>Frecuencia Relativa (fr):</strong> El porcentaje o fracción (f / Total).</li>
+                            <li><strong>Frecuencia Acumulada (F):</strong> La suma de las frecuencias hasta ese punto.</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si 5 personas de 20 prefieren azul, ¿cuál es la frecuencia relativa? <em>(R: 5/20 = 0.25 o 25%)</em></li>
+                            <li>En los datos 2, 2, 3, 5, ¿cuál es la frecuencia absoluta del 2? <em>(R: 2)</em></li>
+                        </ol>
+                    `,
+                                formula: "Absoluta: conteo | Relativa: f/N | Acumulada: suma"
+                            },
+                            "Medidas de posición": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Dividen un conjunto de datos ordenados en partes iguales:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Cuartiles (Q):</strong> Dividen en 4 partes (25% cada una).</li>
+                            <li><strong>Deciles (D):</strong> Dividen en 10 partes (10% cada una).</li>
+                            <li><strong>Percentiles (P):</strong> Dividen en 100 partes (1% cada una).</li>
+                        </ul>
+                        <p><strong>Dato clave:</strong> La Mediana es igual al Q2, al D5 y al P50.</p>
+                    `,
+                                formula: "Q2 = D5 = P50 = Mediana"
+                            },
+                            "Sistemas de ecuaciones (interpretación)": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Resolver un sistema es encontrar el punto donde dos líneas se cruzan:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Una solución:</strong> Las líneas se cortan en un punto.</li>
+                            <li><strong>Sin solución:</strong> Las líneas son paralelas (nunca se cruzan).</li>
+                            <li><strong>Infinitas soluciones:</strong> Las líneas son la misma (están una sobre otra).</li>
+                        </ul>
+                    `,
+                                formula: "Cruce de líneas = Solución"
+                            },
+                            "Representación gráfica de información": {
+                                texto: `
+                        <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Saber leer e interpretar diferentes visualizaciones de datos:</p>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Histogramas/Barras:</strong> Para comparar cantidades.</li>
+                            <li><strong>Pastel (Circular):</strong> Para ver porcentajes del total.</li>
+                            <li><strong>Polígono de frecuencias:</strong> Para ver tendencias en el tiempo.</li>
+                        </ul>
+                    `,
+                                formula: "Líneas: Tendencia | Barras: Comparación | Pastel: Porciento"
                             },
                         };
                         const exp = explicaciones[targetTopic];
