@@ -6598,35 +6598,50 @@
                             "Magnitudes y unidades": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Propiedades físicas que pueden ser medidas. Escalares (solo valor) y Vectoriales (valor y dirección)</p>
+                        <p>Una <strong>magnitud</strong> es toda propiedad de los cuerpos que puede ser medida. En física, las clasificamos según su origen y su naturaleza.</p>
                         
-                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Clasificación:</h4>
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Clasificación por Naturaleza:</h4>
                         <ul style="margin-left: 20px; line-height: 1.8;">
-                            <li><strong>Escalares:</strong> Masa, tiempo, temperatura, energía</li>
-                            <li><strong>Vectoriales:</strong> Velocidad, fuerza, desplazamiento, aceleración</li>
+                            <li><strong>Escalares:</strong> Quedan totalmente definidas con un número y una unidad. Ej: Masa (5kg), Tiempo (10s), Temperatura (20°C).</li>
+                            <li><strong>Vectoriales:</strong> Necesitan magnitud, dirección y sentido. Ej: Fuerza, Velocidad, Aceleración, Desplazamiento.</li>
                         </ul>
-                    `,
-                                formula: "Escalar = Número + Unidad | Vector = Magnitud + Dirección"
-                            },
 
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Clasificación por Origen:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Fundamentales:</strong> No dependen de otras (m, kg, s).</li>
+                            <li><strong>Derivadas:</strong> Se forman combinando las fundamentales (m/s, m/s², Newton).</li>
+                        </ul>
+
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicio:</h4>
+                        <p>¿La rapidez es escalar o vectorial? <em>(R: Escalar. La velocidad es la que es vectorial porque indica dirección)</em></p>
+                    `,
+                                formula: "Escalar: n + u | Vector: n + u + dir + sentido"
+                            },
                             "Sistema Internacional": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Sistema estándar de unidades utilizado en ciencia a nivel mundial</p>
+                        <p>Es el sistema de unidades más utilizado en el mundo. Consta de 7 unidades básicas o fundamentales.</p>
                         
-                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Unidades fundamentales:</h4>
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Las 7 Unidades de Base:</h4>
                         <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
-                            <tr style="background: #ede9fe;">
-                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Magnitud</th>
-                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Unidad</th>
-                                <th style="border: 1px solid #8b5cf6; padding: 8px;">Símbolo</th>
-                            </tr>
-                            <tr><td style="border: 1px solid #ede9fe; padding: 8px;">Longitud</td><td style="border: 1px solid #ede9fe; padding: 8px;">metro</td><td style="border: 1px solid #ede9fe; padding: 8px;">m</td></tr>
-                            <tr><td style="border: 1px solid #ede9fe; padding: 8px;">Masa</td><td style="border: 1px solid #ede9fe; padding: 8px;">kilogramo</td><td style="border: 1px solid #ede9fe; padding: 8px;">kg</td></tr>
-                            <tr><td style="border: 1px solid #ede9fe; padding: 8px;">Tiempo</td><td style="border: 1px solid #ede9fe; padding: 8px;">segundo</td><td style="border: 1px solid #ede9fe; padding: 8px;">s</td></tr>
+                            <tr style="background: #ede9fe;"><th>Magnitud</th><th>Unidad</th><th>Símbolo</th></tr>
+                            <tr><td>Longitud</td><td>Metro</td><td>m</td></tr>
+                            <tr><td>Masa</td><td>Kilogramo</td><td>kg</td></tr>
+                            <tr><td>Tiempo</td><td>Segundo</td><td>s</td></tr>
+                            <tr><td>Temperatura</td><td>Kelvin</td><td>K</td></tr>
+                            <tr><td>Intensidad de Corriente</td><td>Ampere</td><td>A</td></tr>
+                            <tr><td>Intensidad Luminosa</td><td>Candela</td><td>cd</td></tr>
+                            <tr><td>Cantidad de Sustancia</td><td>Mol</td><td>mol</td></tr>
                         </table>
+
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Prefijos y Conversiones:</h4>
+                        <p>Kilo (k) = 10³ | Mega (M) = 10⁶ | Giga (G) = 10⁹</p>
+                        <p>Mili (m) = 10⁻³ | Micro (μ) = 10⁻⁶ | Nano (n) = 10⁻⁹</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicio:</h4>
+                        <p>¿Cuántos gramos hay en 2.5 kg? <em>(R: 2,500 g)</em></p>
                     `,
-                                formula: "m, kg, s, A, K, mol, cd"
+                                formula: "Fundamentales: m, kg, s, K, A, cd, mol"
                             },
                             "Ley de los signos": {
                                 texto: `
@@ -6723,27 +6738,72 @@
                             "Reparto proporcional": {
                                 texto: `
                         <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Distribuir una cantidad en partes proporcionales a ciertos números (índices).</p>
+                        <p>Distribuir una cantidad en partes proporcionales a ciertos números (índices). Puede ser directo o inverso.</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Reparto Proporcional Directo:</h4>
                         <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
-                            <p><strong>Pasos para Reparto Directo:</strong></p>
+                            <p>A mayor índice, mayor parte recibida.</p>
+                            <p><strong>Pasos:</strong></p>
                             <ol>
-                                <li>Sumar los índices (proporciones).</li>
-                                <li>Dividir la cantidad total entre la suma de índices (Constante K).</li>
-                                <li>Multiplicar K por cada índice individual.</li>
+                                <li>Sumar los índices: S = a + b + c + ...</li>
+                                <li>Calcular constante K: K = Cantidad Total / S</li>
+                                <li>Multiplicar K por cada índice: Parte1 = K × a, Parte2 = K × b...</li>
                             </ol>
                         </div>
+
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Ejemplo:</h4>
+                        <p>Repartir $600 entre tres personas de forma proporcional a sus edades: 2, 3 y 5 años.</p>
+                        <ul style="margin-left: 20px;">
+                            <li>Suma de índices: 2 + 3 + 5 = 10</li>
+                            <li>K = 600 / 10 = 60</li>
+                            <li>Persona 1: 60 × 2 = $120</li>
+                            <li>Persona 2: 60 × 3 = $180</li>
+                            <li>Persona 3: 60 × 5 = $300</li>
+                            <li><strong>Prueba:</strong> 120 + 180 + 300 = 600 ✅</li>
+                        </ul>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Repartir 100 en partes proporcionales a 1 y 4. <em>(R: 20 y 80)</em></li>
+                            <li>Si se reparten $1000 entre 2 y 3, ¿cuánto recibe el mayor? <em>(R: $600)</em></li>
+                        </ol>
                     `,
-                                formula: "K = Total / (a+b+c) | Parte = K × índice"
+                                formula: "K = Total / Σíndices | Parte = K × índice"
                             },
                             "Progresión geométrica": {
                                 texto: `
                         <h4 style="color: #f59e0b; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Sucesión de números donde cada término se obtiene multiplicando el anterior por una razón fija (r).</p>
+                        <p>Sucesión de números donde cada término se obtiene multiplicando el anterior por una cantidad constante llamada <strong>razón (r)</strong>.</p>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">🎯 Elementos Clave:</h4>
                         <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
-                            <p><strong>Ejemplo:</strong> 2, 6, 18, 54... (r = 3)</p>
+                            <p>• <strong>a₁</strong>: Primer término</p>
+                            <p>• <strong>r</strong>: Razón (se obtiene dividiendo un término entre el anterior)</p>
+                            <p>• <strong>n</strong>: Posición del término</p>
+                            <p>• <strong>aₙ</strong>: Término general o enésimo</p>
                         </div>
+
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Fórmulas:</h4>
+                        <div style="background: #fef3c7; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Término General:</strong> aₙ = a₁ · rⁿ⁻¹</p>
+                            <p><strong>Suma de n términos:</strong> Sₙ = a₁ · (rⁿ - 1) / (r - 1)</p>
+                        </div>
+
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">📐 Ejemplo:</h4>
+                        <p>Dada la sucesión: 3, 6, 12, 24...</p>
+                        <ul style="margin-left: 20px;">
+                            <li>a₁ = 3</li>
+                            <li>r = 6 / 3 = 2</li>
+                            <li>Término 5: a₅ = 3 · 2⁵⁻¹ = 3 · 2⁴ = 3 · 16 = <strong>48</strong></li>
+                        </ul>
+                        
+                        <h4 style="color: #f59e0b; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>En 5, 25, 125... ¿cuál es la razón? <em>(R: r = 5)</em></li>
+                            <li>Encuenta el 4º término de 2, 8, 32... <em>(R: 128)</em></li>
+                        </ol>
                     `,
-                                formula: "aₙ = a₁ · rⁿ⁻¹"
+                                formula: "aₙ = a₁ · rⁿ⁻¹ | r = a₂/a₁"
                             },
                             "Inecuaciones lineales": {
                                 texto: `
@@ -6948,37 +7008,119 @@
                             "Movimiento circular uniforme": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Movimiento de un objeto que viaja en una trayectoria circular con rapidez constante.</p>
+                        <p>Movimiento de un objeto que viaja en una trayectoria circular con rapidez constante pero velocidad variable (cambia de dirección).</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Conceptos Clave:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Periodo (T):</strong> Tiempo en dar una vuelta completa.</li>
+                            <li><strong>Frecuencia (f):</strong> Vueltas por segundo (f = 1/T).</li>
+                            <li><strong>Velocidad Angular (ω):</strong> Rapidez con la que gira (rad/s).</li>
+                            <li><strong>Aceleración Centrípeta (a꜀):</strong> Siempre apunta al centro del círculo.</li>
+                        </ul>
+
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Fórmulas:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p>ω = 2π / T = 2πf</p>
+                            <p>v = ω · r (Velocidad tangencial)</p>
+                            <p>a꜀ = v² / r = ω² · r</p>
+                        </div>
+
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicios:</h4>
+                        <ol style="margin-left: 20px; line-height: 1.8;">
+                            <li>Si un objeto da 10 vueltas en 2 segundos, ¿frecuencia? <em>(R: 5 Hz)</em></li>
+                            <li>Velocidad angular de un reloj (minutero). <em>(R: 2π/3600 rad/s)</em></li>
+                        </ol>
                     `,
-                                formula: "v = ω · r | Fcentrípeta = (m·v²) / r"
+                                formula: "v = ω·r | a꜀ = v²/r | f = 1/T"
                             },
                             "Mecánica rotacional": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Estudio del movimiento de rotación. Incluye Trabajo rotacional y Energía cinética rotacional.</p>
+                        <p>Análogo del movimiento lineal pero para rotaciones. Sustituimos masa por <strong>Momento de Inercia (I)</strong> y fuerza por <strong>Torque (τ)</strong>.</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Tabla de Equivalencias:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #ede9fe;"><th>Lineal</th><th>Rotacional</th></tr>
+                            <tr><td>Posición (x)</td><td>Ángulo (θ)</td></tr>
+                            <tr><td>Velocidad (v)</td><td>Vel. Angular (ω)</td></tr>
+                            <tr><td>Masa (m)</td><td>Momento Inercia (I)</td></tr>
+                            <tr><td>Fuerza (F)</td><td>Torque (τ)</td></tr>
+                        </table>
+
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Fórmulas:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p>τ = I · α (Segunda Ley Newton rotacional)</p>
+                            <p>Ec_rot = ½ I ω² (Energía cinética)</p>
+                            <p>W = τ · θ (Trabajo rotacional)</p>
+                        </div>
                     `,
-                                formula: "Ec_rot = ½ I ω² | Trabajo = τ · θ"
+                                formula: "τ = I·α | Ec_rot = ½Iω²"
                             },
                             "Momento angular": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Magnitud física que describe la rotación de un objeto. Se conserva si el torque neto es cero.</p>
+                        <p>Es la "cantidad de movimiento" de un objeto que gira. Depende de la distribución de su masa y su velocidad de giro.</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Principio de Conservación:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p>Si no hay torque externo, el momento angular se conserva.</p>
+                            <p style="text-align: center; font-weight: bold;">L₁ = L₂  =>  I₁ω₁ = I₂ω₂</p>
+                            <p><strong>Ejemplo:</strong> Patinadora cierra los brazos, disminuye I, por lo tanto aumenta ω (gira más rápido).</p>
+                        </div>
+
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Fórmula:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0; text-align: center;">
+                            <p style="font-size: 20px; font-weight: bold;">L = I · ω</p>
+                            <p>(Unidad: kg·m²/s)</p>
+                        </div>
                     `,
-                                formula: "L = I · ω"
+                                formula: "L = I·ω | Conservación: I₁ω₁ = I₂ω₂"
                             },
                             "Clasificación de ondas": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Las ondas se clasifican según su medio (Mecánicas vs Electromagnéticas) y su vibración (Transversales vs Longitudinales).</p>
+                        <p>Las ondas se clasifican según tres criterios principales en física:</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Según el Medio de Propagación:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Mecánicas:</strong> Necesitan un medio (aire, agua, cuerda). Ej: Sonido.</li>
+                            <li><strong>Electromagnéticas:</strong> NO necesitan medio (pueden viajar en el vacío). Ej: Luz, Rayos X.</li>
+                        </ul>
+
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Según la Dirección de Vibración:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Longitudinales:</strong> Vibración paralela a la propagación. Ej: Sonido, resorte.</li>
+                            <li><strong>Transversales:</strong> Vibración perpendicular a la propagación. Ej: Luz, cuerda agitada.</li>
+                        </ul>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicio:</h4>
+                        <p>¿Qué tipo de onda es la luz? <em>(R: Electromagnética y Transversal)</em></p>
                     `,
-                                formula: "Mecánicas (necesitan medio) | EM (vacio)"
+                                formula: "Mecánicas vs EM | Longitudinales vs Transversales"
                             },
                             "Movimiento armónico simple (MAS)": {
                                 texto: `
                         <h4 style="color: #8b5cf6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Movimiento periódico vibratorio. Ejemplos: péndulo, resorte. La fuerza restauradora es proporcional al desplazamiento.</p>
+                        <p>Movimiento periódico en ausencia de fricción, producido por una fuerza restauradora (Ley de Hooke).</p>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">🎯 Conceptos Fundamentales:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Elongación (x):</strong> Distancia al punto de equilibrio.</li>
+                            <li><strong>Amplitud (A):</strong> Elongación máxima.</li>
+                            <li><strong>Frecuencia Angular (ω):</strong> ω = √(k/m).</li>
+                        </ul>
+
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">📐 Fórmulas:</h4>
+                        <div style="background: #ede9fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p><strong>Periodo Masa-Resorte:</strong> T = 2π√(m/k)</p>
+                            <p><strong>Periodo Péndulo Simple:</strong> T = 2π√(L/g)</p>
+                            <p><strong>Fuerza (Hooke):</strong> F = -k · x</p>
+                        </div>
+                        
+                        <h4 style="color: #8b5cf6; margin: 15px 0 10px;">✏️ Ejercicio:</h4>
+                        <p>Si cuadruplicas la masa de un resorte, ¿qué pasa con el periodo? <em>(R: Se duplica, porque √4 = 2)</em></p>
                     `,
-                                formula: "F = -k · x | T = 2π√(m/k)"
+                                formula: "T = 2π√(m/k) | T = 2π√(L/g) | F = -kx"
                             },
                             "Electromagnetismo": {
                                 texto: `
@@ -7009,30 +7151,85 @@
                             "Ecuaciones de segundo grado (gráfica)": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>La gráfica de ax² + bx + c = 0 es una parábola. Las raíces son los puntos donde corta al eje X.</p>
+                        <p>La gráfica de una ecuación de segundo grado (ax² + bx + c = 0) siempre es una <strong>parábola</strong>. Los puntos donde la parábola corta al eje X son las soluciones o raíces.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 El Discriminante (Δ = b² - 4ac):</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Δ > 0:</strong> Dos cortes en el eje X (dos soluciones reales).</li>
+                            <li><strong>Δ = 0:</strong> Un corte (toca el eje y se regresa; una solución real).</li>
+                            <li><strong>Δ < 0:</strong> No corta el eje X (no hay soluciones reales).</li>
+                        </ul>
+
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Ejemplo:</h4>
+                        <p>Para x² - 4 = 0:</p>
+                        <p>Es una parábola que corta en x = 2 y x = -2. Abre hacia arriba porque 'a' (1) es positivo.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicio:</h4>
+                        <p>¿Cuántas veces corta al eje X la función f(x) = x² + 1? <em>(R: Cero, porque x² = -1 no tiene solución real)</em></p>
                     `,
-                                formula: "ax² + bx + c = 0 | Discriminante: b² - 4ac"
+                                formula: "Corte eje X = Solución | Δ = b²-4ac"
                             },
                             "Funciones cuadráticas": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Comportamiento gráfico: si 'a' es positivo (+) la parábola abre hacia arriba, si es negativo (-) abre hacia abajo.</p>
+                        <p>Una función f(x) = ax² + bx + c describe una parábola. Su elemento más importante es el <strong>Vértice</strong> (punto más alto o más bajo).</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Propiedades Visuales:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Si a > 0:</strong> Abre hacia arriba (forma de U). El vértice es un <strong>Mínimo</strong>.</li>
+                            <li><strong>Si a < 0:</strong> Abre hacia abajo (U invertida). El vértice es un <strong>Máximo</strong>.</li>
+                            <li><strong>Valor de 'c':</strong> Es el corte con el eje Y (donde x=0).</li>
+                        </ul>
+
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Fórmulas del Vértice:</h4>
+                        <div style="background: #e0f2fe; padding: 15px; border-radius: 8px; margin: 10px 0;">
+                            <p>x_vértice = -b / (2a)</p>
+                            <p>y_vértice = f(x_vértice)</p>
+                        </div>
                     `,
-                                formula: "Vértice: x = -b / (2a)"
+                                formula: "Vérice x = -b/2a | Max/Min según signo de 'a'"
                             },
                             "Polinomios": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Expresiones de varios términos. Incluye suma, resta, multiplicación y división de polinomios.</p>
+                        <p>Un polinomio es una expresión algebraica formada por la suma de varios términos (monomios).</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Operaciones Básicas:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Suma/Resta:</strong> Solo se pueden combinar "Términos Semejantes" (misma letra y mismo exponente).</li>
+                            <li><strong>Multiplicación:</strong> Se multiplican coeficientes y se <strong>suman</strong> exponentes.</li>
+                            <li><strong>División:</strong> Se dividen coeficientes y se <strong>restan</strong> exponentes.</li>
+                        </ul>
+
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Grado de un Polinomio:</h4>
+                        <p>Es el exponente más alto que aparece en la expresión. Ej: 3x⁵ + 2x² + 1 es de <strong>Grado 5</strong>.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicio:</h4>
+                        <p>Simplifica: (2x² + 3x) + (x² - 5x). <em>(R: 3x² - 2x)</em></p>
                     `,
-                                formula: "Suma términos semejantes | Multiplica c/u por c/u"
+                                formula: "Términos semejantes | Suma exp (mult) | Resta exp (div)"
                             },
                             "Deciles, cuartiles y percentiles": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Medidas de posición que dividen los datos en 10, 4 y 100 partes iguales respectivamente.</p>
+                        <p>Son medidas de posición que dividen un conjunto de datos ordenados en partes iguales para analizar la distribución.</p>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">🎯 Tipos de Medidas:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Cuartiles (Q1, Q2, Q3):</strong> Dividen en 4 partes (25% cada una).</li>
+                            <li><strong>Deciles (D1..D9):</strong> Dividen en 10 partes (10% cada una).</li>
+                            <li><strong>Percentiles (P1..P99):</strong> Dividen en 100 partes (1% cada una).</li>
+                        </ul>
+
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Equivalencias Clave:</h4>
+                        <div style="background: #e0f2fe; padding: 12px; border-radius: 8px;">
+                            <p style="text-align: center; font-weight: bold;">MEDIANA = Q2 = D5 = P50</p>
+                        </div>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">✏️ Ejercicio:</h4>
+                        <p>¿Qué porcentaje de datos deja por debajo el Cuartil 3 (Q3)? <em>(R: 75%)</em></p>
                     `,
-                                formula: "Q2 = D5 = P50 = Mediana"
+                                formula: "Q: 25% | D: 10% | P: 1% | Mediana=Q2=D5=P50"
                             },
                             "Sistemas de ecuaciones de 3 incógnitas": {
                                 texto: `
@@ -7247,14 +7444,138 @@
                             "Representación gráfica de información": {
                                 texto: `
                         <h4 style="color: #3b82f6; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
-                        <p>Saber leer e interpretar diferentes visualizaciones de datos:</p>
+                        <p>Saber elegir e interpretar el gráfico adecuado según el tipo de datos:</p>
                         <ul style="margin-left: 20px; line-height: 1.8;">
-                            <li><strong>Histogramas/Barras:</strong> Para comparar cantidades.</li>
-                            <li><strong>Pastel (Circular):</strong> Para ver porcentajes del total.</li>
-                            <li><strong>Polígono de frecuencias:</strong> Para ver tendencias en el tiempo.</li>
+                            <li><strong>Gráfico de Barras:</strong> Para comparar categorías (frecuencias).</li>
+                            <li><strong>Gráfico Circular (Pastel):</strong> Para ver proporciones o porcentajes de un total.</li>
+                            <li><strong>Histograma:</strong> Para datos numéricos agrupados en intervalos.</li>
+                            <li><strong>Polígono de Frecuencias/Líneas:</strong> Para ver cambios o tendencias en el tiempo.</li>
+                        </ul>
+                        
+                        <h4 style="color: #3b82f6; margin: 15px 0 10px;">📐 Tip EXANI:</h4>
+                        <p>Si te piden el <strong>total</strong> de datos y te dan un gráfico de barras, suma las alturas de todas las barras.</p>
+                    `,
+                                formula: "Barras=Comparar | Circular=% | Líneas=Tendencia"
+                            },
+                            "Inferencia y vocabulario": {
+                                texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p><strong>Inferencia:</strong> Capacidad de deducir información no escrita explícitamente basándose en pistas del texto.</p>
+                        <p><strong>Vocabulario en contexto:</strong> Entender el significado de una palabra según cómo se usa, no solo por su definición de diccionario.</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Cómo Inferir:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Observa los adjetivos y el tono del autor.</li>
+                            <li>Relaciona la información nueva con lo que ya se dijo.</li>
+                            <li>Pregúntate: "¿Qué quiso decir el autor sin decirlo directamente?"</li>
+                        </ul>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">✏️ Ejemplo:</h4>
+                        <p>"Juan salió con el paraguas y las botas puestas". <strong>Inferencia:</strong> Está lloviendo o va a llover.</p>
+                    `,
+                                formula: "Inferencia = Pistas + Conocimiento previo"
+                            },
+                            "Textos científicos": {
+                                texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Textos que comunican conocimientos basados en la investigación y el método científico. Su lenguaje es especializado (tecnicismos) y objetivo.</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Características:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Objetividad:</strong> No hay opiniones personales, solo hechos y datos.</li>
+                            <li><strong>Precisión:</strong> Uso de palabras exactas (tecnicismos).</li>
+                            <li><strong>Universalidad:</strong> El contenido debe entenderse igual en cualquier lugar.</li>
+                        </ul>
+                        <p><strong>Tipos:</strong> Artículos de investigación, tesis, manuales de laboratorio.</p>
+                    `,
+                                formula: "Objetivo + Tecnicismos + Datos"
+                            },
+                            "Textos administrativos": {
+                                texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Son los textos que se utilizan en la comunicación entre la administración pública y los ciudadanos, o dentro de las empresas.</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Formatos Comunes:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Oficio:</strong> Comunicación formal oficial.</li>
+                            <li><strong>Memorándum:</strong> Mensaje breve interno para recordar algo.</li>
+                            <li><strong>Circular:</strong> Aviso dirigido a muchas personas a la vez.</li>
+                            <li><strong>Acta:</strong> Documento que registra lo sucedido en una reunión.</li>
                         </ul>
                     `,
-                                formula: "Líneas: Tendencia | Barras: Comparación | Pastel: Porciento"
+                                formula: "Formalidad + Estructura rígida"
+                            },
+                            "Textos sociales": {
+                                texto: `
+                        <h4 style="color: #10b981; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Textos que analizan fenómenos de la sociedad, historia, política o cultura. Suelen ser reflexivos y a veces argumentativos.</p>
+                        
+                        <h4 style="color: #10b981; margin: 15px 0 10px;">🎯 Elementos:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>Tratan sobre grupos humanos y comportamientos.</li>
+                            <li>Pueden incluir estadísticas sociales o testimonios.</li>
+                            <li>El autor a menudo busca generar conciencia o debate.</li>
+                        </ul>
+                    `,
+                                formula: "Análisis + Sociedad + Contexto"
+                            },
+                            "Prólogo y reseña": {
+                                texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p><strong>Prólogo:</strong> Texto al principio de un libro donde el autor u otra persona presenta la obra y justifica su lectura.</p>
+                        <p><strong>Reseña:</strong> Escrito breve que describe y valora una obra (libro, película, evento) dando una opinión crítica.</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Diferencias clave:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li>El prólogo es parte del libro; la reseña se publica aparte (periódicos, blogs).</li>
+                            <li>La reseña SIEMPRE tiene un tono crítico/evaluativo; el prólogo suele ser más introductorio y positivo.</li>
+                        </ul>
+                    `,
+                                formula: "Prólogo (Introducción) | Reseña (Crítica/Valoración)"
+                            },
+                            "Ensayo": {
+                                texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Texto argumentativo en prosa donde el autor expone, analiza y defiende una tesis personal sobre un tema determinado.</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Estructura:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Introducción:</strong> Presenta el tema y la <strong>tesis</strong>.</li>
+                            <li><strong>Desarrollo:</strong> Argumentos, evidencias y ejemplos.</li>
+                            <li><strong>Conclusión:</strong> Resume lo dicho y refuerza la tesis.</li>
+                        </ul>
+                        <p><strong>Clave:</strong> El ensayo es subjetivo (opinión del autor) pero debe estar fundamentado.</p>
+                    `,
+                                formula: "Tesis + Argumentos + Subjetividad"
+                            },
+                            "Corrección de textos": {
+                                texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Proceso de revisar un escrito para mejorar su claridad, coherencia, cohesión y ortografía. En EXANI se enfoca en encontrar errores gramaticales.</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Qué revisar:</h4>
+                        <ul style="margin-left: 20px; line-height: 1.8;">
+                            <li><strong>Discordancia:</strong> Ej: "Los niños corre" (incorrecto) -> "Los niños corren".</li>
+                            <li><strong>Solecismo:</strong> Errores en la estructura (preposiciones mal usadas).</li>
+                            <li><strong>Pleonasmo:</strong> Repetición innecesaria ("subir arriba").</li>
+                        </ul>
+                    `,
+                                formula: "Revisar Gramática + Coherencia + Cohesión"
+                            },
+                            "Ortografía y acentuación": {
+                                texto: `
+                        <h4 style="color: #ec4899; margin-bottom: 10px;">📖 ¿Qué debes saber?</h4>
+                        <p>Reglas fundamentales para escribir correctamente las palabras y colocar las tildes.</p>
+                        
+                        <h4 style="color: #ec4899; margin: 15px 0 10px;">🎯 Reglas de Acentuación:</h4>
+                        <table style="width: 100%; border-collapse: collapse; margin: 10px 0;">
+                            <tr style="background: #fdf2f8;"><th>Tipo</th><th>Sílaba tónica</th><th>Se tilda si termina en:</th></tr>
+                            <tr><td><strong>Aguda</strong></td><td>Última</td><td>n, s o vocal</td></tr>
+                            <tr><td><strong>Grave</strong></td><td>Penúltima</td><td>Cualquier consonante EXCEPTO n, s o vocal</td></tr>
+                            <tr><td><strong>Esdrújula</strong></td><td>Antepenúltima</td><td>SIEMPRE</td></tr>
+                        </table>
+                    `,
+                                formula: "Agudas (n,s,vocal) | Graves (≠n,s,vocal) | Esdrújulas (Siempre)"
                             },
                         };
                         const exp = explicaciones[targetTopic];
