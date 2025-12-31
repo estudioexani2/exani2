@@ -2795,13 +2795,20 @@
 
                 function toggleExplicacion(semana, diaIdx, temaIdx) {
                     const expId = `exp-${semana}-${diaIdx}-${temaIdx}`;
+                    const arrowId = `arrow-${semana}-${diaIdx}-${temaIdx}`;
                     const element = document.getElementById(expId);
+                    const arrow = document.getElementById(arrowId);
 
                     if (element.classList.contains('show')) {
                         element.classList.remove('show');
+                        if (arrow) arrow.style.transform = 'rotate(0deg)';
                     } else {
                         document.querySelectorAll('.tema-explicacion').forEach(el => el.classList.remove('show'));
+                        // Reset all arrows
+                        document.querySelectorAll('[id^="arrow-"]').forEach(el => el.style.transform = 'rotate(0deg)');
+
                         element.classList.add('show');
+                        if (arrow) arrow.style.transform = 'rotate(90deg)';
 
                         setTimeout(() => {
                             const header = element.previousElementSibling;
@@ -2814,9 +2821,15 @@
 
                 function cerrarExplicacion(semana, diaIdx, temaIdx) {
                     const expId = `exp-${semana}-${diaIdx}-${temaIdx}`;
+                    const arrowId = `arrow-${semana}-${diaIdx}-${temaIdx}`;
                     const element = document.getElementById(expId);
+                    const arrow = document.getElementById(arrowId);
+
                     if (element) {
                         element.classList.remove('show');
+                    }
+                    if (arrow) {
+                        arrow.style.transform = 'rotate(0deg)';
                     }
                 }
 
@@ -2938,6 +2951,7 @@
                                         style="cursor: pointer;" 
                                         onclick="toggleExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx})"
                                         title="Haz clic para ver explicación">
+                                        <span id="arrow-${semanaKey}-${diaIdx}-${temaIdx}" style="display:inline-block; transition: transform 0.3s; margin-right: 8px; font-weight:bold; color:#6b7280;">></span>
                                         ${tema} ${notasGuardadas ? '📝' : '💡'}
                                     </span>
                                 </div>
@@ -3026,26 +3040,29 @@
                                             onblur="this.style.borderColor='#e5e7eb'; guardarNotas('${semanaKey}', ${diaIdx}, ${temaIdx})"
                                         >${notasGuardadas}</textarea>
                                         
-                                        <div style="text-align: right; margin-top: 15px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+                                        <div style="text-align: center; margin-top: 20px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
                                             <button 
                                                 onclick="cerrarExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx}')"
                                                 style="
-                                                    background: #ef4444; 
-                                                    color: white; 
+                                                    background: #f3f4f6; 
+                                                    color: #6b7280; 
                                                     border: none; 
-                                                    padding: 8px 16px; 
-                                                    border-radius: 6px; 
-                                                    font-weight: 600; 
+                                                    width: 40px; 
+                                                    height: 40px; 
+                                                    border-radius: 50%; 
+                                                    font-size: 1.2em; 
                                                     cursor: pointer;
+                                                    transition: all 0.3s;
                                                     display: inline-flex;
                                                     align-items: center;
-                                                    gap: 5px;
-                                                    transition: all 0.3s;
+                                                    justify-content: center;
+                                                    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
                                                 "
-                                                onmouseover="this.style.background='#dc2626'"
-                                                onmouseout="this.style.background='#ef4444'"
+                                                onmouseover="this.style.background='#e5e7eb'; this.style.color='#374151'; this.style.transform='translateY(-2px)'"
+                                                onmouseout="this.style.background='#f3f4f6'; this.style.color='#6b7280'; this.style.transform='translateY(0)'"
+                                                title="Cerrar tema"
                                             >
-                                                🔼 Cerrar tema
+                                                🔼
                                             </button>
                                         </div>
                                     </div>
