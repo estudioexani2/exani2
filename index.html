@@ -384,20 +384,33 @@
 
         .tema-explicacion {
             margin-left: 38px;
-            margin-top: 10px;
-            padding: 20px;
+            /* Hidden state props */
+            max-height: 0;
+            opacity: 0;
+            padding: 0 20px;
+            margin-top: 0;
+            overflow: hidden;
+
+            /* Decoration validation */
             background: #f0f9ff;
             border-left: 3px solid #3b82f6;
             border-radius: 8px;
+
+            /* Text props */
             font-size: 0.95em;
             line-height: 1.7;
             color: #1e293b;
-            display: none;
+
+            /* Transition */
+            transition: all 0.6s cubic-bezier(0.25, 1, 0.5, 1);
+            display: block;
         }
 
         .tema-explicacion.show {
-            display: block;
-            animation: slideDown 0.3s ease;
+            max-height: 4000px;
+            opacity: 1;
+            padding: 20px;
+            margin-top: 10px;
         }
 
         .tema-formula {
@@ -2786,10 +2799,6 @@
 
                     if (element.classList.contains('show')) {
                         element.classList.remove('show');
-                        const header = element.previousElementSibling;
-                        if (header) {
-                            header.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                        }
                     } else {
                         document.querySelectorAll('.tema-explicacion').forEach(el => el.classList.remove('show'));
                         element.classList.add('show');
@@ -2797,9 +2806,9 @@
                         setTimeout(() => {
                             const header = element.previousElementSibling;
                             if (header) {
-                                header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                header.scrollIntoView({ behavior: 'smooth', block: 'center' });
                             }
-                        }, 300);
+                        }, 100);
                     }
                 }
 
@@ -3011,7 +3020,7 @@
                                         
                                         <div style="text-align: right; margin-top: 15px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
                                             <button 
-                                                onclick="toggleExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx}')"
+                                                onclick="event.stopPropagation(); toggleExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx}')"
                                                 style="
                                                     background: #ef4444; 
                                                     color: white; 
@@ -3448,18 +3457,13 @@
                     const tituloInput = document.getElementById(`video-titulo-${semana}-${diaIdx}-${temaIdx}`);
                     const urlInput = document.getElementById(`video-url-${semana}-${diaIdx}-${temaIdx}`);
 
-                    const titulo = tituloInput.value.trim();
+                    let titulo = tituloInput.value.trim();
                     const url = urlInput.value.trim();
-
-                    if (!titulo || !url) {
-                        alert('⚠️ Por favor completa el título y la URL del video');
-                        return;
-                    }
 
                     const videoKey = `video-global-${semana}-${diaIdx}-${temaIdx}`;
 
                     try {
-                        // Get existing videos
+                        // Get existing videos first
                         const snapshot = await db.ref('videos-globales/' + videoKey).once('value');
                         let videos = snapshot.val() || [];
 
@@ -3471,6 +3475,16 @@
                                 url: videos,
                                 orden: 1
                             }];
+                        }
+
+                        // Default title logic for the first video
+                        if (videos.length === 0 && !titulo) {
+                            titulo = "Video Principal";
+                        }
+
+                        if (!titulo || !url) {
+                            alert('⚠️ Por favor completa el título y la URL del video');
+                            return;
                         }
 
                         // Add new video
