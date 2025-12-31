@@ -2817,7 +2817,7 @@
                                 const y = header.getBoundingClientRect().top + window.pageYOffset + yOffset;
                                 window.scrollTo({ top: y, behavior: 'smooth' });
                             }
-                        }, 300);
+                        }, 500);
                     }
                 }
 
@@ -2833,6 +2833,13 @@
                     if (arrow) {
                         arrow.style.transform = 'rotate(0deg)';
                     }
+                }
+
+                function cerrarExplicacionFromBtn(btn) {
+                    const semana = btn.getAttribute('data-semana');
+                    const dia = parseInt(btn.getAttribute('data-dia'));
+                    const tema = parseInt(btn.getAttribute('data-tema'));
+                    cerrarExplicacion(semana, dia, tema);
                 }
 
                 function generarPreviewHTML(valor, semana, diaIdx, temaIdx) {
@@ -3044,7 +3051,10 @@
                                         
                                         <div style="text-align: center; margin-top: 20px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
                                             <button 
-                                                onclick="cerrarExplicacion('${semanaKey}',${diaIdx},${temaIdx}')"
+                                                data-semana="${semanaKey}"
+                                                data-dia="${diaIdx}"
+                                                data-tema="${temaIdx}"
+                                                onclick="cerrarExplicacionFromBtn(this)"
                                                 style="
                                                     background: #f3f4f6; 
                                                     color: #6b7280; 
