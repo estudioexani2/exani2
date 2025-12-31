@@ -2894,7 +2894,7 @@
                             dia.temas.forEach((tema, temaIdx) => {
                                 const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
                                 const checked = localStorage.getItem(key) === 'true';
-                                const explicacion = '<p style="color: #6b7280; font-style: italic;">Información detallada próximamente...</p>';
+                                const explicacion = obtenerExplicacion(dia.materia, tema);
                                 const notasKey = `notas-${semanaKey}-${diaIdx}-${temaIdx}`;
                                 const notasGuardadas = localStorage.getItem(notasKey) || '';
 
