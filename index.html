@@ -2813,9 +2813,11 @@
                         setTimeout(() => {
                             const header = element.previousElementSibling;
                             if (header) {
-                                header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                                const yOffset = -20;
+                                const y = header.getBoundingClientRect().top + window.pageYOffset + yOffset;
+                                window.scrollTo({ top: y, behavior: 'smooth' });
                             }
-                        }, 100);
+                        }, 300);
                     }
                 }
 
@@ -3042,7 +3044,7 @@
                                         
                                         <div style="text-align: center; margin-top: 20px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
                                             <button 
-                                                onclick="cerrarExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx}')"
+                                                onclick="cerrarExplicacion('${semanaKey}',${diaIdx},${temaIdx}')"
                                                 style="
                                                     background: #f3f4f6; 
                                                     color: #6b7280; 
