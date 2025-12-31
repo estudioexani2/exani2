@@ -2806,9 +2806,17 @@
                         setTimeout(() => {
                             const header = element.previousElementSibling;
                             if (header) {
-                                header.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                                header.scrollIntoView({ behavior: 'smooth', block: 'start' });
                             }
                         }, 100);
+                    }
+                }
+
+                function cerrarExplicacion(semana, diaIdx, temaIdx) {
+                    const expId = `exp-${semana}-${diaIdx}-${temaIdx}`;
+                    const element = document.getElementById(expId);
+                    if (element) {
+                        element.classList.remove('show');
                     }
                 }
 
@@ -3020,7 +3028,7 @@
                                         
                                         <div style="text-align: right; margin-top: 15px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
                                             <button 
-                                                onclick="event.stopPropagation(); toggleExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx}')"
+                                                onclick="cerrarExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx}')"
                                                 style="
                                                     background: #ef4444; 
                                                     color: white; 
