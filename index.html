@@ -2866,7 +2866,10 @@
 
                 async function renderCalendario() {
                     const container = document.getElementById('calendario');
+                    if (!container) return;
+
                     let html = '';
+                    const temasToRender = []; // Store topics to render videos for
 
                     // Load global videos and check admin status
                     const isUserAdmin = isAdmin();
@@ -2891,11 +2894,12 @@
                             dia.temas.forEach((tema, temaIdx) => {
                                 const key = `${semanaKey}-${diaIdx}-${temaIdx}`;
                                 const checked = localStorage.getItem(key) === 'true';
-                                const explicacion = obtenerExplicacion(dia.materia, tema);
+                                const explicacion = '<p style="color: #6b7280; font-style: italic;">Información detallada próximamente...</p>';
                                 const notasKey = `notas-${semanaKey}-${diaIdx}-${temaIdx}`;
                                 const notasGuardadas = localStorage.getItem(notasKey) || '';
-                                const videoGlobalKey = `video-global-${semanaKey}-${diaIdx}-${temaIdx}`;
-                                const videoGlobal = localStorage.getItem(videoGlobalKey) || '';
+
+                                // Collecting topic info for video rendering
+                                temasToRender.push({ semanaKey, diaIdx, temaIdx });
 
                                 html += `<div>
                                 <div class="tema">
@@ -2912,46 +2916,65 @@
                                     ${explicacion}
                                     
                                     <div style="margin-top: 20px; padding-top: 15px; border-top: 2px solid #e5e7eb;">
-                                        <h4 style="color: #667eea; margin-bottom: 10px;">🎥 Video del tema</h4>
+                                        <h4 style="color: #667eea; margin-bottom: 10px;">🎥 Videos del tema</h4>
                                         <div id="video-global-${semanaKey}-${diaIdx}-${temaIdx}">
                                             ${isUserAdmin ? `
-                                                <input 
-                                                    type="text" 
-                                                    id="video-url-${semanaKey}-${diaIdx}-${temaIdx}"
-                                                    placeholder="Pega aquí la URL del video de YouTube..."
-                                                    value="${videoGlobal || ''}"
-                                                    style="
-                                                        width: 100%;
-                                                        padding: 12px;
-                                                        border: 2px solid #e5e7eb;
-                                                        border-radius: 8px;
-                                                        font-family: inherit;
-                                                        font-size: 0.95em;
-                                                        margin-bottom: 10px;
-                                                    "
-                                                    onfocus="this.style.borderColor='#667eea'"
-                                                    onblur="this.style.borderColor='#e5e7eb'"
-                                                />
-                                                <button 
-                                                    onclick="guardarVideoGlobal('${semanaKey}', ${diaIdx}, ${temaIdx})"
-                                                    style="
-                                                        background: #667eea;
-                                                        color: white;
-                                                        border: none;
-                                                        padding: 10px 20px;
-                                                        border-radius: 8px;
-                                                        cursor: pointer;
-                                                        font-weight: 600;
-                                                        transition: all 0.3s;
-                                                    "
-                                                    onmouseover="this.style.background='#4f46e5'"
-                                                    onmouseout="this.style.background='#667eea'"
-                                                >
-                                                    💾 Guardar video global
-                                                </button>
+                                                <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 2px dashed #e5e7eb;">
+                                                    <h5 style="color: #374151; margin: 0 0 10px 0; font-size: 0.95em;">➕ Agregar nuevo video</h5>
+                                                    <input 
+                                                        type="text" 
+                                                        id="video-titulo-${semanaKey}-${diaIdx}-${temaIdx}"
+                                                        placeholder="Título del video (ej: Parte 1 - Introducción)"
+                                                        style="
+                                                            width: 100%;
+                                                            padding: 10px;
+                                                            border: 2px solid #e5e7eb;
+                                                            border-radius: 6px;
+                                                            font-family: inherit;
+                                                            font-size: 0.9em;
+                                                            margin-bottom: 8px;
+                                                        "
+                                                        onfocus="this.style.borderColor='#667eea'"
+                                                        onblur="this.style.borderColor='#e5e7eb'"
+                                                    />
+                                                    <input 
+                                                        type="text" 
+                                                        id="video-url-${semanaKey}-${diaIdx}-${temaIdx}"
+                                                        placeholder="URL del video de YouTube"
+                                                        style="
+                                                            width: 100%;
+                                                            padding: 10px;
+                                                            border: 2px solid #e5e7eb;
+                                                            border-radius: 6px;
+                                                            font-family: inherit;
+                                                            font-size: 0.9em;
+                                                            margin-bottom: 10px;
+                                                        "
+                                                        onfocus="this.style.borderColor='#667eea'"
+                                                        onblur="this.style.borderColor='#e5e7eb'"
+                                                    />
+                                                    <button 
+                                                        onclick="agregarVideoGlobal('${semanaKey}', ${diaIdx}, ${temaIdx})"
+                                                        style="
+                                                            background: #667eea;
+                                                            color: white;
+                                                            border: none;
+                                                            padding: 10px 20px;
+                                                            border-radius: 8px;
+                                                            cursor: pointer;
+                                                            font-weight: 600;
+                                                            transition: all 0.3s;
+                                                            width: 100%;
+                                                        "
+                                                        onmouseover="this.style.background='#4f46e5'"
+                                                        onmouseout="this.style.background='#667eea'"
+                                                    >
+                                                        ➕ Agregar video
+                                                    </button>
+                                                </div>
                                             ` : ''}
                                             <div id="preview-video-${semanaKey}-${diaIdx}-${temaIdx}" style="margin-top: 10px;">
-                                                ${generarPreviewHTML(videoGlobal, semanaKey, diaIdx, temaIdx)}
+                                                <!-- Videos rendered dynamically -->
                                             </div>
                                         </div>
                                         
@@ -2985,6 +3008,11 @@
                     });
 
                     container.innerHTML = html;
+
+                    // Render videos for all topics after HTML insertion
+                    temasToRender.forEach(({ semanaKey, diaIdx, temaIdx }) => {
+                        renderVideosGlobales(semanaKey, diaIdx, temaIdx);
+                    });
                 }
 
                 function calcularProgresoSemana(semanaKey) {
@@ -3358,46 +3386,224 @@
                     return currentUser.uid === ADMIN_UID;
                 }
 
-                // Save global video (admin only)
-                async function guardarVideoGlobal(semana, diaIdx, temaIdx) {
+                // Extract YouTube video ID from various URL formats
+                function extractYouTubeID(url) {
+                    if (!url) return null;
+
+                    const patterns = [
+                        /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\?\/]+)/,
+                        /^([a-zA-Z0-9_-]{11})$/
+                    ];
+
+                    for (const pattern of patterns) {
+                        const match = url.match(pattern);
+                        if (match) return match[1];
+                    }
+
+                    return null;
+                }
+
+                // Add a new video to a topic (admin only)
+                async function agregarVideoGlobal(semana, diaIdx, temaIdx) {
                     if (!isAdmin()) {
-                        alert('⚠️ Solo el administrador puede cambiar los videos globales');
+                        alert('⚠️ Solo el administrador puede agregar videos globales');
+                        return;
+                    }
+
+                    const tituloInput = document.getElementById(`video-titulo-${semana}-${diaIdx}-${temaIdx}`);
+                    const urlInput = document.getElementById(`video-url-${semana}-${diaIdx}-${temaIdx}`);
+
+                    const titulo = tituloInput.value.trim();
+                    const url = urlInput.value.trim();
+
+                    if (!titulo || !url) {
+                        alert('⚠️ Por favor completa el título y la URL del video');
                         return;
                     }
 
                     const videoKey = `video-global-${semana}-${diaIdx}-${temaIdx}`;
-                    const inputId = `video-url-${semana}-${diaIdx}-${temaIdx}`;
-                    const input = document.getElementById(inputId);
-                    const videoUrl = input.value.trim();
 
                     try {
-                        await db.ref('videos-globales/' + videoKey).set(videoUrl);
-                        localStorage.setItem(videoKey, videoUrl);
+                        // Get existing videos
+                        const snapshot = await db.ref('videos-globales/' + videoKey).once('value');
+                        let videos = snapshot.val() || [];
 
-                        const previewDiv = document.getElementById(`preview-video-${semana}-${diaIdx}-${temaIdx}`);
-                        const previewHTML = generarPreviewHTML(videoUrl, semana, diaIdx, temaIdx);
-
-                        if (previewHTML) {
-                            previewDiv.innerHTML = previewHTML;
-                            alert('✅ Video global actualizado correctamente');
-                        } else if (videoUrl) {
-                            previewDiv.innerHTML = `
-                                    <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 8px;">
-                                        <p style="margin: 0; color: #065f46; font-size: 0.9em;">
-                                            ✅ Video guardado correctamente
-                                        </p>
-                                    </div>
-                                `;
-                            setTimeout(() => {
-                                location.reload();
-                            }, 1500);
-                        } else {
-                            previewDiv.innerHTML = '';
-                            alert('✅ Video eliminado');
+                        // Migrate old format (string) to new format (array)
+                        if (typeof videos === 'string') {
+                            videos = [{
+                                id: Date.now().toString(),
+                                titulo: 'Video Principal',
+                                url: videos,
+                                orden: 1
+                            }];
                         }
+
+                        // Add new video
+                        const nuevoVideo = {
+                            id: Date.now().toString(),
+                            titulo: titulo,
+                            url: url,
+                            orden: videos.length + 1
+                        };
+
+                        videos.push(nuevoVideo);
+
+                        // Save to Firebase
+                        await db.ref('videos-globales/' + videoKey).set(videos);
+                        localStorage.setItem(videoKey, JSON.stringify(videos));
+
+                        // Clear inputs
+                        tituloInput.value = '';
+                        urlInput.value = '';
+
+                        // Re-render videos
+                        renderVideosGlobales(semana, diaIdx, temaIdx);
+
+                        alert('✅ Video agregado correctamente');
                     } catch (error) {
-                        console.error('Error al guardar video:', error);
-                        alert('❌ Error al guardar el video: ' + error.message);
+                        console.error('Error al agregar video:', error);
+                        alert('❌ Error al agregar el video: ' + error.message);
+                    }
+                }
+
+                // Delete a specific video (admin only)
+                async function eliminarVideoGlobal(semana, diaIdx, temaIdx, videoId) {
+                    if (!isAdmin()) {
+                        alert('⚠️ Solo el administrador puede eliminar videos globales');
+                        return;
+                    }
+
+                    if (!confirm('¿Estás seguro de eliminar este video?')) {
+                        return;
+                    }
+
+                    const videoKey = `video-global-${semana}-${diaIdx}-${temaIdx}`;
+
+                    try {
+                        const snapshot = await db.ref('videos-globales/' + videoKey).once('value');
+                        let videos = snapshot.val() || [];
+
+                        // Filter out the video to delete
+                        videos = videos.filter(v => v.id !== videoId);
+
+                        // Reorder remaining videos
+                        videos.forEach((v, idx) => {
+                            v.orden = idx + 1;
+                        });
+
+                        // Save to Firebase
+                        await db.ref('videos-globales/' + videoKey).set(videos);
+                        localStorage.setItem(videoKey, JSON.stringify(videos));
+
+                        // Re-render videos
+                        renderVideosGlobales(semana, diaIdx, temaIdx);
+
+                        alert('✅ Video eliminado correctamente');
+                    } catch (error) {
+                        console.error('Error al eliminar video:', error);
+                        alert('❌ Error al eliminar el video: ' + error.message);
+                    }
+                }
+
+                // Render all videos for a topic
+                async function renderVideosGlobales(semana, diaIdx, temaIdx) {
+                    const videoKey = `video-global-${semana}-${diaIdx}-${temaIdx}`;
+                    const previewDiv = document.getElementById(`preview-video-${semana}-${diaIdx}-${temaIdx}`);
+
+                    if (!previewDiv) return;
+
+                    try {
+                        // Try to get from Firebase first
+                        const snapshot = await db.ref('videos-globales/' + videoKey).once('value');
+                        let videos = snapshot.val();
+
+                        // Fallback to localStorage
+                        if (!videos) {
+                            const cached = localStorage.getItem(videoKey);
+                            if (cached) {
+                                try {
+                                    videos = JSON.parse(cached);
+                                } catch (e) {
+                                    videos = cached; // Old format
+                                }
+                            }
+                        }
+
+                        // Migrate old format (string) to new format (array)
+                        if (typeof videos === 'string') {
+                            videos = [{
+                                id: Date.now().toString(),
+                                titulo: 'Video Principal',
+                                url: videos,
+                                orden: 1
+                            }];
+                        }
+
+                        if (!videos || videos.length === 0) {
+                            previewDiv.innerHTML = '<p style="color: #9ca3af; font-size: 0.9em;">No hay videos para este tema.</p>';
+                            return;
+                        }
+
+                        let html = '';
+
+                        videos.forEach((video, idx) => {
+                            const videoId = extractYouTubeID(video.url);
+
+                            html += `
+                                <div style="margin-bottom: 20px; padding: 15px; background: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+                                        <h5 style="margin: 0; color: #374151; font-size: 1em;">
+                                            ${idx + 1}. ${video.titulo}
+                                        </h5>
+                                        ${isAdmin() ? `
+                                            <button 
+                                                onclick="eliminarVideoGlobal('${semana}', ${diaIdx}, ${temaIdx}, '${video.id}')"
+                                                style="
+                                                    background: #ef4444;
+                                                    color: white;
+                                                    border: none;
+                                                    padding: 6px 12px;
+                                                    border-radius: 6px;
+                                                    cursor: pointer;
+                                                    font-size: 0.85em;
+                                                    font-weight: 600;
+                                                    transition: all 0.3s;
+                                                "
+                                                onmouseover="this.style.background='#dc2626'"
+                                                onmouseout="this.style.background='#ef4444'"
+                                            >
+                                                🗑️ Eliminar
+                                            </button>
+                                        ` : ''}
+                                    </div>
+                            `;
+
+                            if (videoId) {
+                                html += `
+                                    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border-radius: 8px;">
+                                        <iframe 
+                                            src="https://www.youtube.com/embed/${videoId}" 
+                                            frameborder="0" 
+                                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                                            allowfullscreen 
+                                            style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;">
+                                        </iframe>
+                                    </div>
+                                    <a href="${video.url}" target="_blank" style="display: inline-block; margin-top: 8px; color: #667eea; text-decoration: none; font-size: 0.9em;">
+                                        🔗 Abrir en YouTube
+                                    </a>
+                                `;
+                            } else {
+                                html += `<p style="color: #ef4444; font-size: 0.9em;">⚠️ URL de video inválida</p>`;
+                            }
+
+                            html += `</div>`;
+                        });
+
+                        previewDiv.innerHTML = html;
+                    } catch (error) {
+                        console.error('Error al renderizar videos:', error);
+                        previewDiv.innerHTML = '<p style="color: #ef4444;">Error al cargar videos</p>';
                     }
                 }
 
@@ -3409,7 +3615,12 @@
 
                         // Save to localStorage for offline use
                         Object.keys(videos).forEach(key => {
-                            localStorage.setItem(key, videos[key]);
+                            const value = videos[key];
+                            if (typeof value === 'string') {
+                                localStorage.setItem(key, value);
+                            } else {
+                                localStorage.setItem(key, JSON.stringify(value));
+                            }
                         });
 
                         return videos;
