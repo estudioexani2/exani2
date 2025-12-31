@@ -2783,11 +2783,23 @@
                 function toggleExplicacion(semana, diaIdx, temaIdx) {
                     const expId = `exp-${semana}-${diaIdx}-${temaIdx}`;
                     const element = document.getElementById(expId);
+
                     if (element.classList.contains('show')) {
                         element.classList.remove('show');
+                        const header = element.previousElementSibling;
+                        if (header) {
+                            header.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
                     } else {
                         document.querySelectorAll('.tema-explicacion').forEach(el => el.classList.remove('show'));
                         element.classList.add('show');
+
+                        setTimeout(() => {
+                            const header = element.previousElementSibling;
+                            if (header) {
+                                header.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                            }
+                        }, 300);
                     }
                 }
 
@@ -2996,6 +3008,29 @@
                                             onfocus="this.style.borderColor='#667eea'"
                                             onblur="this.style.borderColor='#e5e7eb'; guardarNotas('${semanaKey}', ${diaIdx}, ${temaIdx})"
                                         >${notasGuardadas}</textarea>
+                                        
+                                        <div style="text-align: right; margin-top: 15px; border-top: 1px solid #e5e7eb; padding-top: 10px;">
+                                            <button 
+                                                onclick="toggleExplicacion('${semanaKey}', ${diaIdx}, ${temaIdx}')"
+                                                style="
+                                                    background: #ef4444; 
+                                                    color: white; 
+                                                    border: none; 
+                                                    padding: 8px 16px; 
+                                                    border-radius: 6px; 
+                                                    font-weight: 600; 
+                                                    cursor: pointer;
+                                                    display: inline-flex;
+                                                    align-items: center;
+                                                    gap: 5px;
+                                                    transition: all 0.3s;
+                                                "
+                                                onmouseover="this.style.background='#dc2626'"
+                                                onmouseout="this.style.background='#ef4444'"
+                                            >
+                                                🔼 Cerrar tema
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>`;
