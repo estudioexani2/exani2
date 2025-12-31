@@ -1962,23 +1962,25 @@
                             <div
                                 style="display: flex; gap: 30px; margin-bottom: 40px; align-items: flex-start; flex-wrap: wrap;">
                                 <div style="flex: 1; min-width: 300px;">
-                                    <h3 style="font-size: 1.3em; margin-bottom: 15px; color: #374151;">📄 Archivos
-                                        compartidos</h3>
+                                    <h3 style="font-size: 1.3em; margin-bottom: 15px; color: #374151;">📚 Recursos
+                                        Compartidos</h3>
                                     <div id="archivos-lista" style="display: grid; gap: 12px;">
                                         <!-- Se llena dinámicamente -->
                                     </div>
                                 </div>
 
                                 <div
-                                    style="width: 300px; background: #f8fafc; padding: 25px; border-radius: 20px; border: 1px solid #e2e8f0;">
+                                    style="width: 300px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 25px; border-radius: 20px; box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);">
                                     <h3
-                                        style="font-size: 1.2em; margin-bottom: 15px; display: flex; align-items: center; gap: 8px;">
-                                        📤 Subir Apunte</h3>
-                                    <p style="font-size: 0.9em; color: #64748b; margin-bottom: 20px;">Ayuda a otros
-                                        compartiendo tus propios resúmenes en PDF.</p>
+                                        style="font-size: 1.2em; margin-bottom: 15px; display: flex; align-items: center; gap: 8px; color: white;">
+                                        🔗 Compartir Recurso</h3>
+                                    <p style="font-size: 0.9em; color: rgba(255,255,255,0.9); margin-bottom: 20px;">
+                                        Ayuda a otros compartiendo enlaces a tus resúmenes o guías.</p>
                                     <button onclick="abrirModalSubida()" class="glass-btn"
-                                        style="width: 100%; background: var(--primary); color: white; border: none; padding: 12px; border-radius: 12px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px;">
-                                        <span>✚</span> Subir PDF
+                                        style="width: 100%; background: rgba(255,255,255,0.2); color: white; border: 1px solid rgba(255,255,255,0.3); padding: 14px; border-radius: 12px; cursor: pointer; font-weight: 600; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.3s ease; backdrop-filter: blur(10px);"
+                                        onmouseover="this.style.background='rgba(255,255,255,0.3)'"
+                                        onmouseout="this.style.background='rgba(255,255,255,0.2)'">
+                                        <span>✚</span> Compartir Enlace
                                     </button>
                                 </div>
                             </div>
