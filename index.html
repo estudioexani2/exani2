@@ -2829,6 +2829,13 @@
 
                     if (element) {
                         element.classList.remove('show');
+                        // Scroll back to header
+                        const header = element.previousElementSibling;
+                        if (header) {
+                            setTimeout(() => {
+                                header.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            }, 100);
+                        }
                     }
                     if (arrow) {
                         arrow.style.transform = 'rotate(0deg)';
