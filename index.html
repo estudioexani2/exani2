@@ -8386,89 +8386,65 @@
 
                 function abrirModalSubida() {
                     document.getElementById('upload-modal').style.display = 'flex';
-                    // Resetear input y vista previa
-                    document.getElementById('file-input').value = '';
-                    document.getElementById('file-preview').innerHTML = '<p style="color: #9ca3af;">Ningún archivo seleccionado</p>';
+                    // Resetear inputs
+                    document.getElementById('link-title').value = '';
+                    document.getElementById('link-url').value = '';
                 }
 
                 function cerrarModalSubida() {
                     document.getElementById('upload-modal').style.display = 'none';
                 }
 
-                function handleFilePreview(event) {
-                    const file = event.target.files[0];
-                    const preview = document.getElementById('file-preview');
-
-                    if (file) {
-                        if (file.type !== 'application/pdf') {
-                            alert('⚠️ Solo se permiten archivos PDF');
-                            event.target.value = '';
-                            return;
-                        }
-
-                        if (file.size > 10 * 1024 * 1024) { // 10MB limit
-                            alert('⚠️ El archivo es demasiado grande (máx. 10MB)');
-                            event.target.value = '';
-                            return;
-                        }
-
-                        preview.innerHTML = `
-                            <div style="background: #f3f4f6; padding: 10px; border-radius: 8px; font-weight: 500;">
-                                📄 ${file.name} (${(file.size / 1024 / 1024).toFixed(2)} MB)
-                            </div>
-                        `;
-                    }
-                }
-
-                async function handleSubidaArchivo() {
-                    const fileInput = document.getElementById('file-input');
-                    const file = fileInput.files[0];
+                async function handleCompartirEnlace() {
+                    const title = document.getElementById('link-title').value.trim();
+                    const url = document.getElementById('link-url').value.trim();
                     const materia = document.getElementById('comunidad-detalle').dataset.materia;
 
-                    if (!file || !materia) {
-                        alert('Selecciona un archivo primero');
+                    if (!title || !url) {
+                        alert('Por favor completa el título y el enlace');
                         return;
                     }
 
-                    const subidaBtn = event.target;
-                    const originalText = subidaBtn.textContent;
-                    subidaBtn.disabled = true;
-                    subidaBtn.textContent = 'Subiendo...';
+                    // Validación básica de URL
+                    try {
+                        new URL(url);
+                    } catch (e) {
+                        alert('Por favor ingresa un enlace válido (ej: https://drive.google.com/...)');
+                        return;
+                    }
+
+                    const submitBtn = event.target;
+                    const originalText = submitBtn.textContent;
+                    submitBtn.disabled = true;
+                    submitBtn.textContent = 'Publicando...';
 
                     try {
                         const fileId = Date.now().toString();
-                        const fileName = file.name;
-                        const storageRef = storage.ref(`comunidad/${materia}/${fileId}_${fileName}`);
-
-                        // Subir a Storage
-                        const snapshot = await storageRef.put(file);
-                        const downloadURL = await snapshot.ref.getDownloadURL();
 
                         // Guardar metadatos en Database
                         await db.ref(`comunidad/archivos/${materia}/${fileId}`).set({
-                            name: fileName,
-                            url: downloadURL,
+                            name: title,
+                            url: url,
                             uploader: currentUser.displayName,
                             uploaderId: currentUser.uid,
-                            timestamp: firebase.database.ServerValue.TIMESTAMP,
-                            path: storageRef.fullPath
+                            timestamp: firebase.database.ServerValue.TIMESTAMP
                         });
 
-                        alert('✅ Archivo subido con éxito');
+                        alert('✅ Recurso compartido con éxito');
                         cerrarModalSubida();
                         cargarArchivosModulo(materia);
                     } catch (error) {
-                        console.error('Error al subir:', error);
-                        alert('❌ Error al subir: ' + error.message);
+                        console.error('Error al compartir:', error);
+                        alert('❌ Error al compartir: ' + error.message);
                     } finally {
-                        subidaBtn.disabled = false;
-                        subidaBtn.textContent = originalText;
+                        submitBtn.disabled = false;
+                        submitBtn.textContent = originalText;
                     }
                 }
 
                 function cargarArchivosModulo(materia) {
                     const listContainer = document.getElementById('archivos-lista');
-                    listContainer.innerHTML = '<div style="text-align: center; color: #6b7280; padding: 20px;">Cargando archivos...</div>';
+                    listContainer.innerHTML = '<div style="text-align: center; color: #6b7280; padding: 20px;">Cargando recursos...</div>';
 
                     db.ref(`comunidad/archivos/${materia}`).on('value', snapshot => {
                         const archivos = snapshot.val();
@@ -8476,7 +8452,7 @@
                             listContainer.innerHTML = `
                                 <div style="text-align: center; padding: 40px; color: #9ca3af;">
                                     <div style="font-size: 3em; margin-bottom: 10px;">📄</div>
-                                    <p>No hay archivos todavía en este módulo.<br>¡Sé el primero en compartir!</p>
+                                    <p>No hay recursos todavía en este módulo.<br>¡Sé el primero en compartir!</p>
                                 </div>
                             `;
                             return;
@@ -8492,11 +8468,11 @@
                                 <div class="archivo-item">
                                     <div class="archivo-info">
                                         <div class="archivo-name">${file.name}</div>
-                                        <div class="archivo-meta">Subido por ${file.uploader} el ${date}</div>
+                                        <div class="archivo-meta">Compartido por ${file.uploader} el ${date}</div>
                                     </div>
                                     <div style="display: flex; gap: 8px;">
-                                        <a href="${file.url}" target="_blank" class="btn-sm btn-primary" style="text-decoration: none;">Ver</a>
-                                        ${isMyFile ? `<button onclick="eliminarArchivo('${materia}', '${fileId}', '${file.path}')" class="btn-sm btn-danger">Eliminar</button>` : ''}
+                                        <a href="${file.url}" target="_blank" class="btn-sm btn-primary" style="text-decoration: none;">Abrir</a>
+                                        ${isMyFile ? `<button onclick="eliminarArchivo('${materia}', '${fileId}')" class="btn-sm btn-danger">Eliminar</button>` : ''}
                                     </div>
                                 </div>
                             `;
@@ -8505,15 +8481,13 @@
                     });
                 }
 
-                async function eliminarArchivo(materia, fileId, filePath) {
-                    if (!confirm('¿Seguro que quieres eliminar este archivo?')) return;
+                async function eliminarArchivo(materia, fileId) {
+                    if (!confirm('¿Seguro que quieres eliminar este recurso?')) return;
 
                     try {
-                        // Eliminar de Storage
-                        await storage.ref(filePath).delete();
-                        // Eliminar de Database
+                        // Solo eliminar de la Base de Datos
                         await db.ref(`comunidad/archivos/${materia}/${fileId}`).remove();
-                        alert('✅ Archivo eliminado');
+                        alert('✅ Recurso eliminado');
                     } catch (error) {
                         console.error('Error al eliminar:', error);
                         alert('❌ Error al eliminar: ' + error.message);
