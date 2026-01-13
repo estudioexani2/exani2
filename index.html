@@ -3403,8 +3403,8 @@
                     { id: 'eng_all', icon: '🗽', title: 'Bilingual', desc: 'Todos los temas de Inglés', check: () => countTopicsBySubject('Inglés') >= 6 },
 
                     // SIMULACROS
-                    { id: 'sim_1', icon: '🏁', title: 'Primer Test', desc: 'Completa tu primer simulacro', check: () => { const s = localStorage.getItem('simulacro1'); return s && JSON.parse(s).total; } },
-                    { id: 'sim_all', icon: '🎪', title: 'Invencible', desc: 'Completa los 6 simulacros', check: () => { for (let i = 1; i <= 6; i++) { if (!localStorage.getItem('simulacro' + i)) return false; } return true; } },
+                    { id: 'sim_1', icon: '🏁', title: 'Primer Test', desc: 'Completa tu primer simulacro', check: () => { const data = JSON.parse(localStorage.getItem('simulacrosData') || '[]'); return data.length >= 1; } },
+                    { id: 'sim_all', icon: '🎪', title: 'Invencible', desc: 'Completa 6 simulacros', check: () => { const data = JSON.parse(localStorage.getItem('simulacrosData') || '[]'); return data.length >= 6; } },
 
                     // ESPECIALES
                     { id: 'official', icon: '🆔', title: 'Estudiante Oficial', desc: 'Sé aprobado por el Admin', check: () => currentUser && document.getElementById('app-content') && document.getElementById('app-content').style.display !== 'none' },
