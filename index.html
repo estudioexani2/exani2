@@ -1004,6 +1004,102 @@
             background: #e5e7eb;
             color: var(--text-main);
         }
+
+        /* Tutorial Overlay Styles */
+        .tutorial-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(8px);
+            z-index: 9999;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .tutorial-overlay.show {
+            opacity: 1;
+        }
+
+        .tutorial-card {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            transform: translateY(20px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .tutorial-overlay.show .tutorial-card {
+            transform: translateY(0);
+        }
+
+        .tutorial-icon {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            display: block;
+            animation: bounce 2s infinite;
+        }
+
+        @keyframes bounce {
+
+            0%,
+            20%,
+            50%,
+            80%,
+            100% {
+                transform: translateY(0);
+            }
+
+            40% {
+                transform: translateY(-20px);
+            }
+
+            60% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .tutorial-title {
+            font-size: 1.8rem;
+            color: #1f2937;
+            margin-bottom: 15px;
+            font-weight: 800;
+        }
+
+        .tutorial-text {
+            font-size: 1.1rem;
+            color: #4b5563;
+            line-height: 1.6;
+            margin-bottom: 30px;
+        }
+
+        .tutorial-btn {
+            background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .tutorial-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
+        }
     </style>
 </head>
 
@@ -2761,6 +2857,110 @@
                 let totalTime = 25 * 60;
                 let isRunning = false;
 
+                // Tutorial Configuration
+                const tutorialConfig = {
+                    'inicio': {
+                        icon: '🏠',
+                        title: '¡Bienvenido a tu Dashboard!',
+                        text: 'Aquí encontrarás un resumen de tu progreso diario, frases motivacionales y acceso rápido a tus actividades pendientes.'
+                    },
+                    'calendario': {
+                        icon: '📅',
+                        title: 'Tu Plan de Estudios',
+                        text: 'Sigue tu cronograma semana a semana. Marca los temas vistos, despliega las explicaciones y accede a videos y material de apoyo.'
+                    },
+                    'simulacros': {
+                        icon: '📝',
+                        title: 'Simulacros de Examen',
+                        text: 'Pon a prueba tus conocimientos. Registra tus resultados, visualiza tu evolución en gráficas y desbloquea logros por tu constancia.'
+                    },
+                    'progreso': {
+                        icon: '📊',
+                        title: 'Estadísticas Detalladas',
+                        text: 'Monitorea tu avance por materia. Identifica tus fortalezas y áreas de oportunidad para enfocar mejor tu estudio.'
+                    },
+                    'logros': {
+                        icon: '🏆',
+                        title: 'Sistema de Logros',
+                        text: 'Gamifica tu aprendizaje. Desbloquea medallas cumpliendo objetivos, manteniendo rachas y superando tus propias marcas.'
+                    },
+                    'comunidad': {
+                        icon: '👥',
+                        title: 'Comunidad de Estudio',
+                        text: 'Comparte recursos, resuelve dudas y conecta con otros estudiantes. Juntos llegamos más lejos.'
+                    },
+                    'pomodoro': {
+                        icon: '⏱️',
+                        title: 'Técnica Pomodoro',
+                        text: 'Gestiona tu tiempo de estudio con intervalos de enfoque y descanso. ¡Mantén la productividad al máximo!'
+                    },
+                    'formulas': {
+                        icon: '📐',
+                        title: 'Fórmulas y Conceptos',
+                        text: 'Accede rápidamente a las fórmulas matemáticas, físicas y químicas más importantes para tu examen.'
+                    },
+                    'recursos': {
+                        icon: '🔗',
+                        title: 'Recursos Extra',
+                        text: 'Enlaces útiles, bibliografía recomendada y herramientas adicionales para complementar tu preparación.'
+                    },
+                    'tips': {
+                        icon: '💡',
+                        title: 'Tips de Estudio',
+                        text: 'Consejos prácticos para mejorar tu retención, manejo del estrés y estrategias para el día del examen.'
+                    }
+                };
+
+                function checkAndShowTutorial(tabName) {
+                    // Check if tutorial already seen
+                    if (localStorage.getItem(`tutorial_seen_${tabName}`)) return;
+
+                    const config = tutorialConfig[tabName];
+                    if (config) {
+                        showTutorialOverlay(config, tabName);
+                    }
+                }
+
+                function showTutorialOverlay(config, tabName) {
+                    // Create overlay if it doesn't exist
+                    let overlay = document.getElementById('tutorial-overlay');
+                    if (!overlay) {
+                        overlay = document.createElement('div');
+                        overlay.id = 'tutorial-overlay';
+                        overlay.className = 'tutorial-overlay';
+                        document.body.appendChild(overlay);
+                    }
+
+                    overlay.innerHTML = `
+                        <div class="tutorial-card">
+                            <span class="tutorial-icon">${config.icon}</span>
+                            <h2 class="tutorial-title">${config.title}</h2>
+                            <p class="tutorial-text">${config.text}</p>
+                            <button class="tutorial-btn" onclick="closeTutorial('${tabName}')">¡Entendido!</button>
+                        </div>
+                    `;
+
+                    // Show with animation
+                    overlay.style.display = 'flex';
+                    // Small delay to allow display flex to apply before opacity transition
+                    setTimeout(() => {
+                        overlay.classList.add('show');
+                    }, 10);
+                }
+
+                function closeTutorial(tabName) {
+                    const overlay = document.getElementById('tutorial-overlay');
+                    if (overlay) {
+                        overlay.classList.remove('show');
+                        setTimeout(() => {
+                            overlay.style.display = 'none';
+                        }, 300); // Match transition duration
+                    }
+
+                    // Mark as seen
+                    localStorage.setItem(`tutorial_seen_${tabName}`, 'true');
+                }
+
                 function showTab(tabName) {
                     console.log('showTab called with:', tabName);
                     document.querySelectorAll('.content').forEach(c => c.classList.remove('active'));
@@ -2784,6 +2984,9 @@
                     if (tabName === 'inicio') renderDashboard();
                     if (tabName === 'logros') renderAchievements();
                     if (tabName === 'comunidad') renderComunidad();
+
+                    // Trigger Tutorial
+                    checkAndShowTutorial(tabName);
                 }
 
                 function toggleTema(semana, diaIdx, temaIdx) {
@@ -3403,8 +3606,7 @@
                     { id: 'eng_all', icon: '🗽', title: 'Bilingual', desc: 'Todos los temas de Inglés', check: () => countTopicsBySubject('Inglés') >= 6 },
 
                     // SIMULACROS
-                    { id: 'sim_1', icon: '🏁', title: 'Primer Test', desc: 'Completa tu primer simulacro', check: () => { const data = JSON.parse(localStorage.getItem('simulacrosData') || '[]'); return data.length >= 1; } },
-                    { id: 'sim_all', icon: '🎪', title: 'Invencible', desc: 'Completa 6 simulacros', check: () => { const data = JSON.parse(localStorage.getItem('simulacrosData') || '[]'); return data.length >= 6; } },
+
 
                     // ESPECIALES
                     { id: 'official', icon: '🆔', title: 'Estudiante Oficial', desc: 'Sé aprobado por el Admin', check: () => currentUser && document.getElementById('app-content') && document.getElementById('app-content').style.display !== 'none' },
