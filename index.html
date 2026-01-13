@@ -3985,6 +3985,12 @@
                                             <div style="font-size: 2.5em; font-weight: bold;">${sim.totalAciertos || 0}/${sim.totalReactivos || 168}</div>
                                             <div style="font-size: 1.2em; font-weight: 600; margin-top: 5px;">${sim.porcentaje ? sim.porcentaje.toFixed(2) : '0.00'}%</div>
                                         </div>
+                                        
+                                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; border-radius: 12px; display: flex; flex-direction: column; justify-content: center; align-items: center;">
+                                            <div style="font-size: 0.9em; opacity: 0.9; margin-bottom: 5px;">Puntaje Total sin Inglés</div>
+                                            <div style="font-size: 2.5em; font-weight: bold;">${(sim.totalAciertos || 0) - (sim.ingles || 0)}/138</div>
+                                            <div style="font-size: 1.2em; font-weight: 600; margin-top: 5px;">${((((sim.totalAciertos || 0) - (sim.ingles || 0)) / 138) * 100).toFixed(2)}%</div>
+                                        </div>
                                     </div>
                                     
                                     <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
