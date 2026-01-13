@@ -2660,7 +2660,8 @@
                     "Análisis": "#14b8a6",
                     "Refuerzo": "#f97316",
                     "Descanso": "#64748b",
-                    "Preparación": "#8b5cf6"
+                    "Preparación": "#8b5cf6",
+                    "General": "#4ade80"
                 };
 
                 const moduloTemarios = {
@@ -9185,7 +9186,7 @@
                     const m1 = localStorage.getItem('module1');
                     const m2 = localStorage.getItem('module2');
 
-                    const comunes = ["Pensamiento Matemático", "Comprensión Lectora", "Redacción Indirecta", "Inglés"];
+                    const comunes = ["General", "Pensamiento Matemático", "Comprensión Lectora", "Redacción Indirecta", "Inglés"];
                     const modulosVisibles = [...comunes];
                     if (m1 && !modulosVisibles.includes(m1)) modulosVisibles.push(m1);
                     if (m2 && !modulosVisibles.includes(m2)) modulosVisibles.push(m2);
@@ -9196,10 +9197,11 @@
                         html += `
                             <div class="modulo-card" onclick="verDetalleModulo('${materia}')">
                                 <div class="modulo-icon" style="background: ${color}20; color: ${color};">
-                                    ${materia === 'Comprensión Lectora' ? '📖' :
-                                materia === 'Pensamiento Matemático' ? '📐' :
-                                    materia === 'Redacción Indirecta' ? '✍️' :
-                                        materia === 'Inglés' ? '🌍' : '🧪'}
+                                    ${materia === 'General' ? '📢' :
+                                materia === 'Comprensión Lectora' ? '📖' :
+                                    materia === 'Pensamiento Matemático' ? '📐' :
+                                        materia === 'Redacción Indirecta' ? '✍️' :
+                                            materia === 'Inglés' ? '🌍' : '🧪'}
                                 </div>
                                 <div class="modulo-info">
                                     <div class="modulo-nombre">${materia}</div>
