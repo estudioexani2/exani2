@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="icon"
         href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🎓</text></svg>">
-    <title>Plan de Estudio EXANI-II</title>
+    <title>Plan de Estudio EXANI-II - Completo</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.9.1/chart.min.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
@@ -316,10 +316,15 @@
         }
 
         body.dark-mode {
+            background-color: #030712 !important;
             background-image:
                 radial-gradient(at 0% 0%, hsla(253, 16%, 4%, 1) 0, transparent 50%),
                 radial-gradient(at 50% 0%, hsla(225, 39%, 12%, 1) 0, transparent 50%),
                 radial-gradient(at 100% 0%, hsla(339, 49%, 12%, 1) 0, transparent 50%) !important;
+        }
+
+        body.dark-mode #detalle-materia-lista>div div {
+            color: #f3f4f6 !important;
         }
 
         /* Theme Toggle Button */
@@ -9865,4 +9870,3 @@
 </body>
 
 </html>
-
