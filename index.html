@@ -257,6 +257,71 @@
             border-top: 1px solid #374151;
         }
 
+        /* Dark Mode Polish */
+        body.dark-mode .tema-explicacion div[style*="background"] {
+            background: #374151 !important;
+            /* Gray-700 for formula/info boxes */
+            color: #f3f4f6 !important;
+            border-color: #4b5563 !important;
+        }
+
+        body.dark-mode .tema-explicacion table,
+        body.dark-mode .tema-explicacion tr,
+        body.dark-mode .tema-explicacion th,
+        body.dark-mode .tema-explicacion td {
+            background: #1f2937 !important;
+            color: #f3f4f6 !important;
+            border-color: #374151 !important;
+        }
+
+        body.dark-mode #detalle-materia-lista>div {
+            background: #374151 !important;
+            border-color: #4b5563 !important;
+        }
+
+        body.dark-mode .admin-card,
+        body.dark-mode .simulacro-card,
+        body.dark-mode .simulacro-inner-card,
+        body.dark-mode .video-preview-card,
+        body.dark-mode .achievement {
+            background: #1f2937 !important;
+            color: #f3f4f6 !important;
+            border-color: #374151 !important;
+            box-shadow: var(--shadow-md) !important;
+        }
+
+        body.dark-mode .simulacro-card h4,
+        body.dark-mode .admin-card div,
+        body.dark-mode .achievement div {
+            color: #f3f4f6 !important;
+        }
+
+        body.dark-mode .stat-card {
+            background: #1f2937 !important;
+            border-color: #374151 !important;
+        }
+
+        body.dark-mode .pending-topic-card,
+        body.dark-mode .pending-item-card {
+            background: #451a1a !important;
+            /* Darker red for pending */
+            color: #fecaca !important;
+            border-color: #7f1d1d !important;
+        }
+
+        body.dark-mode .header {
+            background: rgba(0, 0, 0, 0.4) !important;
+            backdrop-filter: blur(15px) !important;
+            border: 1px solid rgba(255, 255, 255, 0.1) !important;
+        }
+
+        body.dark-mode {
+            background-image:
+                radial-gradient(at 0% 0%, hsla(253, 16%, 4%, 1) 0, transparent 50%),
+                radial-gradient(at 50% 0%, hsla(225, 39%, 12%, 1) 0, transparent 50%),
+                radial-gradient(at 100% 0%, hsla(339, 49%, 12%, 1) 0, transparent 50%) !important;
+        }
+
         /* Theme Toggle Button */
         .theme-toggle {
             position: fixed;
