@@ -108,7 +108,7 @@
         .theme-toggle {
             position: absolute;
             top: 20px;
-            right: 20px;
+            right: 250px;
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
@@ -764,15 +764,7 @@
             position: relative;
         }
 
-        .tip-box::before {
-            content: '💡';
-            position: absolute;
-            top: -15px;
-            left: 20px;
-            font-size: 30px;
-            background: #fffbeb;
-            padding: 0 10px;
-        }
+
 
         .achievement {
             background: white;
@@ -1196,89 +1188,6 @@
             transform: translateY(-2px);
             box-shadow: 0 15px 30px rgba(99, 102, 241, 0.4);
         }
-
-        /* Flashcards Styles */
-        .flashcard-container {
-            perspective: 1000px;
-            width: 100%;
-            height: 300px;
-            max-width: 500px;
-            margin: 0 auto;
-            cursor: pointer;
-        }
-
-        .flashcard-inner {
-            position: relative;
-            width: 100%;
-            height: 100%;
-            text-align: center;
-            transition: transform 0.6s;
-            transform-style: preserve-3d;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            border-radius: 20px;
-        }
-
-        .flashcard-container.flipped .flashcard-inner {
-            transform: rotateY(180deg);
-        }
-
-        .flashcard-front,
-        .flashcard-back {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            border-radius: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            box-sizing: border-box;
-        }
-
-        .flashcard-front {
-            background: white;
-            color: var(--text-main);
-            border: 2px solid #e5e7eb;
-        }
-
-        /* Dark mode for flashcard front */
-        body.dark-mode .flashcard-front {
-            background: #374151;
-            border-color: #4b5563;
-        }
-
-        .flashcard-back {
-            background: var(--gradient-main);
-            color: white;
-            transform: rotateY(180deg);
-        }
-
-        .flashcard-subject-tag {
-            background: rgba(99, 102, 241, 0.1);
-            color: var(--primary);
-            padding: 5px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
-            font-weight: 600;
-            margin-bottom: 20px;
-        }
-
-        .flashcard-content {
-            font-size: 1.4em;
-            line-height: 1.5;
-            font-weight: 500;
-        }
-
-        .flashcard-hint {
-            position: absolute;
-            bottom: 20px;
-            font-size: 0.8em;
-            color: #9ca3af;
-            opacity: 0.7;
-        }
     </style>
 </head>
 
@@ -1442,7 +1351,7 @@
                 <button class="tab" onclick="showTab('tips')">💡 Tips</button>
                 <button class="tab" onclick="showTab('logros')">🏆 Logros</button>
                 <button class="tab" onclick="showTab('comunidad')">👥 Comunidad</button>
-                <button class="tab" onclick="showTab('flashcards')">🧠 Flashcards</button>
+
                 <button class="tab" id="admin-tab-btn" onclick="showTab('admin')"
                     style="display: none; background: #1f2937; color: white;">👑 Admin</button>
             </div>
@@ -3127,102 +3036,7 @@
                     updateThemeIcon(true);
                 }
 
-                // ==================== FLASHCARDS LOGIC ====================
-                const flashcardsData = {
-                    "Física": [
-                        { q: "¿Cuál es la unidad de fuerza en el SI?", a: "El Newton (N)" },
-                        { q: "Fórmula de la 2da Ley de Newton", a: "F = m * a" },
-                        { q: "¿Qué estudia la Cinemática?", a: "El movimiento sin atender las causas." },
-                        { q: "Energía debida a la posición", a: "Energía Potencial" },
-                        { q: "Energía debida al movimiento", a: "Energía Cinética" }
-                    ],
-                    "Matemáticas": [
-                        { q: "Valor de PI aproximado", a: "3.1416" },
-                        { q: "Fórmula del área del círculo", a: "A = π * r²" },
-                        { q: "¿Qué es la hipotenusa?", a: "Lado opuesto al ángulo recto en un triángulo rectángulo." },
-                        { q: "Derivada de x²", a: "2x" },
-                        { q: "Resultado de 5!", a: "120 (5*4*3*2*1)" }
-                    ],
-                    "Inglés": [
-                        { q: "Past participle of 'Go'", a: "Gone" },
-                        { q: "Meaning of 'Although'", a: "Aunque / A pesar de" },
-                        { q: "Opposite of 'Cheap'", a: "Expensive" },
-                        { q: "What is a Phrasal Verb?", a: "Verb + Preposition/Adverb" },
-                        { q: "Plural of 'Mouse'", a: "Mice" }
-                    ],
-                    "Redacción": [
-                        { q: "Sinónimo de 'Efímero'", a: "Pasajero, breve" },
-                        { q: "¿Qué es un antónimo?", a: "Palabra con significado opuesto." },
-                        { q: "Uso de la 'B' antes de...", a: "M y consonantes (ej. Brazo, Campo - mb)" },
-                        { q: "Acento diacrítico", a: "Diferencia palabras iguales (tú/tu, él/el)." }
-                    ]
-                };
 
-                let currentSubjectCards = [];
-                let currentCardIndex = 0;
-
-                function loadFlashcards() {
-                    const subject = document.getElementById('flashcard-subject').value;
-                    currentSubjectCards = [];
-
-                    if (subject === 'all') {
-                        Object.values(flashcardsData).forEach(arr => {
-                            currentSubjectCards = [...currentSubjectCards, ...arr];
-                        });
-                        // Shuffle for random mix
-                        currentSubjectCards.sort(() => Math.random() - 0.5);
-                    } else if (flashcardsData[subject]) {
-                        currentSubjectCards = [...flashcardsData[subject]];
-                    }
-
-                    currentCardIndex = 0;
-                    renderCurrentCard();
-                }
-
-                function renderCurrentCard() {
-                    const container = document.getElementById('flashcard-inner');
-                    const subjectEl = document.getElementById('fc-subject');
-                    const questionEl = document.getElementById('fc-question');
-                    const answerEl = document.getElementById('fc-answer');
-
-                    // Reset flip
-                    document.querySelector('.flashcard-container').classList.remove('flipped');
-
-                    if (currentSubjectCards.length === 0) {
-                        questionEl.textContent = "No hay tarjetas disponibles.";
-                        answerEl.textContent = "";
-                        return;
-                    }
-
-                    const card = currentSubjectCards[currentCardIndex];
-                    // Find key for subject if 'all' is selected, otherwise use subject value
-                    // Simply use generic Logic for display
-                    subjectEl.textContent = "Tarjeta " + (currentCardIndex + 1) + "/" + currentSubjectCards.length;
-                    questionEl.textContent = card.q;
-                    answerEl.textContent = card.a;
-                }
-
-                function flipCard() {
-                    document.querySelector('.flashcard-container').classList.toggle('flipped');
-                }
-
-                function nextCard() {
-                    if (currentSubjectCards.length === 0) return;
-                    currentCardIndex = (currentCardIndex + 1) % currentSubjectCards.length;
-                    renderCurrentCard();
-                }
-
-                function prevCard() {
-                    if (currentSubjectCards.length === 0) return;
-                    currentCardIndex = (currentCardIndex - 1 + currentSubjectCards.length) % currentSubjectCards.length;
-                    renderCurrentCard();
-                }
-
-                function prevCard() {
-                    if (currentSubjectCards.length === 0) return;
-                    currentCardIndex = (currentCardIndex - 1 + currentSubjectCards.length) % currentSubjectCards.length;
-                    renderCurrentCard();
-                }
 
                 // ==================== FOCUS SOUNDS LOGIC ====================
                 let audioCtx;
@@ -9825,9 +9639,9 @@
                 </div>
                 <div style="display: flex; gap: 10px;">
                     <button onclick="calculateScore()" class="glass-btn"
-                        style="flex: 1; background: var(--success);">Calcular</button>
+                        style="flex: 1; background: var(--success); color: white;">Calcular</button>
                     <button onclick="closeCalculator()" class="glass-btn"
-                        style="flex: 1; background: var(--danger);">Cerrar</button>
+                        style="flex: 1; background: var(--danger); color: white;">Cerrar</button>
                 </div>
             </div>
         </div>
