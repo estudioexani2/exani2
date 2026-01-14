@@ -55,60 +55,163 @@
             /* Keep standard colors bright enough */
         }
 
-        body.dark-mode .formula-content,
-        body.dark-mode .tip-box,
-        body.dark-mode .resource-link {
-            background: #374151;
-            /* Darker surface for cards */
-            border-color: #4b5563;
+        body.dark-mode .card,
+        body.dark-mode .stat-card,
+        body.dark-mode .semana,
+        body.dark-mode .formula-card,
+        body.dark-mode .hoy-estudiar,
+        body.dark-mode .modulo-card,
+        body.dark-mode .achievement,
+        body.dark-mode .tutorial-card,
+        body.dark-mode .glass-panel,
+        body.dark-mode .tema-explicacion {
+            background: #1f2937 !important;
+            color: #f3f4f6 !important;
+            border-color: #374151 !important;
+        }
+
+        body.dark-mode .semana-header {
+            background: #111827;
             color: #e5e7eb;
+            border-bottom-color: #374151;
         }
 
-        body.dark-mode .dia-contenido {
+        body.dark-mode .dia,
+        body.dark-mode .semana-body {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        body.dark-mode .tema:hover {
             background: #374151;
-            color: #e5e7eb;
         }
 
-        body.dark-mode .modulo-card {
-            background: #374151;
-        }
-
-        body.dark-mode .tabs {
-            background: rgba(31, 41, 55, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        body.dark-mode .tab {
+        body.dark-mode .tema-text {
             color: #d1d5db;
         }
 
-        body.dark-mode .tab:hover {
-            background: rgba(255, 255, 255, 0.1);
+        body.dark-mode .formula-content,
+        body.dark-mode .tip-box,
+        body.dark-mode .resource-link {
+            background: #111827;
+            border-color: #4b5563;
+            color: #e5e7eb;
         }
 
-        body.dark-mode .tab.active {
-            color: white;
-            background: var(--gradient-main);
+        body.dark-mode .back-btn {
+            background: #374151;
+            color: #e5e7eb;
         }
 
+        body.dark-mode .upload-area {
+            background: #111827;
+            border-color: #374151;
+        }
+
+        body.dark-mode .archivo-item {
+            background: #1f2937;
+            border-color: #374151;
+        }
+
+        body.dark-mode .archivo-name {
+            color: #f3f4f6;
+        }
+
+        body.dark-mode h1,
+        body.dark-mode h2,
+        body.dark-mode h3,
+        body.dark-mode h4,
+        body.dark-mode h5,
+        body.dark-mode h6 {
+            color: #f3f4f6 !important;
+        }
+
+        body.dark-mode p,
+        body.dark-mode li {
+            color: #d1d5db;
+        }
+
+        /* Specific fix for inputs in dark mode */
         body.dark-mode input,
         body.dark-mode textarea,
         body.dark-mode select {
-            background: #374151;
-            color: white;
-            border-color: #4b5563;
+            background: #374151 !important;
+            color: white !important;
+            border-color: #4b5563 !important;
         }
 
         body.dark-mode .achievement {
-            background: #374151;
+            background: #1f2937;
             color: white;
+        }
+
+        /* Dynamic Component Classes for Dark Mode Support */
+        .video-preview-card {
+            margin-bottom: 20px;
+            padding: 15px;
+            background: #f9fafb;
+            border-radius: 8px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .pending-topic-card {
+            background: white;
+            border-radius: 6px;
+            padding: 12px;
+            margin-top: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .simulacro-card {
+            background: #f9fafb;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 25px;
+            border-left: 5px solid #667eea;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+
+        .simulacro-inner-card {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            margin-bottom: 15px;
+        }
+
+        .simulacro-empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            background: #f9fafb;
+            border-radius: 15px;
+            border: 2px dashed #d1d5db;
+        }
+
+        /* Dark Mode Overrides for New Classes */
+        body.dark-mode .video-preview-card,
+        body.dark-mode .pending-topic-card,
+        body.dark-mode .simulacro-card,
+        body.dark-mode .simulacro-inner-card,
+        body.dark-mode .simulacro-empty-state {
+            background: #1f2937;
+            border-color: #374151;
+            color: #f3f4f6;
+        }
+
+        body.dark-mode .simulacro-card h4,
+        body.dark-mode .simulacro-inner-card h5 {
+            color: #f3f4f6 !important;
+        }
+
+        body.dark-mode .pending-topic-card strong {
+            color: #fdba74 !important;
+            /* orange-300 */
         }
 
         /* Theme Toggle Button */
         .theme-toggle {
-            position: absolute;
-            top: 20px;
-            right: 250px;
+            position: fixed;
+            bottom: 30px;
+            left: 30px;
             background: rgba(255, 255, 255, 0.2);
             border: none;
             color: white;
@@ -121,7 +224,8 @@
             justify-content: center;
             backdrop-filter: blur(5px);
             transition: all 0.3s;
-            z-index: 100;
+            z-index: 2000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
         }
 
         .theme-toggle:hover {
@@ -4088,7 +4192,7 @@
                             const videoId = extractYouTubeID(video.url);
 
                             html += `
-                                <div style="margin-bottom: 20px; padding: 15px; background: #f9fafb; border-radius: 8px; border: 1px solid #e5e7eb;">
+                                <div class="video-preview-card">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
                                         <h5 style="margin: 0; color: #374151; font-size: 1em;">
                                             ${idx + 1}. ${video.titulo}
@@ -4193,8 +4297,7 @@
                     achievementsList.forEach(ach => {
                         const isUnlocked = unlocked.includes(ach.id);
                         html += `
-                                <div style="
-                                    background: ${isUnlocked ? 'white' : '#f3f4f6'};
+                                <div class="achievement ${isUnlocked ? 'unlocked' : ''}" style="
                                     border: ${isUnlocked ? '2px solid #fbbf24' : '1px solid #e5e7eb'};
                                     border-radius: 16px;
                                     padding: 20px 10px;
@@ -4356,7 +4459,7 @@
 
                         Object.keys(porSemana).sort().forEach(s => {
                             mensajeFinal += `
-                        <div style="background: white; border-radius: 6px; padding: 12px; margin-top: 12px; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                        <div class="pending-topic-card">
                             <strong style="color: #ea580c; font-size: 1.05em;">📚 Semana ${s}:</strong>
                             <div style="margin-top: 8px;">
                     `;
@@ -4394,7 +4497,7 @@
 
                     if (numSimulacros === 0) {
                         html += `
-                            <div style="text-align: center; padding: 60px 20px; background: #f9fafb; border-radius: 15px; border: 2px dashed #d1d5db;">
+                            <div class="simulacro-empty-state">
                                 <div style="font-size: 4em; margin-bottom: 15px;">📝</div>
                                 <h3 style="color: #6b7280; margin-bottom: 10px;">No hay simulacros registrados</h3>
                                 <p style="color: #9ca3af;">Haz clic en "Agregar Simulacro" para comenzar a registrar tus resultados</p>
@@ -4404,7 +4507,7 @@
                         simulacrosData.forEach((sim, index) => {
                             const simNum = index + 1;
                             html += `
-                                <div style="background: #f9fafb; border-radius: 15px; padding: 25px; margin-bottom: 25px; border-left: 5px solid #667eea; box-shadow: 0 2px 8px rgba(0,0,0,0.05);">
+                                <div class="simulacro-card">
                                     <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
                                         <h4 style="font-size: 1.3em; margin: 0; color: #1f2937;">Simulacro #${simNum}</h4>
                                         <button onclick="eliminarSimulacro(${index})" style="background: #ef4444; color: white; border: none; padding: 8px 16px; border-radius: 20px; font-size: 13px; cursor: pointer; transition: all 0.3s ease;">
@@ -4431,7 +4534,7 @@
                                         </div>
                                     </div>
                                     
-                                    <div style="background: white; padding: 20px; border-radius: 12px; margin-bottom: 15px;">
+                                    <div class="simulacro-inner-card">
                                         <h5 style="color: #667eea; margin-bottom: 15px; font-size: 1.1em;">📊 Resultados por Materia</h5>
                                         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
                                             
