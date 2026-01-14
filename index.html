@@ -154,12 +154,29 @@
             border: 1px solid #e5e7eb;
         }
 
+        .video-add-card {
+            background: #f9fafb;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border: 2px dashed #e5e7eb;
+        }
+
         .pending-topic-card {
             background: white;
             border-radius: 6px;
             padding: 12px;
             margin-top: 12px;
             box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .pending-item-card {
+            font-size: 0.95em;
+            padding: 4px 0;
+            padding-left: 10px;
+            border-left: 2px solid #fed7aa;
+            color: #1f2937;
+            /* Default light mode color */
         }
 
         .simulacro-card {
@@ -186,20 +203,43 @@
             border: 2px dashed #d1d5db;
         }
 
+        .archivo-item {
+            background: white;
+            padding: 15px;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
         /* Dark Mode Overrides for New Classes */
         body.dark-mode .video-preview-card,
+        body.dark-mode .video-add-card,
         body.dark-mode .pending-topic-card,
         body.dark-mode .simulacro-card,
         body.dark-mode .simulacro-inner-card,
-        body.dark-mode .simulacro-empty-state {
-            background: #1f2937;
-            border-color: #374151;
-            color: #f3f4f6;
+        body.dark-mode .simulacro-empty-state,
+        body.dark-mode .archivo-item,
+        body.dark-mode .modulo-card,
+        body.dark-mode .modal-overlay>div,
+        body.dark-mode .glass-panel,
+        body.dark-mode [style*="position: fixed"][style*="background: white"] {
+            background: #1f2937 !important;
+            border-color: #374151 !important;
+            color: #f3f4f6 !important;
         }
 
         body.dark-mode .simulacro-card h4,
-        body.dark-mode .simulacro-inner-card h5 {
+        body.dark-mode .simulacro-inner-card h5,
+        body.dark-mode .archivo-name,
+        body.dark-mode .modulo-nombre {
             color: #f3f4f6 !important;
+        }
+
+        body.dark-mode .modulo-meta,
+        body.dark-mode .archivo-meta {
+            color: #9ca3af !important;
         }
 
         body.dark-mode .pending-topic-card strong {
@@ -207,25 +247,35 @@
             /* orange-300 */
         }
 
+        body.dark-mode .pending-item-card {
+            color: #d1d5db !important;
+        }
+
+        /* Nav Bar Dark Mode */
+        body.dark-mode .tabs {
+            background: #1f2937 !important;
+            border-top: 1px solid #374151;
+        }
+
         /* Theme Toggle Button */
         .theme-toggle {
             position: fixed;
             bottom: 30px;
-            left: 30px;
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            border-radius: 25px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-size: 1.5rem;
+            border: none;
             cursor: pointer;
-            padding: 10px;
-            border-radius: 50%;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 2000;
+            font-size: 24px;
             display: flex;
             align-items: center;
             justify-content: center;
-            backdrop-filter: blur(5px);
-            transition: all 0.3s;
-            z-index: 2000;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
         }
 
         .theme-toggle:hover {
@@ -1535,7 +1585,7 @@
 
                 <!-- Detalle de Materia -->
                 <div id="detalle-materia-container"
-                    style="display: none; margin-top: 30px; background: white; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-lg); border: 2px solid #e5e7eb; animation: slideDown 0.3s ease;">
+                    style="display: none; margin-top: 30px; padding: 30px; border-radius: 20px; box-shadow: var(--shadow-lg); border: 2px solid #e5e7eb; animation: slideDown 0.3s ease;">
                     <div
                         style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 25px;">
                         <div>
@@ -1544,8 +1594,7 @@
                             <p id="detalle-materia-progreso" style="color: #6b7280; font-size: 1.1em; margin-top: 5px;">
                             </p>
                         </div>
-                        <button onclick="cerrarDetalleMateria()"
-                            style="background: #f3f4f6; border: none; padding: 12px 24px; border-radius: 12px; cursor: pointer; font-weight: bold; color: #4b5563; transition: all 0.2s;">
+                        <button onclick="cerrarDetalleMateria()" class="back-btn">
                             Cerrar Vista ×
                         </button>
                     </div>
@@ -3408,8 +3457,8 @@
                     if (match) {
                         const videoId = match[1];
                         return `
-                        <div style="background: #f0f9ff; border-left: 4px solid #3b82f6; padding: 15px; border-radius: 8px;">
-                            <p style="margin: 0 0 10px 0; font-weight: bold; color: #1e40af;">
+                        <div style="background: rgba(59, 130, 246, 0.1); border-left: 4px solid #3b82f6; padding: 15px; border-radius: 8px;">
+                            <p style="margin: 0 0 10px 0; font-weight: bold; color: inherit;">
                                 🎥 Video de YouTube detectado
                             </p>
                             <a href="https://www.youtube.com/watch?v=${videoId}" 
@@ -3458,8 +3507,8 @@
                         previewDiv.innerHTML = previewHTML;
                     } else if (valor) {
                         previewDiv.innerHTML = `
-                        <div style="background: #f0fdf4; border-left: 4px solid #10b981; padding: 12px; border-radius: 8px;">
-                            <p style="margin: 0; color: #065f46; font-size: 0.9em;">
+                        <div style="background: rgba(16, 185, 129, 0.1); border-left: 4px solid #10b981; padding: 12px; border-radius: 8px;">
+                            <p style="margin: 0; color: inherit; font-size: 0.9em;">
                                 ✅ Notas guardadas correctamente
                             </p>
                         </div>
@@ -3528,8 +3577,8 @@
                                         <h4 style="color: #667eea; margin-bottom: 10px;">🎥 Videos del tema</h4>
                                         <div id="video-global-${semanaKey}-${diaIdx}-${temaIdx}">
                                             ${isUserAdmin ? `
-                                                <div style="background: #f9fafb; padding: 15px; border-radius: 8px; margin-bottom: 15px; border: 2px dashed #e5e7eb;">
-                                                    <h5 style="color: #374151; margin: 0 0 10px 0; font-size: 0.95em;">➕ Agregar nuevo video</h5>
+                                                <div class="video-add-card">
+                                                    <h5 style="color: inherit; margin: 0 0 10px 0; font-size: 0.95em;">➕ Agregar nuevo video</h5>
                                                     <input 
                                                         type="text" 
                                                         id="video-titulo-${semanaKey}-${diaIdx}-${temaIdx}"
@@ -4464,7 +4513,7 @@
                             <div style="margin-top: 8px;">
                     `;
                             porSemana[s].forEach(p => {
-                                mensajeFinal += `<div style="color: #1f2937; font-size: 0.95em; padding: 4px 0; padding-left: 10px; border-left: 2px solid #fed7aa;">• <strong>${p.dia}</strong> - ${p.materia}: ${p.tema}</div>`;
+                                mensajeFinal += `<div class="pending-item-card">• <strong>${p.dia}</strong> - ${p.materia}: ${p.tema}</div>`;
                             });
                             mensajeFinal += `</div></div>`;
                         });
